@@ -1,0 +1,70 @@
+/* Container styles */
+.container {
+    padding: 10px 100px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(250, 248, 248, 0.1);
+  }
+  
+  .container b {
+    font-size: 24px;
+  }
+  
+  /* Button and dropdown styles */
+  button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: darkred;
+  }
+  
+  /* Dropdown container */
+  .about-us .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    left: 0;
+    top: 100%;
+    width: 100%; /* Full width dropdown */
+  }
+  
+  .about-us:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Dropdown options */
+  .dropdown-content > div {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  .dropdown-content > div:hover {
+    background-color: #f2f2f2;
+  }
+  
+  /* Courses dropdown */
+  .courses .courses-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    left: 0;
+    top: 100%;
+    width: 100%; /* Full width dropdown */
+  }
+  
+  .courses:hover .courses-dropdown-content {
+    display: block;
+  }
+  
