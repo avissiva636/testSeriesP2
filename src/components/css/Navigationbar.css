@@ -1,10 +1,12 @@
 /* Container styles */
 .container {
-    padding: 10px 100px 0px 100px;
+    background-color: white;
+    padding: 10px 100px 10px 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(250, 248, 248, 0.1);
+    box-shadow: 0 2px 5px rgba(143, 138, 138, 0.1);
+    position: relative; /* Add position relative to the container */
   }
   
   .container b {
@@ -23,7 +25,7 @@
   button:hover {
     background-color: darkred;
   }
-  
+
   /* Dropdown container */
   .about-us .dropdown-content {
     display: none;
@@ -32,8 +34,8 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
     left: 0;
-    top: 100%;
-    width: 100%; /* Full width dropdown */
+    top: calc(100% + 10px); /* Position the dropdown below "About Us" */
+    width: 100%;
   }
   
   .about-us:hover .dropdown-content {
@@ -61,7 +63,7 @@
     z-index: 1;
     left: 0;
     top: 100%;
-    width: 100%; /* Full width dropdown */
+    width: 100%;
   }
   
   .courses:hover .courses-dropdown-content {

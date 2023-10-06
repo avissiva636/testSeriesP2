@@ -21,7 +21,7 @@ const Navigationbar = () => {
       </div>
       <HomeIcon></HomeIcon>
       <div className="about-us" onClick={toggleDropdown}>
-        <div>
+        <div className="about-us-arrow">
           About Us <KeyboardArrowDownOutlinedIcon />
         </div>
       </div>

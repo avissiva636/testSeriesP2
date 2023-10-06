@@ -1,0 +1,95 @@
+body, html {
+    margin: 0;
+    padding: 200;
+    height: 100%;
+  }
+  
+  /* Ensure the main content area takes up all available space */
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+.footer {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: auto; /* Pushes the footer to the bottom */
+  }
+  
+  .footer-section {
+    flex: 1;
+    margin: 0 0 0 0;
+  }
+  
+  .about-us {
+    text-align: left;
+  }
+  
+  .company {
+    text-align: center;
+  }
+  
+  .address {
+    text-align: right;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  .social-icons a:hover {
+    text-decoration: underline;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
+  
+  .contact-info p {
+    margin: 10px 0;
+  }
+  
+  h3 {
+    margin-top: 0;
+    font-size: 20px;
+  }
+  
+  address {
+    margin-bottom: 10px;
+  }
+  
+  /* Additional styles for privacy and copyright lines */
+  .privacy-line {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .copyright-line {
+    text-align: center;
+    margin-top: 10px;
+  }
+  /* Add these styles to your Footer.css file */
+
+.footer-disclaimer {
+    background-color: #222; /* Background color for the disclaimer section */
+    color: #fff; /* Text color for the disclaimer text */
+    text-align: center; /* Center-align the text */
+    padding: 10px 0; /* Padding to provide some spacing */
+  }
+  
+  .footer-disclaimer p {
+    margin: 5px 0; /* Adjust margin as needed to control spacing between lines */
+    font-size: 14px; /* Adjust font size as needed */
+  }
+  
