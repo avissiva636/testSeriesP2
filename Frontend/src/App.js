@@ -5,10 +5,12 @@ import StudentFeedback from "./components/StudentsFeedback";
 import Footer from "./components/Footer";
 import FrequentlyAskedQuestions from "./components/FrequentlyAskedQuestions";
 import ContactUs from "./components/ContactUs";
+import PopularCourse from "./components/PopularCourses";
 function App() {
   return (
     <div>
       <Navigationbar></Navigationbar>
+      <PopularCourse />
       <Features /><br /><br /><br /><br /><br />
       <Gallery /><br /><br /><br /><br /><br />
       <StudentFeedback /><br /><br /><br /><br /><br />
