@@ -1,24 +1,23 @@
-import Navigationbar from "./components/Navigatoionbar";
-import Gallery from "./components/Gallery";
-import Features from "./components/Features";
-import StudentFeedback from "./components/StudentsFeedback";
-import Footer from "./components/Footer";
-import FrequentlyAskedQuestions from "./components/FrequentlyAskedQuestions";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { InspiroContext } from "./components/context/InspiroContext";
+import HomePage from "./components/HomePage";
+import Products from "./components/Products";
 import ContactUs from "./components/ContactUs";
-import PopularCourse from "./components/PopularCourses";
+import WhyInspiro from "./components/WhyInspiro";
 function App() {
   return (
     <div>
-      <Navigationbar></Navigationbar>
-      <PopularCourse />
-      <Features /><br /><br /><br /><br /><br />
-      <Gallery /><br /><br /><br /><br /><br />
-      <StudentFeedback /><br /><br /><br /><br /><br />
-      <FrequentlyAskedQuestions /><br /><br /><br /><br /><br />
-      <ContactUs /><br />
-      <Footer />
+      <Router>
+        <InspiroContext>
+          <Routes>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/Products" element={<Products />}></Route>
+            <Route path="/ContactUs" element={<ContactUs />}></Route>
+            <Route path="/WhyInspiro" element={<WhyInspiro />}></Route>
+          </Routes>
+        </InspiroContext>
+      </Router>
     </div>
   );
 }
-
 export default App;

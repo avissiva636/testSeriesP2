@@ -1,8 +1,9 @@
-import HomeIcon from "@mui/icons-material/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import "./css/Navigationbar.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navigationbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -19,7 +20,9 @@ const Navigationbar = () => {
       <div>
         <b>Inspiro</b>
       </div>
-      <HomeIcon></HomeIcon>
+      <Link to={"/"}>
+        <HomeOutlinedIcon className="home-icon"></HomeOutlinedIcon>
+      </Link>
       <div className="about-us" onClick={toggleDropdown}>
         <div className="about-us-arrow">
           About Us <KeyboardArrowDownOutlinedIcon />
@@ -27,7 +30,9 @@ const Navigationbar = () => {
       </div>
       {showDropdown && (
         <div className="dropdown-content">
+          <Link to={"/WhyInspiro"}>
           <div>Why Inspiro</div>
+          </Link>
           <div>Profile</div>
           <div>Demo Classes</div>
           <div>Gallery</div>
@@ -39,8 +44,10 @@ const Navigationbar = () => {
       {showCourses && <div className="courses-dropdown-content"></div>}
       <div>Current Affairs</div>
       <div>Admission</div>
-      <div>Webinars</div>
-      <div>Conatct Us</div>
+      <div>Notifications</div>
+      <Link to={"/ContactUs"}>
+        <div>Conatct Us</div>
+      </Link>
       <div>
         <button>
           <PersonSharpIcon />

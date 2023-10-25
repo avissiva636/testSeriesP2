@@ -1,0 +1,76 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Product Page Styles */
+  .product-page {
+    text-align: center;
+  }
+  
+  .heading{
+    text-align: center;
+  }
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Adjust the gap as needed */
+  }
+  
+  .product-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    cursor: pointer;
+    width: 20%; /* Each row contains three main product headings */
+    margin-bottom: 20px;
+    position: relative;
+    transition: background-color 0.3s;
+  }
+  
+  .product-item h2 {
+    margin: 0;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .product-item:hover {
+    background-color: #f0f0f0; /* Change the background color on hover */
+  }
+  
+ /* Sub-products Styles */
+ .sub-products {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Override opacity for active sub-products */
+.product-item.active .sub-products {
+  opacity: 1; /* Make it fully opaque */
+}
+  
+  
+  .sub-products ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sub-products li {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  /* Active Product Styles */
+  .product-item.active .sub-products {
+    display: block;
+  }
+  
