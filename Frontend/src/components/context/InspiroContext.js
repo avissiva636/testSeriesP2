@@ -33,9 +33,49 @@ export const InspiroContext = ({ children }) => {
       subProducts: ["Subproduct A", "Subproduct B", "Subproduct C"],
     },
   ];
+  let CourseList = [
+    {
+      Title : "IAS",
+      subarr: [
+        {
+          Desc: "Something",
+          Fees:"10000",
+          Portions : "Some content here"
+        }
+      ],
+      SubTitle:""
+    },
+    {
+      Title : "KAS",
+      subarr: [
+        {
+          Desc: "No content",
+          Fees:"10500",
+          Portions : "Some content here for second"
+        }
+      ],
+      SubTitle:""
+    },
+    {
+      Title: "SAAD",
+      subarr: [
+        {
+          Desc: "Something",
+          Fees:"10000",
+          Portions : "Some content here"
+        }
+      ],
+      SubTitle:""
+    },
+    {
+      Title : "KPSC Prelims",
+      SubTitle : ["CTI","AE/JE","Group C"]
+    }
+  ]
   const [products, setProducts] = useState(ProductLists);
+  const [Courses, setCourses] = useState(CourseList)
   return (
-    <inspiroContext.Provider value={{ products }}>
+    <inspiroContext.Provider value={{ products , Courses }}>
       {children}
     </inspiroContext.Provider>
   );
