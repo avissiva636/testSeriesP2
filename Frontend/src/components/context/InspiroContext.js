@@ -35,43 +35,74 @@ export const InspiroContext = ({ children }) => {
   ];
   let CourseList = [
     {
-      Title : "IAS",
+      Title: "IAS",
       subarr: [
         {
-          Desc: "Something",
-          Fees:"10000",
-          Portions : "Some content here"
-        }
+          Syllabus: "Something",
+          Fees: "10000",
+          Portions: "Some content here",
+        },
       ],
-      SubTitle:""
+      SubTitle: "",
     },
     {
-      Title : "KAS",
+      Title: "KAS",
       subarr: [
         {
-          Desc: "No content",
-          Fees:"10500",
-          Portions : "Some content here for second"
-        }
+          Syllabus: "No content",
+          Fees: "10500",
+          Portions: "Some content here for second",
+        },
       ],
-      SubTitle:""
+      SubTitle: "",
     },
     {
       Title: "SAAD",
       subarr: [
         {
-          Desc: "Something",
-          Fees:"10000",
-          Portions : "Some content here"
-        }
+          Syllabus: "Something",
+          Fees: "10000",
+          Portions: "Some content here",
+        },
       ],
-      SubTitle:""
+      SubTitle: "",
     },
     {
-      Title : "KPSC Prelims",
-      SubTitle : ["CTI","AE/JE","Group C"]
-    }
-  ]
+      Title: "KPSC Prelims",
+      SubTitle: [
+        {
+          Title: "CTI",
+          subarr: [
+            {
+              Syllabus: "Something",
+              Fees: "100100",
+              Portions: "Some content here",
+            },
+          ],
+        },
+        {
+          Title: "AE/JE",
+          subarr: [
+            {
+              Syllabus: "Something",
+              Fees: "100200",
+              Portions: "Some content here",
+            },
+          ],
+        },
+        {
+          Title: "Group C",
+          subarr: [
+            {
+              Syllabus: "Something",
+              Fees: "100030",
+              Portions: "Some content here",
+            },
+          ],
+        },
+      ],
+    },
+  ];
   const [products, setProducts] = useState(ProductLists);
   const [Courses, setCourses] = useState(CourseList)
   return (

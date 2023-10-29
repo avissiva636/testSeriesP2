@@ -3,8 +3,8 @@ import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import "./css/Navigationbar.css";
 import CourseDescription from "./CourseDescription";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const Navigationbar = () => {
@@ -12,98 +12,71 @@ const Navigationbar = () => {
   const [showCourses, setShowCourses] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubtitle, setSelectedSubtitle] = useState(null);
-  // const { Courses } = useInspiroCrud();
+  const { Courses } = useInspiroCrud();
 
-  let CourseList = [
-    {
-      Title: "IAS",
-      subarr: [
-        {
-          Desc: "Something",
-          Fees: "10000",
-          Portions: "Some content here",
-        },
-      ],
-      SubTitle: "",
-    },
-    {
-      Title: "KAS",
-      subarr: [
-        {
-          Desc: "No content",
-          Fees: "10500",
-          Portions: "Some content here for second",
-        },
-      ],
-      SubTitle: "",
-    },
-    {
-      Title: "SAAD",
-      subarr: [
-        {
-          Desc: "Something",
-          Fees: "10000",
-          Portions: "Some content here",
-        },
-      ],
-      SubTitle: "",
-    },
-    {
-      Title: "KPSC Prelims",
-      SubTitle: [
-        {
-          Title: "CTI",
-          subarr: [
-            {
-              Desc: "Something",
-              Fees: "10000",
-              Portions: "Some content here",
-            },
-          ],
-        },
-        {
-          Title: "AE/JE",
-          subarr: [
-            {
-              Desc: "Something",
-              Fees: "10000",
-              Portions: "Some content here",
-            },
-          ],
-        },
-        {
-          Title: "Group C",
-          subarr: [
-            {
-              Desc: "Something",
-              Fees: "10000",
-              Portions: "Some content here",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const navigate = useNavigate();
 
-  let Courses = CourseList;
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
   const toggleCoursesDropDoem = () => {
     setShowCourses(!showCourses);
   };
-  const handleCourseClick = (index) => {
+
+  const handleCourseClick = (index, Title) => {
     if (selectedCourse === index) {
       setSelectedCourse(null);
       setSelectedSubtitle(null);
     } else {
       setSelectedCourse(index);
+      if (Title !== "KPSC Prelims") {
+        navigate("/CourseDescription", {
+          state: { subarr: Courses[index].subarr },
+        });
+      }
     }
   };
 
   const handleSubtitleClick = (subarr) => {
     setSelectedSubtitle(subarr);
+    navigate("/CourseDescription", { state: { subarr } });
   };
+
+  const courseItems = useMemo(() => {
+    return Courses.map((course, index) => (
+      <div key={index}>
+        <div
+          onClick={() => handleCourseClick(index, course.Title)}
+          className="course-title"
+        >
+          {course.Title}
+        </div>
+        {selectedCourse === index &&
+          course.subarr &&
+          course.subarr.length > 0 && (
+            <CourseDescription subarr={course.subarr} />
+          )}
+        {selectedCourse === index &&
+          Array.isArray(course.SubTitle) &&
+          course.SubTitle.map((subTitle, subIndex) => (
+            <div
+              key={subIndex}
+              onClick={() => handleSubtitleClick(subTitle.subarr)}
+              className="sub-Title"
+            >
+              {subTitle.Title}
+            </div>
+          ))}
+      </div>
+    ));
+  }, [Courses, selectedCourse]);
+
+  useEffect(() => {
+    if (selectedCourse !== null) {
+      // Handle side effects or further logic here
+    }
+  }, [selectedCourse]);
   return (
     <div className="container">
       <div>
@@ -135,14 +108,17 @@ const Navigationbar = () => {
           {Courses.map((course, index) => (
             <div key={index}>
               <div
-                onClick={() => handleCourseClick(index)}
+                onClick={() => handleCourseClick(index, course.Title)}
                 className="course-title"
               >
                 {course.Title}
               </div>
-              {selectedCourse === index && course.subarr && course.subarr.length > 0 && (
-                <CourseDescription subarr={course.subarr} />
-              )}
+
+              {selectedCourse === index &&
+                course.subarr &&
+                course.subarr.length > 0 && (
+                  <CourseDescription subarr={course.subarr} />
+                )}
               {selectedCourse === index &&
                 Array.isArray(course.SubTitle) &&
                 course.SubTitle.map((subTitle, subIndex) => (
@@ -152,17 +128,14 @@ const Navigationbar = () => {
                     className="sub-Title"
                   >
                     {subTitle.Title}
+                    {/* <CourseDescription subarr={selectedSubtitle} /> */}
                   </div>
-                  {selectedSubtitle === subIndex && subTitle.subarr && subTitle.subarr.length >0 && (
-                    <CourseDescription subarr={course.subarr}/>
-                  )}
                 ))}
             </div>
           ))}
         </div>
       )}
       <div>Current Affairs</div>
-      <div>Admission</div>
       <div>Notifications</div>
       <Link to={"/ContactUs"}>
         <div>Conatct Us</div>
