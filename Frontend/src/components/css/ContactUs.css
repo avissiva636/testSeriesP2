@@ -1,3 +1,99 @@
-.center{
+/* ContactUs.css */
+
+/* Center the heading and breadcrumbs */
+.heading-container {
     text-align: center;
-}
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color:lightgoldenrodyellow;
+  }
+  
+  /* Container for the left and right sections */
+  .contact-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: aliceblue;
+  }
+  
+  /* Style for the left section (Address, Email, Call, Open Timing) */
+  .left-section {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #f8f8f8;
+  }
+  
+  /* Style for the right section (Map, Form, etc.) */
+  .right-section {
+    flex: 2;
+    padding: 10px 200px 10px ;
+  }
+  
+  /* Style for each individual contact item */
+  .left-item {
+    margin-bottom: 20px;
+  }
+  
+  /* Style for icons */
+  .left-item svg {
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  
+  /* Center text in the contact items */
+  .left-section h4, .left-section p {
+    text-align: center;
+  }
+  
+  /* Style for the Quick Contact section */
+  .quick-contact {
+    background-color: #f8f8f8;
+    padding: 100px ;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .quick-contact h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .quick-contact form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group {
+    margin-bottom: 10px;
+  }
+  
+  .input-group label {
+    font-weight: bold;
+  }
+  
+  .input-group input,
+  .input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: red;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: darkred;
+  }
+  

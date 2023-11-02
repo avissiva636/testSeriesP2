@@ -1,47 +1,9 @@
-Inspiro
-
-Change webinar to Notifications
-Features is secondary
-Add popular courses section in front page
-Courses - 
-Notifications should add from backend, user should able to short the display order.
-Contact us should include that which courses students are interested to choose section.
-Key word search features
-Attach instamojo links in first page
-Attach previous year question paper
-Current affairs link to kas moksha 
-
-
-
-Reference - shankarIAS, Insights on India, als ias, vajram ias,
-
-Primary vision - previous year question papers - this will include in instamojo, courses, instamojo,
-
-First page:
-1. Courses from - refer insightsias
-2. Products - Refer kas moksha - courses can be add dynamically & each heading need sub sections and while clicking on those sub sections redirect to instamojo
-    1. KAS Mains notes
-    2. KAS prelims notes
-    3. Current affairs magazines
-    4. SAAD Material
-    5. KPSC Group C Material
-    6. PSI/ ESI Material
-    7. FDA & SDA Material
-3. Photos & Videos Gallery
-4. Feedbacks
-5. FAQ
-
-
-Notifications:
-
---------------------------------------------------------------------------------------------------------------------------
-
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import "./css/Navigationbar.css";
 import CourseDescription from "./CourseDescription";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
 
@@ -53,29 +15,68 @@ const Navigationbar = () => {
   const { Courses } = useInspiroCrud();
 
   const navigate = useNavigate();
-  // let Courses = CourseList;
+
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
   const toggleCoursesDropDoem = () => {
     setShowCourses(!showCourses);
   };
+
   const handleCourseClick = (index, Title) => {
     if (selectedCourse === index) {
       setSelectedCourse(null);
       setSelectedSubtitle(null);
-    } else if (Title != "KPSC Prelims") {
-      setSelectedCourse(index);
-      navigate("/CourseDescription", { subarr: { selectedCourse } });
     } else {
       setSelectedCourse(index);
+      if (Title !== "KPSC Prelims") {
+        navigate("/CourseDescription", {
+          state: { subarr: Courses[index].subarr },
+        });
+      }
     }
   };
 
   const handleSubtitleClick = (subarr) => {
     setSelectedSubtitle(subarr);
-    navigate("/CourseDescription", { subarr: { selectedSubtitle } });
+    navigate("/CourseDescription", { state: { subarr } });
   };
+
+  const courseItems = useMemo(() => {
+    return Courses.map((course, index) => (
+      <div key={index}>
+        <div
+          onClick={() => handleCourseClick(index, course.Title)}
+          className="course-title"
+        >
+          {course.Title}
+        </div>
+        {selectedCourse === index &&
+          course.subarr &&
+          course.subarr.length > 0 && (
+            <CourseDescription subarr={course.subarr} />
+          )}
+        {selectedCourse === index &&
+          Array.isArray(course.SubTitle) &&
+          course.SubTitle.map((subTitle, subIndex) => (
+            <div
+              key={subIndex}
+              onClick={() => handleSubtitleClick(subTitle.subarr)}
+              className="sub-Title"
+            >
+              {subTitle.Title}
+            </div>
+          ))}
+      </div>
+    ));
+  }, [Courses, selectedCourse]);
+
+  useEffect(() => {
+    if (selectedCourse !== null) {
+      // Handle side effects or further logic here
+    }
+  }, [selectedCourse]);
   return (
     <div className="container">
       <div>
@@ -106,14 +107,13 @@ const Navigationbar = () => {
         <div className="courses-dropdown-content">
           {Courses.map((course, index) => (
             <div key={index}>
-              {/* <Link to={"/CourseDescription"}> */}
               <div
-                onClick={(event) => handleCourseClick(index, course.Title)}
+                onClick={() => handleCourseClick(index, course.Title)}
                 className="course-title"
               >
                 {course.Title}
               </div>
-              {/* </Link> */}
+
               {selectedCourse === index &&
                 course.subarr &&
                 course.subarr.length > 0 && (
@@ -122,7 +122,6 @@ const Navigationbar = () => {
               {selectedCourse === index &&
                 Array.isArray(course.SubTitle) &&
                 course.SubTitle.map((subTitle, subIndex) => (
-                  // <Link to={"/CourseDescription"}>
                   <div
                     key={subIndex}
                     onClick={() => handleSubtitleClick(subTitle.subarr)}
@@ -131,7 +130,6 @@ const Navigationbar = () => {
                     {subTitle.Title}
                     {/* <CourseDescription subarr={selectedSubtitle} /> */}
                   </div>
-                  // </Link>
                 ))}
             </div>
           ))}

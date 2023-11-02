@@ -1,7 +1,7 @@
 /* Container styles */
 .container {
     background-color: white;
-    padding: 10px 100px 10px 100px;
+    padding: 30px 100px 30px 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,6 +20,9 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+  }
+  .home-icon{
+    color: red;
   }
   
   button:hover {
@@ -69,4 +72,11 @@
   .courses:hover .courses-dropdown-content {
     display: block;
   }
-  
+  .about-us-arrow{
+    display: flex;
+    align-items: center;
+  }
+  .courses{
+    align-items: center;
+    display: flex;
+  }
