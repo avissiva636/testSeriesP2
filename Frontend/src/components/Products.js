@@ -15,7 +15,7 @@ const Products = () => {
   return (
     <div>
       <div>
-        <Navigationbar></Navigationbar>
+        {/* <Navigationbar></Navigationbar> */}
         <h1 className='heading'>Our Products</h1>
         <div className="product-list">
           {products.map((product, index) => (

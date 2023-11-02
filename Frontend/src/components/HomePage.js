@@ -11,7 +11,7 @@ import ProductsHomePage from "./ProductsHomePage";
 const HomePage = () => {
   return (
     <div>
-      <Navigationbar></Navigationbar>
+      {/* <Navigationbar></Navigationbar> */}
       <PopularCourse />
       <ProductsHomePage />
       <br />

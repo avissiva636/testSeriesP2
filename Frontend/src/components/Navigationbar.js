@@ -2,16 +2,18 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import "./css/Navigationbar.css";
-import CourseDescription from "./CourseDescription";
 import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const Navigationbar = () => {
+  const Gallery = {key1: "Photo", key2: "Video"};
+
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCourses, setShowCourses] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubtitle, setSelectedSubtitle] = useState(null);
+  const [showGallery, setShowGallery] = useState(Gallery);
   const { Courses } = useInspiroCrud();
 
   const navigate = useNavigate();
@@ -20,27 +22,32 @@ const Navigationbar = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const toggleDropdownGallery = () => {
+    setShowGallery(!showGallery);
+  };
   const toggleCoursesDropDoem = () => {
     setShowCourses(!showCourses);
   };
 
-  const handleCourseClick = (index, Title) => {
+  const handleCourseClick = (index, Title, subarr) => {
     if (selectedCourse === index) {
       setSelectedCourse(null);
       setSelectedSubtitle(null);
     } else {
       setSelectedCourse(index);
       if (Title !== "KPSC Prelims") {
-        navigate("/CourseDescription", {
-          state: { subarr: Courses[index].subarr },
+        navigate("/ListAllCourses", {
+          state: { data: { Title, subarr } },
         });
       }
     }
   };
 
-  const handleSubtitleClick = (subarr) => {
+  const handleSubtitleClick = (subarr, Title) => {
     setSelectedSubtitle(subarr);
-    navigate("/CourseDescription", { state: { subarr } });
+    navigate("/ListAllCourses", {
+      state: { data: { Title, subarr } },
+    });
   };
 
   const courseItems = useMemo(() => {
@@ -52,11 +59,6 @@ const Navigationbar = () => {
         >
           {course.Title}
         </div>
-        {selectedCourse === index &&
-          course.subarr &&
-          course.subarr.length > 0 && (
-            <CourseDescription subarr={course.subarr} />
-          )}
         {selectedCourse === index &&
           Array.isArray(course.SubTitle) &&
           course.SubTitle.map((subTitle, subIndex) => (
@@ -74,7 +76,6 @@ const Navigationbar = () => {
 
   useEffect(() => {
     if (selectedCourse !== null) {
-      // Handle side effects or further logic here
     }
   }, [selectedCourse]);
   return (
@@ -97,7 +98,9 @@ const Navigationbar = () => {
           </Link>
           <div>Profile</div>
           <div>Demo Classes</div>
-          <div>Gallery</div>
+          <div onClick={toggleDropdownGallery}>
+            Gallery <KeyboardArrowDownOutlinedIcon />
+          </div>
         </div>
       )}
       <div className="courses" onClick={toggleCoursesDropDoem}>
@@ -108,27 +111,24 @@ const Navigationbar = () => {
           {Courses.map((course, index) => (
             <div key={index}>
               <div
-                onClick={() => handleCourseClick(index, course.Title)}
+                onClick={() =>
+                  handleCourseClick(index, course.Title, course.subarr)
+                }
                 className="course-title"
               >
                 {course.Title}
               </div>
-
-              {selectedCourse === index &&
-                course.subarr &&
-                course.subarr.length > 0 && (
-                  <CourseDescription subarr={course.subarr} />
-                )}
               {selectedCourse === index &&
                 Array.isArray(course.SubTitle) &&
                 course.SubTitle.map((subTitle, subIndex) => (
                   <div
                     key={subIndex}
-                    onClick={() => handleSubtitleClick(subTitle.subarr)}
+                    onClick={() =>
+                      handleSubtitleClick(subTitle.subarr, subTitle.Title)
+                    }
                     className="sub-Title"
                   >
                     {subTitle.Title}
-                    {/* <CourseDescription subarr={selectedSubtitle} /> */}
                   </div>
                 ))}
             </div>

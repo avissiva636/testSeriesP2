@@ -11,7 +11,7 @@ const ContactUs = () => {
       }, []);
     return (
       <div>
-        <Navigationbar />
+        {/* <Navigationbar /> */}
         <div className="heading-container">
             <img src="/Users/jagan/Documents/Projects/inspiroias/Frontend/src/components/contact-banner.jpg" alt="contact-banner"/>
         <h1 >Contact Us</h1>  
