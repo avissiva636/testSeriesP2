@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import Navigationbar from './Navigationbar';
-import { useInspiroCrud } from './context/InspiroContext';
+import React, { useState } from "react";
+import { useInspiroCrud } from "./context/InspiroContext";
 import "./css/Products.css";
-import Footer from './Footer';
+import Footer from "./Footer";
 
 const Products = () => {
   const { products } = useInspiroCrud();
@@ -15,13 +14,14 @@ const Products = () => {
   return (
     <div>
       <div>
-        {/* <Navigationbar></Navigationbar> */}
-        <h1 className='heading'>Our Products</h1>
+        <h1 className="heading">Our Products</h1>
         <div className="product-list">
           {products.map((product, index) => (
             <div
               key={index}
-              className={`product-item ${activeProduct === product ? 'active' : ''}`}
+              className={`product-item ${
+                activeProduct === product ? "active" : ""
+              }`}
               onClick={() => handleProductClick(product)}
             >
               <h2>{product.mainProduct}</h2>
@@ -29,7 +29,11 @@ const Products = () => {
                 <div className="sub-products">
                   <ul>
                     {product.subProducts.map((subProduct, subIndex) => (
-                      <li key={subIndex}>{subProduct}</li>
+                      <li key={subIndex}>
+                        <a href={subProduct.link} target="_blank">
+                          {subProduct.name}
+                        </a>
+                      </li>
                     ))}
                   </ul>
                 </div>

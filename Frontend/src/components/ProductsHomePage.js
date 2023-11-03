@@ -6,7 +6,7 @@ import ProductCardDisplay from "./ProductCardDisplay";
 
 const ProductsHomePage = () => {
   const { products } = useInspiroCrud();
-  const [hoveredProduct, setHoveredProduct] = useState(null);
+  // const [hoveredProduct, setHoveredProduct] = useState(null);
 
   return (
     <div>
@@ -17,8 +17,8 @@ const ProductsHomePage = () => {
             <ProductCardDisplay
               key={product.mainProduct}
               product={product}
-              hoveredProduct={hoveredProduct}
-              setHoveredProduct={setHoveredProduct}
+              // hoveredProduct={hoveredProduct}
+              // setHoveredProduct={setHoveredProduct}
             />
           ))}
         </div>

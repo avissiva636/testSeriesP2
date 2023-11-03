@@ -5,15 +5,16 @@ import "./css/Navigationbar.css";
 import { useState, useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
+import DemoClass from "./DemoClass";
 
 const Navigationbar = () => {
-  const Gallery = {key1: "Photo", key2: "Video"};
+  const Gallery = { key1: "Photo", key2: "Video" };
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCourses, setShowCourses] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubtitle, setSelectedSubtitle] = useState(null);
-  const [showGallery, setShowGallery] = useState(Gallery);
+  const [showGallery, setShowGallery] = useState(false);
   const { Courses } = useInspiroCrud();
 
   const navigate = useNavigate();
@@ -29,7 +30,19 @@ const Navigationbar = () => {
     setShowCourses(!showCourses);
   };
 
+  const photoHandler = () => {
+    toggleDropdownGallery();
+    toggleDropdown();
+    navigate("/PhotoPage");
+  };
+  const videoHandler = () => {
+    toggleDropdownGallery();
+    toggleDropdown();
+    navigate("/VideoPage");
+  };
+
   const handleCourseClick = (index, Title, subarr) => {
+    // toggleCoursesDropDoem();
     if (selectedCourse === index) {
       setSelectedCourse(null);
       setSelectedSubtitle(null);
@@ -44,40 +57,53 @@ const Navigationbar = () => {
   };
 
   const handleSubtitleClick = (subarr, Title) => {
+    toggleCoursesDropDoem();
     setSelectedSubtitle(subarr);
     navigate("/ListAllCourses", {
       state: { data: { Title, subarr } },
     });
   };
 
-  const courseItems = useMemo(() => {
-    return Courses.map((course, index) => (
-      <div key={index}>
-        <div
-          onClick={() => handleCourseClick(index, course.Title)}
-          className="course-title"
-        >
-          {course.Title}
-        </div>
-        {selectedCourse === index &&
-          Array.isArray(course.SubTitle) &&
-          course.SubTitle.map((subTitle, subIndex) => (
-            <div
-              key={subIndex}
-              onClick={() => handleSubtitleClick(subTitle.subarr)}
-              className="sub-Title"
-            >
-              {subTitle.Title}
-            </div>
-          ))}
-      </div>
-    ));
-  }, [Courses, selectedCourse]);
+  const HandleCurrentAffair = () => {
+    navigate("/CurrentAffairsMainPage");
+  };
 
-  useEffect(() => {
-    if (selectedCourse !== null) {
-    }
-  }, [selectedCourse]);
+  const handleResultPage = () => {
+    navigate("/ResultPage");
+  };
+
+  const handleDemoClass = () => {
+    navigate("/DemoClass");
+  };
+
+  // const courseItems = useMemo(() => {
+  //   return Courses.map((course, index) => (
+  //     <div key={index}>
+  //       <div
+  //         onClick={() => handleCourseClick(index, course.Title)}
+  //         className="course-title"
+  //       >
+  //         {course.Title}
+  //       </div>
+  //       {selectedCourse === index &&
+  //         Array.isArray(course.SubTitle) &&
+  //         course.SubTitle.map((subTitle, subIndex) => (
+  //           <div
+  //             key={subIndex}
+  //             onClick={() => handleSubtitleClick(subTitle.subarr)}
+  //             className="sub-Title"
+  //           >
+  //             {subTitle.Title}
+  //           </div>
+  //         ))}
+  //     </div>
+  //   ));
+  // }, [Courses, selectedCourse]);
+
+  // useEffect(() => {
+  //   if (selectedCourse !== null) {
+  //   }
+  // }, [selectedCourse]);
   return (
     <div className="container">
       <div>
@@ -94,13 +120,20 @@ const Navigationbar = () => {
       {showDropdown && (
         <div className="dropdown-content">
           <Link to={"/WhyInspiro"}>
-            <div>Why Inspiro</div>
+            <div onClick={toggleDropdown}>Why Inspiro</div>
           </Link>
-          <div>Profile</div>
-          <div>Demo Classes</div>
+          <div onClick={handleResultPage}>Our Results</div>
+          <div onClick={handleDemoClass}>Demo Classes</div>
+          {/* <div onClick={toggleDropdownGallery}> */}
           <div onClick={toggleDropdownGallery}>
             Gallery <KeyboardArrowDownOutlinedIcon />
           </div>
+        </div>
+      )}
+      {showGallery && (
+        <div>
+          <div onClick={photoHandler}>Photo</div>
+          <div onClick={videoHandler}>Video</div>
         </div>
       )}
       <div className="courses" onClick={toggleCoursesDropDoem}>
@@ -135,11 +168,13 @@ const Navigationbar = () => {
           ))}
         </div>
       )}
-      <div>Current Affairs</div>
+      <div onClick={HandleCurrentAffair}>Current Affairs</div>
       <div>Notifications</div>
-      <Link to={"/ContactUs"}>
-        <div>Conatct Us</div>
-      </Link>
+
+      <a href="http://exam.inspiroias.in" target="_blank">
+        Test Series
+      </a>
+
       <div>
         <button>
           <PersonSharpIcon />

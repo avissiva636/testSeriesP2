@@ -18,7 +18,6 @@ const ListAllCourses = () => {
   // const [b, setB] = useState([]);
   // let a = location.state.data.Title;
   // let b = location.state.data.subarr;
-  console.log(location.state.data.Title);
 
   useEffect(() => {
     if (location.state.data) {

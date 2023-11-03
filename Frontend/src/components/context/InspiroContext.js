@@ -6,31 +6,59 @@ export const InspiroContext = ({ children }) => {
   let ProductLists = [
     {
       mainProduct: "KAS Mains notes",
-      subProducts: ["Subproduct 1", "Subproduct 2", "Subproduct 3"],
+      subProducts: [
+        { name: "Subproduct 1", link: "https://www.google.com" },
+        { name: "Subproduct 2", link: "" },
+        { name: "Subproduct 3", link: "" },
+      ],
     },
     {
       mainProduct: "KAS Prelims notes",
-      subProducts: ["Subproduct A", "Subproduct B"],
+      subProducts: [
+        { name: "Subproduct A", link: "" },
+        { name: "Subproduct B", link: "" },
+        { name: "Subproduct C", link: "" },
+      ],
     },
     {
       mainProduct: "Current affairs magazines",
-      subProducts: ["Subproduct X", "Subproduct Y", "Subproduct Z"],
+      subProducts: [
+        { name: "Subproduct X", link: "https://www.google.com" },
+        { name: "Subproduct Y", link: "" },
+        { name: "Subproduct Z", link: "" },
+      ],
     },
     {
       mainProduct: "SAAD Material",
-      subProducts: ["Subproduct I", "Subproduct II"],
+      subProducts: [
+        { name: "Subproduct I", link: "" },
+        { name: "Subproduct II", link: "" },
+        { name: "Subproduct III", link: "" },
+      ],
     },
     {
       mainProduct: "KPSC Group C Material",
-      subProducts: ["Subproduct Alpha", "Subproduct Beta"],
+      subProducts: [
+        { name: "Subproduct Alpha", link: "" },
+        { name: "Subproduct Beta", link: "" },
+        { name: "Subproduct Gama", link: "" },
+      ],
     },
     {
       mainProduct: "PSI/ ESI Material",
-      subProducts: ["Subproduct One", "Subproduct Two"],
+      subProducts: [
+        { name: "Subproduct 4", link: "" },
+        { name: "Subproduct 5", link: "" },
+        { name: "Subproduct 6", link: "" },
+      ],
     },
     {
       mainProduct: "FDA & SDA Material",
-      subProducts: ["Subproduct A", "Subproduct B", "Subproduct C"],
+      subProducts: [
+        { name: "Subproduct 11", link: "" },
+        { name: "Subproduct 12", link: "" },
+        { name: "Subproduct 13", link: "" },
+      ],
     },
   ];
   let CourseList = [
@@ -147,6 +175,13 @@ export const InspiroContext = ({ children }) => {
       desc: "",
     },
   ];
+  const DemoClassVideo = [
+    {
+      id: "1",
+      embedId: "u9yyC6uLTDQ?si=wIOwJ1xCZhpGfCsv",
+      desc: "",
+    },
+  ];
   const Testimonials = [
     {
       id: "1",
@@ -173,13 +208,30 @@ export const InspiroContext = ({ children }) => {
       rating: "4.9",
     },
   ];
+
+  const CurrentAffair = ProductLists.find(
+    (product) => product.mainProduct === "Current affairs magazines"
+  )?.subProducts;
+
   const [products, setProducts] = useState(ProductLists);
   const [Courses, setCourses] = useState(CourseList);
   const [Images, setImages] = useState(ImageList);
   const [Video, setVideos] = useState(Videos);
   const [Testimonial, setTestimonial] = useState(Testimonials);
+  const [DemoVideo, setDemoVideo] = useState(DemoClassVideo);
+  // const [CurrentAffair, setCurrentAffair] = useState(ProductLists.mainProduct("Current affairs magazines"));
   return (
-    <inspiroContext.Provider value={{ products, Courses, Images, Video, Testimonial }}>
+    <inspiroContext.Provider
+      value={{
+        products,
+        Courses,
+        Images,
+        Video,
+        Testimonial,
+        CurrentAffair,
+        DemoVideo,
+      }}
+    >
       {children}
     </inspiroContext.Provider>
   );

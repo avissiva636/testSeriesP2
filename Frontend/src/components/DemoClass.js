@@ -1,20 +1,24 @@
+import ContactUsHomePage from "./ContactUsHomePage";
+import Footer from "./Footer";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useInspiroCrud } from "./context/InspiroContext";
 
-const VideoPage = () => {
-  const { Video } = useInspiroCrud();
+const DemoClass = () => {
+  const { DemoVideo } = useInspiroCrud();
   return (
     <div>
-      <h1>Video Gallery</h1>
+      <h1>Demo Classes</h1>
       <div>
-        {Video.map((video, index) => (
+        {DemoVideo.map((video, index) => (
           <div key={index}>
             <YoutubeEmbed embedId={video.embedId} />
             <p>{video.desc}</p>
           </div>
         ))}
       </div>
+      <ContactUsHomePage />
+      <Footer />
     </div>
   );
 };
-export default VideoPage;
+export default DemoClass;
