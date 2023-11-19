@@ -4,15 +4,17 @@ var todos = [];
 const loadSection = (filename, clickedElement) => {
     const clickedElementId = clickedElement.closest('div').id;
 
-    fetch(`/${"views"}/${clickedElementId}/${filename}`)
+    // fetch(`/${"views"}/${clickedElementId}/${filename}`)
+    fetch(`/${filename}`)
         .then(res => {
-            if (res.ok) {
+            if (res.ok) {                
                 return res.text();
             }
         })
-        .then(htmlSnippet => {
+        .then(htmlSnippet => {           
             content.innerHTML = htmlSnippet;
-        });
+        })
+       
 };
 
 // const descriptionContainer = document.getElementById("descriptionDetails");

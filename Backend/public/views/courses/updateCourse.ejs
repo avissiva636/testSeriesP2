@@ -1,1 +1,45 @@
-<h1>UPDATE COURSE</h1>
+<h1>Course Details</h1>
+
+<!-- Course Dropdown -->
+<label for="course">Select Course:</label>
+<select id="course">
+    <option value="" selected disabled>Select Course</option>
+    <% for (var i=0; i < CourseList.length; i++) { %>
+        <option value="<%= CourseList[i].Title %>">
+            <%= CourseList[i].Title %>
+        </option>
+        <% } %>
+</select>
+<br>
+
+<!-- Subtitle Dropdown -->
+<div id="subtitleVisiblity" style="display: none;">
+    <label for="subtitle">Select Subtitle:</label>
+    <select id="subtitle" onchange="handleSubtitleSelection()">       
+        <!-- Add more options as needed -->
+    </select>
+    <br>
+</div>
+
+<div id="subtitleContent" style="display: none; flex-direction: column;">
+    <!-- Title Input Box -->
+    <label for="updatesubTitle">Sub Title:</label>
+    <input type="text" id="updatesubTitle" name="subTitle" required>
+    <br>
+
+    <!-- Description Input Box -->
+    <label for="updatequill-editorSub">Description:</label>
+    <!-- <div id="updataequill-editorSub" name="description"></div> -->
+    <input type="text" id="updatequill-editorSub" name="subTitle" required>
+    <br>
+
+    <button type="button" id="updateBtn" onclick="updateCourseListSubtitle()">Update</button>
+</div>
+
+<!-- Description Input Box -->
+<div id="descriptionVisiblity" style="display: none;">
+    <label for="updateDescription">Description:</label>
+    <textarea id="updateDescription" rows="4" placeholder="Enter course description..."></textarea>
+    <br>
+    <button onclick="updateCourseListDescrition()">Update</button>
+</div>

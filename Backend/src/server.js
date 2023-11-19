@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const errorHandler = require("./util/middleware/errorHandler");
 const {connectDb} = require("./database");
 const path = require("path");
+const ejs = require('ejs');
 
 const app = express();
 

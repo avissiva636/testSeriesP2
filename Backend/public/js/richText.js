@@ -66,27 +66,27 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-var quillEditorSub = document.getElementById('quill-editorSub');
-document.addEventListener('DOMContentLoaded', function () {
-  if (quillEditorSub) {
-    console.log("second")
-    quillSub = new Quill(quillEditorSub, {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["bold", "italic", "underline"],
-          [{ color: [] }, { background: [] }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["image", "blockquote", "code-block"],
-          ["clean"],
-        ],
-      },
-    });
-  }
+// var quillEditorSub = document.getElementById('quill-editorSub');
+// document.addEventListener('DOMContentLoaded', function () {
+//   if (quillEditorSub) {
+//     console.log("second")
+//     quillSub = new Quill(quillEditorSub, {
+//       theme: 'snow',
+//       modules: {
+//         toolbar: [
+//           [{ header: [1, 2, 3, 4, 5, 6, false] }],
+//           [{ font: [] }],
+//           [{ list: "ordered" }, { list: "bullet" }],
+//           ["bold", "italic", "underline"],
+//           [{ color: [] }, { background: [] }],
+//           [{ script: "sub" }, { script: "super" }],
+//           [{ align: [] }],
+//           ["image", "blockquote", "code-block"],
+//           ["clean"],
+//         ],
+//       },
+//     });
+//   }
 
-});
+// });
 
