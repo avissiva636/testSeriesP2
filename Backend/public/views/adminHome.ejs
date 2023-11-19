@@ -3,7 +3,8 @@
 
 <head>
     <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
 </head>
 
 <body>
@@ -20,10 +21,10 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Courses
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCourses" id="courses" >
-                        <a class="dropdown-item"  onclick="loadSection('addCourse.ejs',this)">Add</a>
-                        <a class="dropdown-item"  onclick="loadSection('updateCourse.ejs',this)">Update</a>
-                        <a class="dropdown-item"  onclick="loadSection('deleteCourse.ejs',this)">Delete</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCourses" id="courses">
+                        <a class="dropdown-item" onclick="loadSection('addCourse.ejs',this)">Add</a>
+                        <a class="dropdown-item" onclick="loadSection('updateCourse.ejs',this)">Update</a>
+                        <a class="dropdown-item" onclick="loadSection('deleteCourse.ejs',this)">Delete</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -32,9 +33,9 @@
                         Products
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownProducts" id="products">
-                        <a class="dropdown-item"  onclick="loadSection('addProduct.ejs',this)">Add</a>
-                        <a class="dropdown-item"  onclick="loadSection('updateProduct.ejs',this)">Update</a>
-                        <a class="dropdown-item"  onclick="loadSection('deleteProduct.ejs',this)">Delete</a>
+                        <a class="dropdown-item" onclick="loadSection('addProduct.ejs',this)">Add</a>
+                        <a class="dropdown-item" onclick="loadSection('updateProduct.ejs',this)">Update</a>
+                        <a class="dropdown-item" onclick="loadSection('deleteProduct.ejs',this)">Delete</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -43,8 +44,8 @@
                         Gallary
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownProducts" id="gallary">
-                        <a class="dropdown-item"  onclick="loadSection('addPhoto.ejs',this)">Photo</a>
-                        <a class="dropdown-item"  onclick="loadSection('addVideo.ejs',this)">Video</a>
+                        <a class="dropdown-item" onclick="loadSection('addPhoto.ejs',this)">Photo</a>
+                        <a class="dropdown-item" onclick="loadSection('addVideo.ejs',this)">Video</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -53,9 +54,9 @@
                         Testimonial
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownProducts" id="testimonial">
-                        <a class="dropdown-item"  onclick="loadSection('addtestimonial.ejs',this)">Add</a>
-                        <a class="dropdown-item"  onclick="loadSection('updateTestimonial.ejs',this)">Update</a>
-                        <a class="dropdown-item"  onclick="loadSection('deleteTestimonial.ejs',this)">Delete</a>
+                        <a class="dropdown-item" onclick="loadSection('addtestimonial.ejs',this)">Add</a>
+                        <a class="dropdown-item" onclick="loadSection('updateTestimonial.ejs',this)">Update</a>
+                        <a class="dropdown-item" onclick="loadSection('deleteTestimonial.ejs',this)">Delete</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -75,6 +76,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="/js/richText.js" defer></script>
     <script src="/js/index.js" defer></script>
 </body>
 

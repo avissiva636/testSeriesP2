@@ -16,41 +16,44 @@
     <!-- Subtitle with Yes/No Radio Buttons -->
     <span>Subtitle:</span>
     <br>
-    <input type="radio" id="yes" name="subtitle" value="yes" onclick="toggleVisibility('yes','subtitleDetails','descriptionDetails')">
-    <label for="yes">Yes</label>
+    <input type="radio" id="yesSubtitle" name="subtitle" value="yesSubtitle"
+        onclick="toggleVisibility('yesSubtitle','subtitleDetails','descriptionDetails')">
+    <label for="yesSubtitle">Yes</label>
     <br>
-    <input type="radio" id="no" name="subtitle" value="no" onclick="toggleVisibility('no','subtitleDetails','descriptionDetails')" checked>
-    <label for="no">No</label>
-    
+    <input type="radio" id="noSubtitle" name="subtitle" value="noSubtitle"
+        onclick="toggleVisibility('noSubtitle','subtitleDetails','descriptionDetails')" >
+    <label for="noSubtitle">No</label>
+
     <br>
 
     <div id="descriptionDetails">
-        <label for="description-yes">Description:</label>
-        <input type="text" id="description-yes" name="description">
+        <label for="quill-editornormal">Description:</label>
+        <div id="quill-editornormal" aria-label="Editor for describing something"></div>
     </div>
-    
+
 
     <div id="subtitleDetails" style="display: none; flex-direction: column;">
         <!-- Sub Button Input Box -->
-        <button type="button" id="subButtonBtn" onclick="toggleVisibility('yes','subtDescVisiblity')">New Sub</button>
+        <button type="button" id="subButtonBtn" 
+        onclick="toggleVisibility('yesSubtitle','subtDescVisiblity')">New Sub</button>
         <br>
 
         <ul id="todoList"></ul>
-        
+
         <div id="subtDescVisiblity" style="display: none; flex-direction: column;">
             <!-- Title Input Box -->
             <label for="subTitle">Sub Title:</label>
             <input type="text" id="subTitle" name="subTitle" required>
             <br>
-            
+
             <!-- Description Input Box -->
-            <label for="description-no">Description:</label>
-            <input type="text" id="description-no" name="description">
+            <label for="quill-editorSub">Description:</label>
+            <div id="quill-editorSub" name="description"></div>
             <br>
 
             <button type="button" id="addBtn" onclick="addTodo()">Add</button>
-        </div>        
-                
+        </div>
+
     </div>
 
     <br><br>

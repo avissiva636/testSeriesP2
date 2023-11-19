@@ -9,10 +9,10 @@ router.route("/").get((req,res)=>{
 })
 
 // Testing View
-router.route("/test").get((req,res)=>{    
-    res.render("test",{
-        message:"update"
-    });        
-})
+// router.route("/test").get((req,res)=>{    
+//     res.render("test",{
+//         message:"update"
+//     });        
+// })
 
 module.exports = router;

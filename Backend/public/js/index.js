@@ -21,13 +21,13 @@ const toggleVisibility = (display, elementA, elementB) => {
     const containerA = document.getElementById(elementA);
     const containerB = document.getElementById(elementB);
 
-    if (display === "yes") {
+    if (display === "yesSubtitle") {
         containerA.style.display = "flex";
         if (containerB) {
             containerB.style.display = "none";
         }
     }
-    if (display === "no") {
+    if (display === "noSubtitle") {
         containerA.style.display = "none";
         if (containerB) {
             containerB.style.display = "block";
@@ -54,7 +54,7 @@ const editSubTitle = (elementToRemove) => {
     updateSubTitle.value = title;
     quillSub.setContents(JSON.parse(description));    
 
-    toggleVisibility('yes', 'subtDescVisiblity')
+    toggleVisibility('yesSubtitle', 'subtDescVisiblity')
 
 }
 
@@ -81,5 +81,5 @@ function addTodo() {
     quillSub.setText("");
 
 
-    toggleVisibility('no','subtDescVisiblity')
+    toggleVisibility('noSubtitle','subtDescVisiblity')
 }
