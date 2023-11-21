@@ -67,7 +67,7 @@ router.route("/updateCourse").get((req, res) => {
 router.route("/deleteCourse").get((req, res) => {
     res.render("courses/deleteCourse", {
         message: "delete Course",
-        CourseList: [{ Title: 'Sample Course' }],
+        CourseList: CourseList,
     });
 })
 

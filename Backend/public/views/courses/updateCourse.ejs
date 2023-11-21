@@ -13,12 +13,30 @@
 <br>
 
 <!-- Subtitle Dropdown -->
-<div id="subtitleVisiblity" style="display: none;">
+<div id="subtitleVisiblity" style="display: none; flex-direction: column;">
     <label for="subtitle">Select Subtitle:</label>
     <select id="subtitle" onchange="handleSubtitleSelection()">       
         <!-- Add more options as needed -->
     </select>
     <br>
+    <button type="button" id="subButtonBtn" 
+        onclick="toggleVisibility('yesSubtitle','upAddSubtDescVisiblity','subtitleContent')">New Sub</button>
+    <br>
+
+    <div id="upAddSubtDescVisiblity" style="display: none; flex-direction: column;">
+        <!-- Title Input Box -->
+        <label for="upAddsubTitle">Sub Title:</label>
+        <input type="text" id="upAddsubTitle" name="subTitle" required>
+        <br>
+
+        <!-- Description Input Box -->
+        <label for="quill-editorSubupAdd">Description:</label>
+        <!-- <div id="quill-editorSub" name="description"></div> -->
+        <div id="quill-editorSubupAdd" name="description"></div>
+        <br>
+
+        <button type="button" id="updateAddBtn" onclick="updateAddSubTitle()">Add</button>
+    </div>
 </div>
 
 <div id="subtitleContent" style="display: none; flex-direction: column;">
@@ -28,9 +46,9 @@
     <br>
 
     <!-- Description Input Box -->
-    <label for="updatequill-editorSub">Description:</label>
+    <label for="quill-editorSubup">Description:</label>
     <!-- <div id="updataequill-editorSub" name="description"></div> -->
-    <input type="text" id="updatequill-editorSub" name="subTitle" required>
+    <div id="quill-editorSubup" name="description"></div>
     <br>
 
     <button type="button" id="updateBtn" onclick="updateCourseListSubtitle()">Update</button>
@@ -38,8 +56,9 @@
 
 <!-- Description Input Box -->
 <div id="descriptionVisiblity" style="display: none;">
-    <label for="updateDescription">Description:</label>
-    <textarea id="updateDescription" rows="4" placeholder="Enter course description..."></textarea>
+    <label for="quillUpdateDescription">Description:</label>
+    <div id="quillUpdateDescription" name="description"></div>
+    <!-- <textarea id="updateDescription" rows="4" placeholder="Enter course description..."></textarea> -->
     <br>
     <button onclick="updateCourseListDescrition()">Update</button>
 </div>

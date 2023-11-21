@@ -2,6 +2,9 @@
 
 var quillNormal;
 var quillSub;
+var quillUpAdd;
+var quillUp;
+var quillDes;
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -44,6 +47,93 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (quillEditorSub) {        
         quillSub = new Quill(editor, {
+          theme: 'snow',
+          modules: {
+            toolbar: [
+              [{ header: [1, 2, 3, 4, 5, 6, false] }],
+              [{ font: [] }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["bold", "italic", "underline"],
+              [{ color: [] }, { background: [] }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ align: [] }],
+              ["image", "blockquote", "code-block"],
+              ["clean"],
+            ],
+          },
+        });
+      }
+    }
+  });
+
+  document.body.addEventListener('click', function (event) {
+    // Check if the clicked element has a specific class or ID
+    if (event.target.id === 'course') {   
+      var quillEditorUpAdd = document.getElementById('quill-editorSubupAdd');
+      quillEditorUpAdd.innerHTML = '';
+      const editor = document.createElement("div");
+      quillEditorUpAdd.append(editor);
+
+      if (quillEditorUpAdd) {        
+        quillUpAdd = new Quill(editor, {
+          theme: 'snow',
+          modules: {
+            toolbar: [
+              [{ header: [1, 2, 3, 4, 5, 6, false] }],
+              [{ font: [] }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["bold", "italic", "underline"],
+              [{ color: [] }, { background: [] }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ align: [] }],
+              ["image", "blockquote", "code-block"],
+              ["clean"],
+            ],
+          },
+        });
+      }
+    }
+  });
+
+  document.body.addEventListener('click', function (event) {
+    // Check if the clicked element has a specific class or ID
+    if (event.target.id === 'course') {   
+      var quillEditorUp = document.getElementById('quill-editorSubup');
+      quillEditorUp.innerHTML = '';
+      const editor = document.createElement("div");
+      quillEditorUp.append(editor);
+
+      if (quillEditorUp) {        
+        quillUp = new Quill(editor, {
+          theme: 'snow',
+          modules: {
+            toolbar: [
+              [{ header: [1, 2, 3, 4, 5, 6, false] }],
+              [{ font: [] }],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["bold", "italic", "underline"],
+              [{ color: [] }, { background: [] }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ align: [] }],
+              ["image", "blockquote", "code-block"],
+              ["clean"],
+            ],
+          },
+        });
+      }
+    }
+  });
+
+  document.body.addEventListener('click', function (event) {
+    // Check if the clicked element has a specific class or ID
+    if (event.target.id === 'course') {   
+      var quillEditorDes = document.getElementById('quillUpdateDescription');
+      quillEditorDes.innerHTML = '';
+      const editor = document.createElement("div");
+      quillEditorDes.append(editor);
+
+      if (quillEditorDes) {        
+        quillDes = new Quill(editor, {
           theme: 'snow',
           modules: {
             toolbar: [
