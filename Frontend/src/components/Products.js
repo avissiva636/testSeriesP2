@@ -19,7 +19,7 @@ const Products = () => {
           {products.map((product, index) => (
             <div
               key={index}
-              className={`product-item ${
+              className={`col-3 product__item ${
                 activeProduct === product ? "active" : ""
               }`}
               onClick={() => handleProductClick(product)}

@@ -12,6 +12,7 @@ const Navigationbar = () => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCourses, setShowCourses] = useState(false);
+  const [avatarDropdown, setavatarDropdown] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubtitle, setSelectedSubtitle] = useState(null);
   const [showGallery, setShowGallery] = useState(false);
@@ -21,6 +22,10 @@ const Navigationbar = () => {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
+  };
+
+  const toggleAvatar = () => {
+    setavatarDropdown(!avatarDropdown);
   };
 
   const toggleDropdownGallery = () => {
@@ -64,9 +69,9 @@ const Navigationbar = () => {
     });
   };
 
-  const HandleCurrentAffair = () => {
-    navigate("/CurrentAffairsMainPage");
-  };
+  // const HandleCurrentAffair = () => {
+  //   navigate("#");
+  // };
 
   const handleResultPage = () => {
     navigate("/ResultPage");
@@ -105,81 +110,98 @@ const Navigationbar = () => {
   //   }
   // }, [selectedCourse]);
   return (
-    <div className="container">
+    <div className="navigation__container d-flex justify-content-between">
       <div>
         <b>Inspiro</b>
       </div>
-      <Link to={"/"}>
-        <HomeOutlinedIcon className="home-icon"></HomeOutlinedIcon>
-      </Link>
-      <div className="about-us" onClick={toggleDropdown}>
-        <div className="about-us-arrow">
-          About Us <KeyboardArrowDownOutlinedIcon />
-        </div>
-      </div>
-      {showDropdown && (
-        <div className="dropdown-content">
-          <Link to={"/WhyInspiro"}>
-            <div onClick={toggleDropdown}>Why Inspiro</div>
-          </Link>
-          <div onClick={handleResultPage}>Our Results</div>
-          <div onClick={handleDemoClass}>Demo Classes</div>
-          {/* <div onClick={toggleDropdownGallery}> */}
-          <div onClick={toggleDropdownGallery}>
-            Gallery <KeyboardArrowDownOutlinedIcon />
+      <div className="nav__item-link">
+        <Link to={"/"}>
+          <HomeOutlinedIcon className="home-icon"></HomeOutlinedIcon>
+        </Link>
+        <div className="about-us">
+          <div className="about-us-arrow">
+            About Us <KeyboardArrowDownOutlinedIcon />
           </div>
-        </div>
-      )}
-      {showGallery && (
-        <div>
-          <div onClick={photoHandler}>Photo</div>
-          <div onClick={videoHandler}>Video</div>
-        </div>
-      )}
-      <div className="courses" onClick={toggleCoursesDropDoem}>
-        Courses <KeyboardArrowDownOutlinedIcon />
-      </div>
-      {showCourses && (
-        <div className="courses-dropdown-content">
-          {Courses.map((course, index) => (
-            <div key={index}>
-              <div
-                onClick={() =>
-                  handleCourseClick(index, course.Title, course.subarr)
-                }
-                className="course-title"
-              >
-                {course.Title}
+          {
+            <div className="dropdown-content">
+              <div onClick={toggleDropdown}>
+                <Link to={"/WhyInspiro"}>Why Inspiro</Link>
               </div>
-              {selectedCourse === index &&
-                Array.isArray(course.SubTitle) &&
-                course.SubTitle.map((subTitle, subIndex) => (
-                  <div
-                    key={subIndex}
-                    onClick={() =>
-                      handleSubtitleClick(subTitle.subarr, subTitle.Title)
-                    }
-                    className="sub-Title"
-                  >
-                    {subTitle.Title}
-                  </div>
-                ))}
+
+              <div onClick={handleResultPage}>Our Results</div>
+              <div onClick={handleDemoClass}>Demo Classes</div>
+              {/* <div onClick={toggleDropdownGallery}> */}
+              <div
+                className="navigation__gallery"
+                onClick={toggleDropdownGallery}
+              >
+                Gallery <KeyboardArrowDownOutlinedIcon />
+              </div>
             </div>
-          ))}
+          }
         </div>
-      )}
-      <div onClick={HandleCurrentAffair}>Current Affairs</div>
-      <div>Notifications</div>
 
-      <a href="http://exam.inspiroias.in" target="_blank">
-        Test Series
-      </a>
+        {showGallery && (
+          <div className="navigation__gallery-dropdown">
+            <div onClick={photoHandler}>Photo</div>
+            <div onClick={videoHandler}>Video</div>
+          </div>
+        )}
+        <div className="courses">
+          Courses <KeyboardArrowDownOutlinedIcon />
+          {
+            <div className="courses-dropdown-content">
+              {Courses.map((course, index) => (
+                <div key={index}>
+                  <div
+                    onClick={() =>
+                      handleCourseClick(index, course.Title, course.subarr)
+                    }
+                    className="course-title"
+                  >
+                    {course.Title}
+                  </div>
+                  {selectedCourse === index &&
+                    Array.isArray(course.SubTitle) &&
+                    course.SubTitle.map((subTitle, subIndex) => (
+                      <div
+                        key={subIndex}
+                        onClick={() =>
+                          handleSubtitleClick(subTitle.subarr, subTitle.Title)
+                        }
+                        className="sub-Title"
+                      >
+                        {subTitle.Title}
+                      </div>
+                    ))}
+                </div>
+              ))}
+            </div>
+          }
+        </div>
 
-      <div>
-        <button>
-          <PersonSharpIcon />
-          Register/Login
-        </button>
+        <div>
+          <a href="https://www.instamojo.com/inspiroiaskas">Current Affairs</a>
+        </div>
+        <div>Notifications</div>
+
+        <a
+          className="navigation__test"
+          href="http://exam.inspiroias.in"
+          target="_blank"
+        >
+          Test Series
+        </a>
+      </div>
+      <div className="navigation__avatar">
+        <PersonSharpIcon />
+        {
+          <div className="dropdown-content">
+            {" "}
+            <div>Register</div>
+            <div>Login</div>
+          </div>
+        }
       </div>
     </div>
   );

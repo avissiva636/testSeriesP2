@@ -5,12 +5,11 @@ const VideoPage = () => {
   const { Video } = useInspiroCrud();
   return (
     <div>
-      <h1>Video Gallery</h1>
-      <div>
+      <h1 className="d-flex justify-content-center my-5">Video Gallery</h1>
+      <div className="gallery__video-content">
         {Video.map((video, index) => (
           <div key={index}>
             <YoutubeEmbed embedId={video.embedId} />
-            <p>{video.desc}</p>
           </div>
         ))}
       </div>

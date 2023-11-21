@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./css/PopularCourses.css";
+// import "./css/PopularCourses.css";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useInspiroCrud } from "./context/InspiroContext";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ const PopularCourse = () => {
           </div>
         ))}
       </div>
-      <div>
+      <div className="course__btn">
         {/* <Link to="/ListAllCourses" state={{ Courses: Courses }}> */}
         {/* <Link to="/ListAllCourses"> */}
         <button onClick={clickHandler}>

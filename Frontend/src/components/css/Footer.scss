@@ -1,0 +1,76 @@
+.footer {
+  background-color: #000000;
+  padding: 30px;
+  ul {
+    list-style-type: none;
+    padding: 0;
+    li {
+      a {
+        text-decoration: none;
+        color: white; /* Set the text color for links in the Quick links list */
+        transition: color 0.5s;
+        &:hover {
+          color: red; /* Set the text color to red when hovering */
+        }
+      }
+    }
+  }
+}
+
+.test {
+  background-color: #000000;
+}
+.footer__bottom {
+  background-color: grey;
+}
+
+.footer__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-icons {
+  gap: 20px;
+  display: flex;
+
+  a {
+    color: rgb(233, 209, 209);
+    transition: color 0.5s;
+    &:hover {
+      color: red; /* Set the text color to red when hovering */
+    }
+  }
+}
+
+.footer__mail {
+  color: white;
+}
+
+.footer__bottom {
+  background-color: #212122;
+  text-align: center;
+}
+
+.future__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+.footer-disclaimer {
+  text-align: center;
+
+  a {
+    color: rgb(246, 240, 240);
+    transition: color 0.5s;
+    padding-right: 15px;
+    border-right: 2px solid white;
+    &:hover {
+      color: red; /* Set the text color to red when hovering */
+    }
+  }
+  a.link:last-child {
+    border-right: none; /* Remove the vertical line from the last link */
+  }
+}

@@ -10,7 +10,7 @@ import ProductsHomePage from "./ProductsHomePage";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="landing__page">
       <PopularCourse />
       <ProductsHomePage />
       <br />
@@ -37,7 +37,7 @@ const HomePage = () => {
       <br />
       <br />
       <ContactUsHomePage />
-      <br />
+      {/* <br /> */}
       <Footer />
     </div>
   );

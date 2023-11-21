@@ -7,7 +7,7 @@ const ProductCardDisplay = ({ product, hoveredProduct, setHoveredProduct }) => {
   };
   return (
     <div className="product-item">
-      <div>
+      <div className="product__contents">
         <h2
         // onMouseEnter={() => setHoveredProduct(product)}
         // onMouseLeave={() => setHoveredProduct(null)}
@@ -15,7 +15,11 @@ const ProductCardDisplay = ({ product, hoveredProduct, setHoveredProduct }) => {
         >
           <div onClick={handleClick}>{product.mainProduct}</div>
         </h2>
+        <div className="mt-5">A JS library for developing web pages
+        </div>
+        
       </div>
+      <button className="product__btn">learn more</button>
       <div>
         {hoveredProduct === product && (
           <ul>

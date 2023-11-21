@@ -6,13 +6,12 @@ import { useInspiroCrud } from "./context/InspiroContext";
 const DemoClass = () => {
   const { DemoVideo } = useInspiroCrud();
   return (
-    <div>
-      <h1>Demo Classes</h1>
-      <div>
+    <div className="">
+      <h1 className="d-flex justify-content-center mt-5 mb-5">Demo Classes</h1>
+      <div className="d-flex col-3">
         {DemoVideo.map((video, index) => (
           <div key={index}>
             <YoutubeEmbed embedId={video.embedId} />
-            <p>{video.desc}</p>
           </div>
         ))}
       </div>

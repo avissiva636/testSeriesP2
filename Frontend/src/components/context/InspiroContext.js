@@ -63,7 +63,7 @@ export const InspiroContext = ({ children }) => {
   ];
   let CourseList = [
     {
-      Title: "IAS",
+      Title: "Indian Administrative Service",
       subarr: [
         {
           Syllabus: "Something",
@@ -74,7 +74,7 @@ export const InspiroContext = ({ children }) => {
       SubTitle: "",
     },
     {
-      Title: "KAS",
+      Title: "Karnataka Administrative Service",
       subarr: [
         {
           Syllabus: "No content",
@@ -85,7 +85,7 @@ export const InspiroContext = ({ children }) => {
       SubTitle: "",
     },
     {
-      Title: "SAAD",
+      Title: "State Audit And Accounts Department",
       subarr: [
         {
           Syllabus: "Something",
@@ -96,7 +96,7 @@ export const InspiroContext = ({ children }) => {
       SubTitle: "",
     },
     {
-      Title: "KPSC Prelims",
+      Title: "Karnataka Public Service Commission Prelims",
       SubTitle: [
         {
           Title: "CTI",
@@ -185,25 +185,25 @@ export const InspiroContext = ({ children }) => {
   const Testimonials = [
     {
       id: "1",
-      name: "User1",
+      name: "vijay",
       desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
       rating: "4",
     },
     {
       id: "2",
-      name: "User2",
+      name: "stephen",
       desc: "The way lecturers communicate and maintain the explanation of the topics is extremely outstanding. They are wonderful teachers and highly professional in their daily work. You must have patience to comprehend, though, as you cannot expect your lecturers to complete everything for you if you rush them. They also assist you in resolving any questions you may have and ensure that no one feels embarrassed sharing their opinions about the subjects covered in class. Overall I would suggest you to be a part of this classes and excel in your career.",
       rating: "5",
     },
     {
       id: "3",
-      name: "User3",
+      name: "root",
       desc: "I am a student in this institute since August 2022. With regular quizzes, mock tests, and feedback via Personalized Mentorship, this institute has drastically helped me improve my preparation and stay motivated. The faculties are very knowledgeable and caring regarding classes. Students are taken care individually. I would highly recommend inspiro to all the aspirants prepping for any kind of competitive specially civil services examinations.",
       rating: "4.5",
     },
     {
       id: "4",
-      name: "User4",
+      name: "morgan",
       desc: "Very supportive faculty. Mains test series evaluation has helped me to improve my answer writing skills and  presentation. The feedback given for each answer and one to one interaction with Harish sir and Venktesh sir helps to understand the mistake and gives scope for improvement in quality of preparation. Its a very good Institute which gives individual attention to each aspirant and boosts morale.",
       rating: "4.9",
     },

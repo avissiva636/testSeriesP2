@@ -1,91 +1,123 @@
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
 import { useInspiroCrud } from "./context/InspiroContext";
-// import Navigationbar from "./Navigationbar";
-import { useEffect, useState } from "react";
+import Navigationbar from "./Navigationbar";
+import { useState } from "react";
 import CourseDescription from "./CourseDescription";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const ListAllCourses = () => {
   const { Courses } = useInspiroCrud();
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubCourse, setSelectedSubCourse] = useState(null);
-  const location = useLocation();
-  let initialTitle = location.state.data.Title;
-  let initialSubarr = location.state.data.subarr;
-  const [a,setA] = useState(initialTitle);
-  const [b,setB] = useState(initialSubarr);
-  // const [a, setA] = useState('');
-  // const [b, setB] = useState([]);
-  // let a = location.state.data.Title;
-  // let b = location.state.data.subarr;
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (location.state.data) {
-      setA(location.state.data.Title);
-      setB(location.state.data.subarr);
-    }
-  }, [location.state.data]);
-
-  const handleCourseClick = (index, course) => {
+  const handleCourseClick = (index, subarr) => {
     if (selectedCourse === index) {
       setSelectedCourse(null);
     } else {
-      setA(course.Title);
-      setB(course.subarr);
-      console.log(a, b);
       setSelectedCourse(index);
       setSelectedSubCourse(null);
     }
   };
-  
 
-  const handleSubtitleClick = (index,course) => {
+  const handleSubtitleClick = (index) => {
     if (selectedSubCourse === index) {
       setSelectedSubCourse(null);
     } else {
-      setA(course.Title);
-      setB(course.subarr);
       setSelectedSubCourse(index);
     }
   };
   return (
     <div>
-      {/* <Navigationbar /> */}
       {Courses.map((course, index) => {
         if (course.SubTitle) {
           return course.SubTitle.map((subCourse, subIndex) => (
-            <div key={subIndex} onClick={() => handleSubtitleClick(subIndex,subCourse)}>
+            <div key={subIndex} onClick={() => handleSubtitleClick(subIndex)}>
               <ul>{subCourse.Title}</ul>
-              {/* {selectedSubCourse === subIndex && (
+              {selectedSubCourse === subIndex && (
                 <CourseDescription
                   Title={subCourse.Title}
                   subarr={subCourse.subarr}
                 />
-              )} */}
+              )}
             </div>
           ));
         } else {
           return (
-            <div key={index} onClick={() => handleCourseClick(index, course)}>
+            <div
+              key={index}
+              onClick={() => handleCourseClick(index, course.subarr)}
+            >
               {course.Title}
-              {/* {selectedCourse === index &&
+              {selectedCourse === index &&
                 course.subarr &&
                 course.subarr.length > 0 && (
                   <CourseDescription
                     Title={course.Title}
                     subarr={course.subarr}
                   />
-                )} */}
+                )}
             </div>
           );
         }
       })}
-{console.log("aaa",a,b)}
-      <CourseDescription Title={a} subarr={b} />
-
       <ContactUsHomePage />
       <Footer />
     </div>
   );
 };
 export default ListAllCourses;
+
+// import React, { useState } from 'react';
+
+// const TabbedContent = () => {
+//   const [activeTab, setActiveTab] = useState(0);
+
+//   const handleTabClick = (index) => {
+//     setActiveTab(index);
+//   };
+
+//   const tabData = [
+//     { title: 'GS Comprehensive Programme' },
+//     { title: 'General Studies Extensive'},
+//     { title: 'GS 2-Year Foundation'},
+//     { title: 'GS 500+ Programme'},
+//     { title: 'Essay Writing Programme'},
+//   ];
+
+//   return (
+//     <div className="d-flex course__content">
+//       <div className="card col-xl-3 col-lg-4 course__header">
+//         <div className="side-header d-flex justify-content-center">
+//           <span>Courses Offered</span>
+//         </div>
+//         <div className="side-menu">
+//           <div className="side-nav">
+//             <ul>
+//               {tabData.map((tab, index) => (
+//                 <li key={index} className={activeTab === index ? 'active' : ''}>
+//                   <a className='tab-title' href={tab.link} onClick={() => handleTabClick(index)}>
+//                     {tab.title}
+//                   </a>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="card col-xl-9 col-lg-8">
+//         <div className="tab-content">
+//           {tabData.map((tab, index) => (
+//             <div key={index} className={activeTab === index ? 'tab-pane active' : 'tab-pane'}>
+//               <h2>{tab.title}</h2>
+//               {/* Add content specific to each tab if needed */}
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default TabbedContent;

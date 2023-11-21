@@ -9,8 +9,8 @@ const WhyInspiro = () => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, []);
   return (
-    <div>
-      <h1>About Us</h1>
+    <div className="inspiro__content">
+   <div className="p-5">   <h1>About Us</h1>
       <p>
         How it will be if highly motivated and dedicated coaching experts from
         Delhi come together to start a school, the sole purpose of which is to
@@ -25,12 +25,12 @@ const WhyInspiro = () => {
         KPSC- KAS,SAAD,FDA,SDA,PSI,AE,JE,PDO Prelims Test Series Coaching
         centre.
       </p>
-      <h3>
+      <h3 className="d-flex justify-content-center">
         “We teach you how less is too less and how much is too much to Study”.
       </h3>
       <Features />
-      <h2>Vision</h2>
-      <p>
+      <h2 className="mt-5">Vision</h2>
+      <div>  <p>
         To be a professional School of Civil Services that stands at the
         forefront of the line of institutions, which catalyse the potential
         aspirants to be successful candidates in the UPSC conducted Civil
@@ -49,51 +49,51 @@ const WhyInspiro = () => {
         and construct, and deliver courses and programmes which are highly
         reasonable for the Civil Services Exam preparation. In this order of
         business, our mission includes:
-      </p>
+      </p></div>
       <ol>
         <li>
-          &#8226; To evolve a learning culture that values freedom of thought,
+          To evolve a learning culture that values freedom of thought,
           inquiry, expression, sharing, innovation, teamwork and dissent of
           aspirants in the class room, and ultimately develops the quality of
           real policy makers and executors which the exam demands.
         </li>
         <li>
-          &#8226; To develop an in-depth knowledge and understanding of the
+          To develop an in-depth knowledge and understanding of the
           subject and issues rather than simple mugging-up of information
           gathered at the last moment before the exams.
         </li>
         <li>
-          &#8226; To generate a durable knowledge by engaging in cutting-edge
+          To generate a durable knowledge by engaging in cutting-edge
           teaching methodologies and to promote academic gain by offering
           flexible and state-of-the-art courses and programmes according to the
           need of the aspirants.
         </li>
         <li>
-          &#8226; To provide guidance and training to the needy students to
+          To provide guidance and training to the needy students to
           develop better learning skills and personality.
         </li>
         <li>
-          &#8226; To provide quality training to faculty members and teachers,
+          To provide quality training to faculty members and teachers,
           and to update their knowledge and skills in their fields of teaching.
         </li>
         <li>
-          &#8226; To undertake collaborative projects with NGOs and other
+          To undertake collaborative projects with NGOs and other
           institutions that offer opportunities for the aspirants to have
           real-time interaction with academia, public and public policy makers
           and implementers.
         </li>
         <li>
-          &#8226; To engage in consultancy for the generation and application of
+          To engage in consultancy for the generation and application of
           knowledge in the field of academics and public governance.
         </li>
         <li>
-          &#8226; To develop human potential to its finest extent in our
+          To develop human potential to its finest extent in our
           students so that intellectually capable, imaginative, ethical and
           people-friendly leaders can emerge in the Indian Political and
           Bureaucratic system
         </li>
         <li>
-          &#8226; To publish journal, magazines, research papers and books in
+          To publish journal, magazines, research papers and books in
           print and electronic media for the wider dissemination of knowledge
           and useful content for the aspirants of competitive exams, activation
           of public interest and participation in the study and improvement of
@@ -102,20 +102,17 @@ const WhyInspiro = () => {
       </ol>
       <h3>Teaching methodology:</h3>
       <ol>
-        <li>&#8226; Greatest thrust on Conceptual Clarity.</li>
-        <li>&#8226; Meticulously designed Course Plan.</li>
+        <li> Greatest thrust on Conceptual Clarity.</li>
+        <li>Meticulously designed Course Plan.</li>
         <li>
-          &#8226; Prime focus on answer writing practice for Main Examination.
+          Prime focus on answer writing practice for Main Examination.
         </li>
-        <li>&#8226; Invaluable inputs for Writing Best Answers.</li>
-        <li>&#8226; Ensuring individual Attention.</li>
-        <li>&#8226; Quality is the hallmark of Our School.</li>
-        <li>&#8226; Highly relevant printed materials</li>
-      </ol>
+        <li>Invaluable inputs for Writing Best Answers.</li>
+        <li>Ensuring individual Attention.</li>
+        <li>Quality is the hallmark of Our School.</li>
+        <li>Highly relevant printed materials</li>
+      </ol></div>
       <ContactUsHomePage />
-      <br />
-      <br />
-      <br />
       <Footer />
     </div>
   );

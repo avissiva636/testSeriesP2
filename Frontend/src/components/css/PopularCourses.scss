@@ -1,0 +1,126 @@
+.popular-courses-container{
+  background-image: url("./images//img-4.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+padding: 20px;
+padding-bottom: 80px;
+h1{
+  display: flex;
+  justify-content: center;
+  color: aliceblue;
+  margin: 20px;
+}
+}
+
+.course__content{
+  height: 100%;
+  padding-top: 30px;
+  gap: 40px;
+}
+.course__header{
+  margin-left: 20px;
+  width: 300px !important;
+}
+
+.side-header {
+  background: red;
+  color: white;
+  padding: 10px;
+}
+
+.tab-content {
+  padding: 20px; /* Adjust the padding as needed */
+}
+
+.tab-title {
+  padding: 10px;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.side-nav{
+  margin: 10px;
+
+  ul{
+    padding: unset;
+
+    li.active{
+.tab-title { 
+  color: red !important;
+  }
+  }
+}
+}
+.card{
+                box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+                  0 5px 15px 0 rgba(37, 44, 97, 0.15);
+                border-radius: 15px;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+                min-height: 265px;
+                transition: 0.7s;
+}
+
+.course-list{
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  margin: 20px 0 20px 0;
+}
+
+.course__btn{
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.product-item h2 {
+  text-decoration: none !important;
+}
+
+
+.card__result{
+  background-color: #ebf7ff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+  0 5px 15px 0 rgba(37, 44, 97, 0.15);
+border-radius: 15px;
+position: relative;
+padding: 20px;
+z-index: 1;
+overflow: hidden;
+min-height: 265px;
+transition: 0.7s;
+
+&:hover{
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+}
+.course-item {
+  background-color: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 100px;
+  // gap: 20px;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px 0 rgba(136, 144, 195, 0.4),
+      0 10px 20px 0 rgba(37, 44, 97, 0.3);
+  }
+
+  h2 {
+    font-size: 18px;
+    padding: 20px;
+    margin: 0;
+    text-decoration: none;
+    color: #333;
+    transition: 0.3s;
+  }
+}

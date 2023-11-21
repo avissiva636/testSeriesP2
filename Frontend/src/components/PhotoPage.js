@@ -5,12 +5,12 @@ const PhotoPage = () => {
   console.log(Images);
   return (
     <div>
-      <h1>Photo Gallery</h1>
-      <div>
+      <h1 className="d-flex justify-content-center my-5">Photo Gallery</h1>
+      <div className="gallery__photo-content">
         {Images.map((photo) => (
           <div key={photo.id}>
             <img src={photo.url} width="300" height="200" />
-            <p>{photo.description}</p>
+            {/* <p>{photo.description}</p> */}
           </div>
         ))}
       </div>
