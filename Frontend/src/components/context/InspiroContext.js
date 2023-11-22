@@ -184,10 +184,11 @@ export const InspiroContext = ({ children }) => {
   ];
   const Testimonials = [
     {
-      id: "1",
+      //id: "1",
       name: "vijay",
       desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
-      rating: "4",
+      //rating: "4",
+      photo:
     },
     {
       id: "2",
