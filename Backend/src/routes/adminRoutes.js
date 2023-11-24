@@ -427,18 +427,17 @@ router.post("/uploadDeleteTestimonial", dataflow.any(), (req, res) => {
         const indexToRemove = Testimonials.findIndex(testimonial => testimonial.name === deleteTestimonial);
         const photoPath = Testimonials[indexToRemove].photo;
         Testimonials.splice(indexToRemove, 1)
-        
+
         // Check if the file exists before attempting to delete
         if (fs.existsSync(photoPath)) {
             // Delete the file
-            fs.unlinkSync(photoPath);
-            res.json({ message: `File ${photoPath} deleted successfully.` })            
+            fs.unlinkSync(photoPath);    
         } else {
             console.log(`File ${photoPath} does not exist.`);
         }
         // Respond to the client as needed
         res.json({
-            message: 'Received Testimonial Data',
+            message: `File ${photoPath} deleted successfully.`,
             Testimonials
         });
     } catch (error) {

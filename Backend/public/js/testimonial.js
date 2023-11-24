@@ -34,7 +34,7 @@ function handleTestimonial() {
         .then(data => {
             // You can update the UI or show a success message here
             form.reset();
-            console.log(data.Testimonials)
+            Testimonials=data.Testimonials;            
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -47,7 +47,7 @@ function handleUpdateTestimonial() {
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
 
     const filteredTestimonials = Testimonials.filter((testimonial) => testimonial.name === updateTestimonial.value);
-
+    console.log(filteredTestimonials,)
     UpdateTestimonialName.value = filteredTestimonials[0].name;
     UpdateTestimonialDescription.value = filteredTestimonials[0].desc;
 }
@@ -82,7 +82,7 @@ function handleDeleteTestimonial() {
 
     const formData = new FormData();
     formData.append('deleteTestimonial', deleteTestimonial);
-    
+
     fetch('/uploadDeleteTestimonial', {
         method: 'POST',
         body: formData
