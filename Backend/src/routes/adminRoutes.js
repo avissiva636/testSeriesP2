@@ -404,7 +404,7 @@ router.post("/uploadUpdateTestimonial", dataflow.any(), (req, res) => {
             }
             return testimonial;
         });
-    
+
         res.json({
             message: 'Updated Testimonial Data',
             Testimonials
@@ -412,22 +412,6 @@ router.post("/uploadUpdateTestimonial", dataflow.any(), (req, res) => {
     } catch (error) {
         console.log(error.message)
     }
-
-    const filePath = path.join(__dirname, '../../public/images/testimonials', req.testimonialImagePath)
-
-    // Check if the file exists before attempting to delete
-    if (fs.existsSync(filePath)) {
-        // Delete the file
-        fs.unlinkSync(filePath);
-        res.json({ message: `File ${imagenameToDelete} deleted successfully.` })
-    } else {
-        console.log(`File ${imagenameToDelete} does not exist.`);
-    }
-    // Respond to the client as needed
-    res.json({
-        message: 'Received Testimonial Data',
-        Testimonials
-    });
 })
 
 router.route("/updateTestimonial").get((req, res) => {
@@ -437,37 +421,29 @@ router.route("/updateTestimonial").get((req, res) => {
     });
 })
 
-router.post("/uploadDeleteTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
+router.post("/uploadDeleteTestimonial", dataflow.any(), (req, res) => {
     try {
-        const testimonialName = req.body.UpdateTestimonialName;
-        const testimonialDescription = req.body.UpdateTestimonialDescription;
-
-
-        Testimonials.push({
-            name: testimonialName,
-            desc: testimonialDescription,
-            photo: req.testimonialImagePath
-        })
+        const deleteTestimonial = req.body.deleteTestimonial;
+        const indexToRemove = Testimonials.findIndex(testimonial => testimonial.name === deleteTestimonial);
+        const photoPath = Testimonials[indexToRemove].photo;
+        Testimonials.splice(indexToRemove, 1)
+        
+        // Check if the file exists before attempting to delete
+        if (fs.existsSync(photoPath)) {
+            // Delete the file
+            fs.unlinkSync(photoPath);
+            res.json({ message: `File ${photoPath} deleted successfully.` })            
+        } else {
+            console.log(`File ${photoPath} does not exist.`);
+        }
+        // Respond to the client as needed
+        res.json({
+            message: 'Received Testimonial Data',
+            Testimonials
+        });
     } catch (error) {
-        console.log(error.message)
+        console.log("error",error.message)
     }
-
-    const filePath = path.join(__dirname, '../../public/images/testimonials', req.testimonialImagePath)
-
-    // Check if the file exists before attempting to delete
-    if (fs.existsSync(filePath)) {
-        // Delete the file
-        fs.unlinkSync(filePath);
-        res.json({ message: `File ${imagenameToDelete} deleted successfully.` })
-        // console.log(`File ${imagenameToDelete} deleted successfully.`);
-    } else {
-        console.log(`File ${imagenameToDelete} does not exist.`);
-    }
-    // Respond to the client as needed
-    res.json({
-        message: 'Received Testimonial Data',
-        Testimonials
-    });
 })
 
 router.route("/deleteTestimonial").get((req, res) => {

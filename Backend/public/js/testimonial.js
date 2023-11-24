@@ -78,5 +78,22 @@ function handleUpdateSubmitTestimonial() {
 }
 
 function handleDeleteTestimonial() {
-    console.log("axios call to delete the testimonails")
+    const deleteTestimonial = document.getElementById('deleteTestimonial').value;
+
+    const formData = new FormData();
+    formData.append('deleteTestimonial', deleteTestimonial);
+    
+    fetch('/uploadDeleteTestimonial', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            Testimonials = data.Testimonials;
+            loadSection('deleteTestimonial');
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
 }
