@@ -1,7 +1,7 @@
 //updateCourse
 let CourseList = [];
 
-function fetchData() {
+function fetchCourseData() {
     return fetch('/getCourseList')
       .then(response => {
         if (!response.ok) {
@@ -20,7 +20,7 @@ function fetchData() {
   }
   
   // Call the function to initiate the fetch operation
-  fetchData();
+  fetchCourseData();
 
 document.addEventListener('change', function (event) {
     var target = event.target;
