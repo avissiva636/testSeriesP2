@@ -1,61 +1,25 @@
-let productList = [
-    {
-        mainProduct: "KAS Mains notes",
-        subProducts: [
-            { name: "Subproduct 1", link: "wrotea" },
-            { name: "Subproduct 2", link: "wroteb" },
-            { name: "Subproduct 3", link: "wrotec" },
-        ],
-    },
-    {
-        mainProduct: "KAS Prelims notes",
-        subProducts: [
-            { name: "Subproduct A", link: "dheara" },
-            { name: "Subproduct B", link: "dhearb" },
-            { name: "Subproduct C", link: "dhearc" },
-        ],
-    },
-    {
-        mainProduct: "Current affairs magazines",
-        subProducts: [
-            { name: "Subproduct X", link: "goodlea" },
-            { name: "Subproduct Y", link: "goodleb" },
-            { name: "Subproduct Z", link: "goodlec" },
-        ],
-    },
-    {
-        mainProduct: "SAAD Material",
-        subProducts: [
-            { name: "Subproduct I", link: "youtubea" },
-            { name: "Subproduct II", link: "youtubeb" },
-            { name: "Subproduct III", link: "youtubec" },
-        ],
-    },
-    {
-        mainProduct: "KPSC Group C Material",
-        subProducts: [
-            { name: "Subproduct Alpha", link: "gmaila" },
-            { name: "Subproduct Beta", link: "gmailb" },
-            { name: "Subproduct Gama", link: "gmailc" },
-        ],
-    },
-    {
-        mainProduct: "PSI/ ESI Material",
-        subProducts: [
-            { name: "Subproduct 4", link: "checka" },
-            { name: "Subproduct 5", link: "checkb" },
-            { name: "Subproduct 6", link: "checkc" },
-        ],
-    },
-    {
-        mainProduct: "FDA & SDA Material",
-        subProducts: [
-            { name: "Subproduct 11", link: "materiala" },
-            { name: "Subproduct 12", link: "materialb" },
-            { name: "Subproduct 13", link: "materialc" },
-        ],
-    },
-];
+let productList = [];
+let productTodo = [];
+function fetchProductData() {
+    return fetch('/getProductList')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            productList = data.productList;
+            // Now you can use the CourseList array with the fetched data
+        })
+        .catch(error => {
+            // Handle errors that occurred during the fetch
+            console.error('Error during fetch:', error);
+        });
+}
+
+// Call the function to initiate the fetch operation
+fetchProductData();
 
 
 function addProductTodo() {
@@ -67,13 +31,42 @@ function addProductTodo() {
     var subTitleElement = document.createElement("li");
     subTitleElement.innerHTML = `<p id="${subProductName}" data-title="${subProductName}" data-description='${subProductLink}'  onclick="editProduct(this)"><strong> ${subProductName} </strong></p> `;
     ProductUlList.appendChild(subTitleElement);
+    productTodo.push({ name: subProductName, link: subProductLink });
 
     // Clear input fields
     document.getElementById("subProductName").value = "";
     document.getElementById("subProductLink").value = "";
 
 
-    toggleVisibility('noSubtitle', 'addProductVisiblity')
+    toggleVisibility('noSubtitle', 'addProductVisiblity');
+
+}
+
+function handleSubmitProduct() {
+    var mainProductName = document.getElementById("mainProductName");
+    var ProductUlList = document.getElementById("ProductUlList");
+
+
+    const formData = new FormData();
+    formData.append("mainProduct", mainProductName.value);
+    formData.append("subProducts", JSON.stringify(productTodo));
+
+    fetch('/addProductList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            productList = data.productList;
+            mainProductName.value = '';
+            ProductUlList.innerHTML = '';
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
+    // location.reload();
+
 }
 
 const editProduct = (elementToRemove) => {
@@ -84,6 +77,9 @@ const editProduct = (elementToRemove) => {
     const ProductUlList = document.getElementById("ProductUlList");
 
     ProductUlList.removeChild(elementToRemove.parentNode);
+
+    const indexToRemove = productTodo.findIndex(todo => todo.name === title.value);
+    productTodo.splice(indexToRemove, 1);
 
     const updatesubProductName = document.getElementById("subProductName");
     const updatesubProductLink = document.getElementById("subProductLink");
@@ -97,6 +93,7 @@ const editProduct = (elementToRemove) => {
 }
 
 function handleUpdateProduct() {
+    console.log(productList)
     var updateProductSelect = document.getElementById('updateProduct');
     originalSubTitleName = updateProductSelect.value;
     var selectedProduct = updateProductSelect.options[updateProductSelect.selectedIndex];
@@ -181,27 +178,48 @@ function updateSubProductList() {
     //immediately update dropdown 
     // updateProduct related function
     handleUpdateProduct();
-
+    fetchUpdateProductData();
 }
 
-// function updateAddSubTitle() {
-//     var selectedProduct = document.getElementById('updateProduct');
-//     var upAddSubProductName = document.getElementById("upAddSubProductName");
-//     var upAddSubProductLink = document.getElementById("upAddSubProductLink");
+function updateAddSubProduct() {
+    var selectedProduct = document.getElementById('updateProduct');
+    var upAddSubProductName = document.getElementById("upAddSubProductName");
+    var upAddSubProductLink = document.getElementById("upAddSubProductLink");
 
-//     // Find the target product in ProductList
-//     var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
-//     targetProduct.subProducts.push({ name: upAddSubProductName.value, link: upAddSubProductLink.value });
+    // Find the target product in ProductList
+    var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
+    targetProduct.subProducts.push({ name: upAddSubProductName.value, link: upAddSubProductLink.value });
 
-//     addSubProductOption({ name: upAddSubProductName.value, link: upAddSubProductLink.value })
+    addSubProductOption({ name: upAddSubProductName.value, link: upAddSubProductLink.value })
 
-//     // Clear input fields
-//     upAddSubProductName.value = "";
-//     upAddSubProductLink.value = "";
+    // Clear input fields
+    upAddSubProductName.value = "";
+    upAddSubProductLink.value = "";
 
-//     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
-// }
+    toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
+    fetchUpdateProductData();
+}
 
+function fetchUpdateProductData() {
+    const formData = new FormData();
+    formData.append("productList", JSON.stringify(productList));
+
+
+    fetch('/updateProductList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            productList = data.productList;
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
+    // location.reload();
+
+}
 function deleteProduct() {
     var deleteProductSelect = document.getElementById('deleteProduct');
 
@@ -209,6 +227,11 @@ function deleteProduct() {
     var selectedValues = Array.from(deleteSubproductSelect.selectedOptions).map(option => option.value);
 
     if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
+        // It will not delete product if it has subProducts
+        var kpscProductLength = productList.find(product => product.mainProduct === deleteProductSelect.value)?.subProducts?.length;
+        if (kpscProductLength > 0) {
+            return;
+        }
         // Get the index of the currently selected option
         var selectedIndex = deleteProductSelect.selectedIndex;
 
@@ -216,7 +239,7 @@ function deleteProduct() {
             // Remove the currently selected option
             deleteProductSelect.remove(selectedIndex);
         }
-        deleteProductList(deleteProductSelect.selectedIndex - 1)
+        deleteProductList(selectedIndex - 1)
         return;
     }
 
@@ -236,7 +259,8 @@ function deleteProduct() {
 function deleteProductList(productIndex, selectedValues) {
     if (selectedValues === null || selectedValues === undefined) {
         productList.splice(productIndex, 1)
-        return
+        fetchDeleteProductList();
+        return;
     }
 
     if (productIndex !== -1) {
@@ -251,8 +275,31 @@ function deleteProductList(productIndex, selectedValues) {
             }
         });
     }
+    fetchDeleteProductList();
 }
 
+function fetchDeleteProductList() {
+    const formData = new FormData();
+    formData.append("productList", JSON.stringify(productList));
+
+
+    fetch('/deleteProductList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            productList = data.productList;
+            console.log(data.productList);
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
+    // location.reload();
+}
+
+//DropDownFunctionality
 function handleDeleteProduct() {
 
     var deleteproductSelect = document.getElementById('deleteProduct');
@@ -266,7 +313,7 @@ function handleDeleteProduct() {
     var selectedProductData = productList.find(function (product) {
         return product.mainProduct === selectedProduct;
     });
-    console.log(selectedProduct,selectedProductData)
+    console.log(selectedProduct, selectedProductData)
     // Assuming selectedProductData is the object mentioned above
 
     if (selectedProductData && selectedProductData.subProducts && selectedProductData.subProducts.length > 0) {

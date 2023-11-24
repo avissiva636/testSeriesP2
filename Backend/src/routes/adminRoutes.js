@@ -193,6 +193,24 @@ router.route("/deleteCourse").get((req, res) => {
     });
 })
 
+router.route("/getProductList").get((req, res) => {
+    res.json({ productList });
+})
+
+router.route("/addProductList").post(dataflow.any(), (req, res) => {
+    const data = {
+        mainProduct: req.body.mainProduct,
+        subProducts: JSON.parse(req.body.subProducts)
+    }
+
+    productList.push(data);
+    console.log("make addProduct api request for databasechange");
+    res.json({
+        message: "Product Data Updated",
+        productList,
+    });
+})
+
 router.route("/addProduct").get((req, res) => {
     res.render("products/addProduct", {
         message: "delete Course",
@@ -200,10 +218,30 @@ router.route("/addProduct").get((req, res) => {
     });
 })
 
+router.route("/updateProductList").post(dataflow.any(), (req, res) => {
+
+    productList=JSON.parse(req.body.productList);
+    console.log("make addProduct api request for databasechange");
+    res.json({
+        message: "Product Data Updated",
+        productList,
+    });
+})
+
 router.route("/updateProduct").get((req, res) => {
     res.render("products/updateProduct", {
         message: "delete Course",
         productList: productList,
+    });
+})
+
+router.route("/deleteProductList").post(dataflow.any(), (req, res) => {
+
+    productList=JSON.parse(req.body.productList);
+    console.log("make addProduct api request for databasechange");
+    res.json({
+        message: "Product Data Deleted",
+        productList,
     });
 })
 
