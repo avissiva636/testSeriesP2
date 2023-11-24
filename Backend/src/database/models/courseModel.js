@@ -1,18 +1,12 @@
 const mongoose = require('mongoose');
 
-const subarrSchema = new mongoose.Schema({
-    Syllabus: String,
-    Fees: Number, // Assuming Fees is a number
-    Portions: String,
-});
-
 const courseSchema = new mongoose.Schema({
     Title: String,
-    subarr: [subarrSchema], // Array of subarr subdocuments
+    subarr: [Object], // Array of subarr subdocuments
     SubTitle: [
         {
             Title: String,
-            subarr: [subarrSchema], // Array of subarr subdocuments
+            subarr: [Object], // Array of subarr subdocuments
         },
     ],
 });
