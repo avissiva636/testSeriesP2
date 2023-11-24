@@ -94,7 +94,7 @@ let productList = [
     },
 ];
 
-const Testimonials = [
+let Testimonials = [
     {
         name: "vijay",
         desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
@@ -129,7 +129,6 @@ router.route("/getCourseList").get((req, res) => {
 router.route("/addCourseNormalList").post(dataflow.any(), (req, res) => {
     const data = req.body;
     CourseList.push(data);
-    console.log("make api request for databasechange");
     res.json({
         message: "Course Data Updated",
         CourseList,
@@ -145,7 +144,6 @@ router.route("/addCourseSubList").post(dataflow.any(), (req, res) => {
 
 
     CourseList.push(data);
-    console.log("make api request for databasechange");
     res.json({
         message: "Course Data Updated",
         CourseList,
@@ -161,11 +159,10 @@ router.route("/addCourse").get((req, res) => {
 
 router.route("/updateCourseList").post(dataflow.any(), (req, res) => {
     const data = req.body;
-    CourseList=JSON.parse(req.body.CourseList);
-    console.log("make api request for databasechange");
+    CourseList = JSON.parse(req.body.CourseList);
     res.json({
         message: "Course Data Updated",
-        CourseList        
+        CourseList
     });
 })
 
@@ -178,11 +175,10 @@ router.route("/updateCourse").get((req, res) => {
 
 router.route("/deleteCourseList").post(dataflow.any(), (req, res) => {
     const data = req.body;
-    CourseList=JSON.parse(req.body.CourseList);
-    console.log("make delete api request for databasechange");
+    CourseList = JSON.parse(req.body.CourseList);
     res.json({
         message: "Course Data Deleted",
-        CourseList       
+        CourseList
     });
 })
 
@@ -204,7 +200,6 @@ router.route("/addProductList").post(dataflow.any(), (req, res) => {
     }
 
     productList.push(data);
-    console.log("make addProduct api request for databasechange");
     res.json({
         message: "Product Data Updated",
         productList,
@@ -220,8 +215,7 @@ router.route("/addProduct").get((req, res) => {
 
 router.route("/updateProductList").post(dataflow.any(), (req, res) => {
 
-    productList=JSON.parse(req.body.productList);
-    console.log("make addProduct api request for databasechange");
+    productList = JSON.parse(req.body.productList);
     res.json({
         message: "Product Data Updated",
         productList,
@@ -237,8 +231,7 @@ router.route("/updateProduct").get((req, res) => {
 
 router.route("/deleteProductList").post(dataflow.any(), (req, res) => {
 
-    productList=JSON.parse(req.body.productList);
-    console.log("make addProduct api request for databasechange");
+    productList = JSON.parse(req.body.productList);
     res.json({
         message: "Product Data Deleted",
         productList,
@@ -306,24 +299,23 @@ router.route("/addPhoto").get((req, res) => {
     }
 });
 
-router.route("/deletePhoto").post(dataflow.any(),(req,res)=>{
-    
+router.route("/deletePhoto").post(dataflow.any(), (req, res) => {
+
     // Assuming you have the filename you want to delete
     const imagenameToDelete = req.body.imagenameToDelete;
-    
-    res.json({message:req.body})
+
+    res.json({ message: req.body })
     const filePath = path.join(__dirname, '../../public/images', imagenameToDelete);
-    
+
     // Check if the file exists before attempting to delete
     if (fs.existsSync(filePath)) {
         // Delete the file
         fs.unlinkSync(filePath);
-        res.json({message:`File ${imagenameToDelete} deleted successfully.`})
-        // console.log(`File ${imagenameToDelete} deleted successfully.`);
+        res.json({ message: `File ${imagenameToDelete} deleted successfully.` })
     } else {
         console.log(`File ${imagenameToDelete} does not exist.`);
     }
-    
+
 })
 
 router.post('/uploadVideo', dataflow.any(), (req, res) => {
@@ -345,13 +337,13 @@ router.route("/addVideo").get((req, res) => {
     });
 })
 
-router.route("/deleteVideo").post(dataflow.any(),(req,res)=>{
-    
+router.route("/deleteVideo").post(dataflow.any(), (req, res) => {
+
     // Assuming you have the filename you want to delete
     const videoIdToDelete = req.body.videoIdToDelete;
 
-    videoEidList=videoEidList.filter(item => item !== videoIdToDelete);
-    res.json({message:videoEidList})   
+    videoEidList = videoEidList.filter(item => item !== videoIdToDelete);
+    res.json({ message: videoEidList })
 })
 
 const testimonialStorage = multer.diskStorage({
@@ -364,6 +356,10 @@ const testimonialStorage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
+
+router.route("/gettestimoniallist").get((req, res) => {
+    res.json({ Testimonials });
+})
 
 const testimonialUpload = multer({ storage: testimonialStorage });
 router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
@@ -393,10 +389,84 @@ router.route("/addTestimonial").get((req, res) => {
     });
 })
 
+router.post("/uploadUpdateTestimonial", dataflow.any(), (req, res) => {
+    try {
+        const testimonialName = req.body.UpdateTestimonialName;
+        const testimonialDescription = req.body.UpdateTestimonialDescription;
+
+        Testimonials = Testimonials.map((testimonial) => {
+            if (testimonial.name === testimonialName) {
+                return {
+                    ...testimonial,
+                    name: testimonialName,
+                    desc: testimonialDescription,
+                };
+            }
+            return testimonial;
+        });
+    
+        res.json({
+            message: 'Updated Testimonial Data',
+            Testimonials
+        });
+    } catch (error) {
+        console.log(error.message)
+    }
+
+    const filePath = path.join(__dirname, '../../public/images/testimonials', req.testimonialImagePath)
+
+    // Check if the file exists before attempting to delete
+    if (fs.existsSync(filePath)) {
+        // Delete the file
+        fs.unlinkSync(filePath);
+        res.json({ message: `File ${imagenameToDelete} deleted successfully.` })
+    } else {
+        console.log(`File ${imagenameToDelete} does not exist.`);
+    }
+    // Respond to the client as needed
+    res.json({
+        message: 'Received Testimonial Data',
+        Testimonials
+    });
+})
+
 router.route("/updateTestimonial").get((req, res) => {
     res.render("testimonial/updateTestimonial", {
         message: "update Testimonial",
         Testimonials,
+    });
+})
+
+router.post("/uploadDeleteTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
+    try {
+        const testimonialName = req.body.UpdateTestimonialName;
+        const testimonialDescription = req.body.UpdateTestimonialDescription;
+
+
+        Testimonials.push({
+            name: testimonialName,
+            desc: testimonialDescription,
+            photo: req.testimonialImagePath
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+
+    const filePath = path.join(__dirname, '../../public/images/testimonials', req.testimonialImagePath)
+
+    // Check if the file exists before attempting to delete
+    if (fs.existsSync(filePath)) {
+        // Delete the file
+        fs.unlinkSync(filePath);
+        res.json({ message: `File ${imagenameToDelete} deleted successfully.` })
+        // console.log(`File ${imagenameToDelete} deleted successfully.`);
+    } else {
+        console.log(`File ${imagenameToDelete} does not exist.`);
+    }
+    // Respond to the client as needed
+    res.json({
+        message: 'Received Testimonial Data',
+        Testimonials
     });
 })
 

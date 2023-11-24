@@ -1,10 +1,25 @@
-const Testimonials = [
-    {
-        name: "vijay",
-        desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
-        photo: "images/testimonials/4.jpg"
-    }
-];
+let Testimonials = [];
+
+function fetchtestimonialData() {
+    return fetch('/gettestimoniallist')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            Testimonials = data.Testimonials;
+            // Now you can use the CourseList array with the fetched data
+        })
+        .catch(error => {
+            // Handle errors that occurred during the fetch
+            console.error('Error during fetch:', error);
+        });
+}
+
+// Call the function to initiate the fetch operation
+fetchtestimonialData()
 
 function handleTestimonial() {
 
@@ -20,7 +35,6 @@ function handleTestimonial() {
             // You can update the UI or show a success message here
             form.reset();
             console.log(data.Testimonials)
-            // updateVideoGallery(data.videos);
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -31,15 +45,36 @@ function handleUpdateTestimonial() {
     const updateTestimonial = document.getElementById('updateTestimonial');
     const UpdateTestimonialName = document.getElementById('UpdateTestimonialName');
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
-    
+
     const filteredTestimonials = Testimonials.filter((testimonial) => testimonial.name === updateTestimonial.value);
-    
+
     UpdateTestimonialName.value = filteredTestimonials[0].name;
     UpdateTestimonialDescription.value = filteredTestimonials[0].desc;
 }
 
 function handleUpdateSubmitTestimonial() {
-    console.log("axios call to update the testimonails")
+    const updateTestimonialData = document.getElementById('updateTestimonial').value;
+    if (!updateTestimonialData) {
+        return;
+    }
+    const UpdateTestimonialName = document.getElementById('UpdateTestimonialName');
+    const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
+    const formData = new FormData();
+    formData.append('UpdateTestimonialName', UpdateTestimonialName.value);
+    formData.append('UpdateTestimonialDescription', UpdateTestimonialDescription.value);
+
+    fetch('/uploadUpdateTestimonial', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            Testimonials = data.Testimonials;
+            loadSection('updateTestimonial');
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
 }
 
 function handleDeleteTestimonial() {
