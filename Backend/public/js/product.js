@@ -93,7 +93,6 @@ const editProduct = (elementToRemove) => {
 }
 
 function handleUpdateProduct() {
-    console.log(productList)
     var updateProductSelect = document.getElementById('updateProduct');
     originalSubTitleName = updateProductSelect.value;
     var selectedProduct = updateProductSelect.options[updateProductSelect.selectedIndex];
@@ -158,7 +157,6 @@ function updateSubProductList() {
     var updatesubProductLink = document.getElementById("updatesubProductLink");
     // var updateQuillEditorSub = quillUp.getContents();
 
-    console.log(updateSubProduct.value, updatesubProductLink.value)
     productList = productList.map(product => {
         if (product.mainProduct === selectedProduct.value) {
             product.subProducts = product.subProducts.map(subproduct => {
@@ -289,8 +287,7 @@ function fetchDeleteProductList() {
     })
         .then(response => response.json())
         .then(data => {
-            productList = data.productList;
-            console.log(data.productList);
+            productList = data.productList;            
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -313,7 +310,6 @@ function handleDeleteProduct() {
     var selectedProductData = productList.find(function (product) {
         return product.mainProduct === selectedProduct;
     });
-    console.log(selectedProduct, selectedProductData)
     // Assuming selectedProductData is the object mentioned above
 
     if (selectedProductData && selectedProductData.subProducts && selectedProductData.subProducts.length > 0) {
