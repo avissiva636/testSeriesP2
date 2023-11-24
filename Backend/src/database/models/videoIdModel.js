@@ -4,6 +4,6 @@ const videoSchema = new mongoose.Schema({
     videoid:[String],
 });
 
-const Testimonials = mongoose.model('Testimonials', videoSchema);
+const video = mongoose.model('video', videoSchema);
 
-module.exports = Testimonials;
+module.exports = video;
