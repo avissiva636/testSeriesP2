@@ -2,7 +2,7 @@ var todos = [];
 
 const loadSection = (filename, clickedElement) => {
     const content = document.getElementById("content");
-    const clickedElementId = clickedElement.closest('div').id;
+    // const clickedElementId = clickedElement.closest('div').id;
 
     // fetch(`/${"views"}/${clickedElementId}/${filename}`)
     fetch(`/${filename}`)
@@ -17,8 +17,6 @@ const loadSection = (filename, clickedElement) => {
 
 };
 
-// const descriptionContainer = document.getElementById("descriptionDetails");
-// const subtitlContainer = document.getElementById("subtitleDetails");
 const toggleVisibility = (display, elementA, elementB) => {
     const containerA = document.getElementById(elementA);
     const containerB = document.getElementById(elementB);

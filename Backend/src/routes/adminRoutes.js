@@ -291,6 +291,7 @@ router.route("/addPhoto").get((req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
 
+        //To skip the testimonials folder
         let index = files.indexOf('testimonials');
         if (index !== -1) {
             files.splice(index, 1);
@@ -304,6 +305,26 @@ router.route("/addPhoto").get((req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+router.route("/deletePhoto").post(dataflow.any(),(req,res)=>{
+    
+    // Assuming you have the filename you want to delete
+    const imagenameToDelete = req.body.imagenameToDelete;
+    
+    res.json({message:req.body})
+    const filePath = path.join(__dirname, '../../public/images', imagenameToDelete);
+    
+    // Check if the file exists before attempting to delete
+    if (fs.existsSync(filePath)) {
+        // Delete the file
+        fs.unlinkSync(filePath);
+        res.json({message:`File ${imagenameToDelete} deleted successfully.`})
+        // console.log(`File ${imagenameToDelete} deleted successfully.`);
+    } else {
+        console.log(`File ${imagenameToDelete} does not exist.`);
+    }
+    
+})
 
 router.post('/uploadVideo', dataflow.any(), (req, res) => {
     // After successful upload, you can redirect or send a response
@@ -322,6 +343,15 @@ router.route("/addVideo").get((req, res) => {
         message: "add video",
         videos: videoEidList,
     });
+})
+
+router.route("/deleteVideo").post(dataflow.any(),(req,res)=>{
+    
+    // Assuming you have the filename you want to delete
+    const videoIdToDelete = req.body.videoIdToDelete;
+
+    videoEidList=videoEidList.filter(item => item !== videoIdToDelete);
+    res.json({message:videoEidList})   
 })
 
 const testimonialStorage = multer.diskStorage({

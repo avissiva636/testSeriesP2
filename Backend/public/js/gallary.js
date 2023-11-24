@@ -60,7 +60,17 @@ function updateImageGallery(updatedFiles) {
 }
 
 function deleteImage(deleteFile) {
-    console.log(`making api call to delete ${deleteFile}`);
+    const formData = new FormData();
+    formData.append("imagenameToDelete", deleteFile);
+    fetch('/deletePhoto', {
+        method: 'POST',
+        body: formData
+    })
+        .then(() => loadSection('addPhoto'))
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
 }
 
 
@@ -82,12 +92,7 @@ function uploadvideo() {
             .then(data => {
                 // You can update the UI or show a success message here
                 form.reset();
-
-                console.log('received', data.videos);
-                console.log(data.result)
-
                 updateVideoGallery(data.videos);
-
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -128,10 +133,17 @@ function updateVideoGallery(updatedVideos) {
 }
 
 function deleteVideo(elementToRemove) {
-    
-    // Use filter to create a new array without the element to remove
-    // myArray = myArray.filter(item => item !== elementToRemove);
 
-    console.log(`making api call to remove ${elementToRemove}`); // [1, 2, 4, 5]
+    const formData = new FormData();
+    formData.append('videoIdToDelete', elementToRemove);
+
+    fetch('/deleteVideo', {
+        method: 'POST',
+        body: formData
+    })
+        .then(() => loadSection('addVideo'))
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
 
 }
