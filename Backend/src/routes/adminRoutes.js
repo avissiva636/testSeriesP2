@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const fs = require('fs');
+const path = require("path");
 
 let CourseList = [
     {
@@ -92,6 +94,16 @@ let productList = [
     },
 ];
 
+const Testimonials = [
+    {
+        name: "vijay",
+        desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
+        photo: "images/testimonials/4.jpg"
+    }
+];
+
+let videoEidList = ['9dhAEj7bZ28'];
+
 router.route("/").get((req, res) => {
     res.render("adminHome", {
         message: "update",
@@ -149,5 +161,132 @@ router.route("/deleteProduct").get((req, res) => {
         productList: productList,
     });
 })
+
+// router.route("/addPhoto").get((req, res) => {
+//     res.render("gallary/addPhoto", {
+//         message: "add photo",
+//         files: ["2.jpg","3.jpeg"],
+//     });
+// })
+
+const multer = require('multer');
+// Set up storage using multer
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../../public/images'));
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
+// Handle the file upload
+router.post('/upload', upload.single('image'), (req, res) => {
+    // After successful upload, you can redirect or send a response
+
+    const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
+
+    let index = files.indexOf('testimonials');
+    if (index !== -1) {
+        files.splice(index, 1);
+    }
+
+    res.json({
+        message: 'File uploaded successfully!',
+        files
+    });
+});
+
+router.route("/addPhoto").get((req, res) => {
+    try {
+        const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
+
+        let index = files.indexOf('testimonials');
+        if (index !== -1) {
+            files.splice(index, 1);
+        }
+
+        res.render("gallery/addPhoto", {
+            message: "Add photo",
+            files,
+        });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+const uploadVideomul = multer();
+router.post('/uploadVideo', uploadVideomul.any(), (req, res) => {
+    // After successful upload, you can redirect or send a response
+
+    const videoId = req.body.videoId;
+    videoEidList.push(videoId);
+
+    res.json({
+        message: 'video Id successfully!',
+        videos: videoEidList,
+    });
+});
+
+router.route("/addVideo").get((req, res) => {
+    res.render("gallery/addVideo", {
+        message: "add video",
+        videos: videoEidList,
+    });
+})
+
+const testimonialStorage = multer.diskStorage({
+    destination: function (req, file, cb) {        
+        cb(null, path.join(__dirname, '../../public/images/testimonials'));
+    },
+    filename: function (req, file, cb) {        
+        const fileName = Date.now() + path.extname(file.originalname);
+        req.testimonialImagePath = path.join(__dirname, '../../public/images/testimonials', fileName);        
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const testimonialUpload = multer({ storage: testimonialStorage });
+router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
+    try {               
+        const testimonialName = req.body['Testimonial Name'];
+        const testimonialDescription = req.body['Testimonial Description'];       
+              
+        Testimonials.push({
+            name: testimonialName,
+            desc: testimonialDescription,
+            photo: req.testimonialImagePath
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+    // Respond to the client as needed
+    res.json({
+        message: 'Received Testimonial Data',
+        Testimonials        
+    });
+})
+
+router.route("/addTestimonial").get((req, res) => {
+    res.render("testimonial/addTestimonial", {
+        message: "add Testimonial",
+        Testimonials,
+    });
+})
+
+router.route("/updateTestimonial").get((req, res) => {
+    res.render("testimonial/updateTestimonial", {
+        message: "update Testimonial",
+        Testimonials,
+    });
+})
+
+router.route("/deleteTestimonial").get((req, res) => {
+    res.render("testimonial/deleteTestimonial", {
+        message: "delete Testimonial",
+        Testimonials,
+    });
+})
+
 
 module.exports = router;
