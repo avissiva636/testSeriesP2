@@ -6,30 +6,30 @@ const path = require("path");
 let CourseList = [
     {
         Title: "IAS",
-        Description: "IAS",
+        Description: { "ops": [{ "insert": "IASdes\n" }] },
     },
     {
         Title: "KAS",
-        Description: "KAS",
+        Description: { "ops": [{ "insert": "KASdes\n" }] },
     },
     {
         Title: "SAAD",
-        Description: "SAAD",
+        Description: { "ops": [{ "insert": "SAADdes\n" }] },
     },
     {
         Title: "KPSC Prelims",
         SubTitle: [
             {
                 Title: "CTI",
-                Description: "CTI",
+                Description: { "ops": [{ "insert": "CTIdes\n" }] },
             },
             {
                 Title: "AE/JE",
-                Description: "AE/JE",
+                Description: { "ops": [{ "insert": "AE/JEdes\n" }] },
             },
             {
                 Title: "Group C",
-                Description: "Group C",
+                Description: { "ops": [{ "insert": "Group Cdes\n" }] },
             },
         ],
     },
@@ -159,10 +159,30 @@ router.route("/addCourse").get((req, res) => {
     });
 })
 
+router.route("/updateCourseList").post(dataflow.any(), (req, res) => {
+    const data = req.body;
+    CourseList=JSON.parse(req.body.CourseList);
+    console.log("make api request for databasechange");
+    res.json({
+        message: "Course Data Updated",
+        CourseList        
+    });
+})
+
 router.route("/updateCourse").get((req, res) => {
     res.render("courses/updateCourse", {
         message: "update Course",
         CourseList: CourseList,
+    });
+})
+
+router.route("/deleteCourseList").post(dataflow.any(), (req, res) => {
+    const data = req.body;
+    CourseList=JSON.parse(req.body.CourseList);
+    console.log("make delete api request for databasechange");
+    res.json({
+        message: "Course Data Deleted",
+        CourseList       
     });
 })
 

@@ -37,22 +37,24 @@
 
         <button type="button" id="updateAddBtn" onclick="updateAddSubTitle()">Add</button>
     </div>
+    <div id="subtitleContent" style="display: none; flex-direction: column;">
+        <!-- Title Input Box -->
+        <label for="updatesubTitle">Sub Title:</label>
+        <input type="text" id="updatesubTitle" name="subTitle" required>
+        <br>
+    
+        <!-- Description Input Box -->
+        <label for="quill-editorSubup">Description:</label>
+        <!-- <div id="updataequill-editorSub" name="description"></div> -->
+        <div id="quill-editorSubup" name="description"></div>
+        <br>
+    
+        <button type="button" id="updateBtn" onclick="updateCourseListSubtitle()">Update Subtitle</button>
+    </div>
+    <br>
+    <button onclick="fetchUpdateCourseList()">Update</button>
 </div>
 
-<div id="subtitleContent" style="display: none; flex-direction: column;">
-    <!-- Title Input Box -->
-    <label for="updatesubTitle">Sub Title:</label>
-    <input type="text" id="updatesubTitle" name="subTitle" required>
-    <br>
-
-    <!-- Description Input Box -->
-    <label for="quill-editorSubup">Description:</label>
-    <!-- <div id="updataequill-editorSub" name="description"></div> -->
-    <div id="quill-editorSubup" name="description"></div>
-    <br>
-
-    <button type="button" id="updateBtn" onclick="updateCourseListSubtitle()">Update</button>
-</div>
 
 <!-- Description Input Box -->
 <div id="descriptionVisiblity" style="display: none;">

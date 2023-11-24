@@ -184,23 +184,23 @@ function updateSubProductList() {
 
 }
 
-function updateAddSubTitle() {
-    var selectedProduct = document.getElementById('updateProduct');
-    var upAddSubProductName = document.getElementById("upAddSubProductName");
-    var upAddSubProductLink = document.getElementById("upAddSubProductLink");
+// function updateAddSubTitle() {
+//     var selectedProduct = document.getElementById('updateProduct');
+//     var upAddSubProductName = document.getElementById("upAddSubProductName");
+//     var upAddSubProductLink = document.getElementById("upAddSubProductLink");
 
-    // Find the target product in ProductList
-    var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
-    targetProduct.subProducts.push({ name: upAddSubProductName.value, link: upAddSubProductLink.value });
+//     // Find the target product in ProductList
+//     var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
+//     targetProduct.subProducts.push({ name: upAddSubProductName.value, link: upAddSubProductLink.value });
 
-    addSubProductOption({ name: upAddSubProductName.value, link: upAddSubProductLink.value })
+//     addSubProductOption({ name: upAddSubProductName.value, link: upAddSubProductLink.value })
 
-    // Clear input fields
-    upAddSubProductName.value = "";
-    upAddSubProductLink.value = "";
+//     // Clear input fields
+//     upAddSubProductName.value = "";
+//     upAddSubProductLink.value = "";
 
-    toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
-}
+//     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
+// }
 
 function deleteProduct() {
     var deleteProductSelect = document.getElementById('deleteProduct');

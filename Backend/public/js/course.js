@@ -1,41 +1,32 @@
 //updateCourse
-let CourseList = [
-    {
-        Title: "IAS",
-        Description: { "ops": [{ "insert": "IASdes\n" }] },
-    },
-    {
-        Title: "KAS",
-        Description: { "ops": [{ "insert": "KASdes\n" }] },
-    },
-    {
-        Title: "SAAD",
-        Description: { "ops": [{ "insert": "SAADdes\n" }] },
-    },
-    {
-        Title: "KPSC Prelims",
-        SubTitle: [
-            {
-                Title: "CTI",
-                Description: { "ops": [{ "insert": "CTIdes\n" }] },
-            },
-            {
-                Title: "AE/JE",
-                Description: { "ops": [{ "insert": "AE/JEdes\n" }] },
-            },
-            {
-                Title: "Group C",
-                Description: { "ops": [{ "insert": "Group Cdes\n" }] },
-            },
-        ],
-    },
-];
+let CourseList = [];
+
+function fetchData() {
+    return fetch('/getCourseList')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json(); // Assuming the response is in JSON format
+      })
+      .then(data => {
+        CourseList = data.CourseList;
+        // Now you can use the CourseList array with the fetched data
+      })
+      .catch(error => {
+        // Handle errors that occurred during the fetch
+        console.error('Error during fetch:', error);
+      });
+  }
+  
+  // Call the function to initiate the fetch operation
+  fetchData();
 
 document.addEventListener('change', function (event) {
     var target = event.target;
 
     // Check if the changed element is the course dropdown
-    if (target.id === 'course') {        
+    if (target.id === 'course') {
         toggleVisibility("noSubtitle", "subtitleContent");
         var selectedCourse = target.value;
         var subtitleSelect = document.getElementById('subtitle');
@@ -49,26 +40,22 @@ document.addEventListener('change', function (event) {
         // Assuming selectedCourseData is the object mentioned above
 
         if (selectedCourseData && selectedCourseData.SubTitle && selectedCourseData.SubTitle.length > 0) {
+            selectedCourseData.SubTitle.forEach(function (subtitle) {
+                addSubtitleOption(subtitle);
+            });
             // The course has subtitles            
             toggleVisibility("yesSubtitle", "subtitleVisiblity", "descriptionVisiblity");
-        } else {
-            // The course has no subtitles            
-            // var updateDescription = document.getElementById('quillUpdateDescription');
-            // console.log(JSON.parse(selectedCourseData.Description))
-            
-            // quillDes.setText("hello");
-            
-            // quillDes.setContents(selectedCourseData.Description); 
-            // updateDescription.value = selectedCourseData.Description;
+        } else {            
+            quillDes.setContents(selectedCourseData.Description);             
             toggleVisibility("noSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         }
 
         // Add options based on the selected course's subtitles
-        if (selectedCourseData && selectedCourseData.SubTitle) {
-            selectedCourseData.SubTitle.forEach(function (subtitle) {
-                addSubtitleOption(subtitle);
-            });
-        }
+        // if (selectedCourseData && selectedCourseData.SubTitle) {
+        //     selectedCourseData.SubTitle.forEach(function (subtitle) {
+        //         addSubtitleOption(subtitle);
+        //     });
+        // }
     }
 
     if (target.id === 'deleteCourse') {
@@ -161,15 +148,16 @@ function updateCourseListSubtitle() {
 
 function updateCourseListDescrition() {
     var selectedCourse = document.getElementById('course');
-    var updateDescription = JSON.stringify(quillSub.getContents());
+    var updateDescription = JSON.stringify(quillDes.getContents());
 
     CourseList = CourseList.map(course => {
         if (course.Title === selectedCourse.value) {
-            return { ...course, Description: updateDescription.value };
+            return { ...course, Description: JSON.parse(updateDescription) };
         }
         return course;
     });
 
+    fetchUpdateCourseList();
 }
 
 function updateAddSubTitle() {
@@ -184,7 +172,7 @@ function updateAddSubTitle() {
     var targetCourse = CourseList.find(course => course.Title === selectedCourse.value);
     targetCourse.SubTitle.push({ Title: title.value, Description: description });
 
-    addSubtitleOption({ Title: title.value, Description: JSON.stringify(description) })
+    addSubtitleOption({ Title: title.value, Description: description })
 
     // Clear input fields
     title.value = "";
@@ -194,21 +182,46 @@ function updateAddSubTitle() {
     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
 }
 
+function fetchUpdateCourseList() {    
+    const formData = new FormData();
+    formData.append("CourseList", JSON.stringify(CourseList));
+
+    fetch('/updateCourseList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            CourseList = data.CourseList;           
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
+        // location.reload();
+
+}
+
 function deleteCourse() {
     var deleteCourseSelect = document.getElementById('deleteCourse');
 
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
     
-    if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {        
+    if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
+        var kpscCourseLength =CourseList.find(course => course.Title === deleteCourseSelect.value)?.SubTitle?.length;
+        if(kpscCourseLength>0){
+            return;
+        }        
+        
         // Get the index of the currently selected option
         var selectedIndex = deleteCourseSelect.selectedIndex;
 
-        if (selectedIndex !== -1) {
+        if (selectedIndex !== -1 ) {
             // Remove the currently selected option
             deleteCourseSelect.remove(selectedIndex);
+            deleteCourseList(selectedIndex - 1)
         }
-        deleteCourseList(deleteCourseSelect.selectedIndex - 1)
         return;
     }
 
@@ -228,9 +241,9 @@ function deleteCourse() {
 function deleteCourseList(courseIndex, selectedValues) {
     if (selectedValues === null || selectedValues === undefined) {
         CourseList.splice(courseIndex, 1)
+        deleteApi();
         return
     }
-
     if (courseIndex !== -1) {
         // Iterate over selectedValues
         selectedValues.forEach(subTitleTitleToRemove => {
@@ -243,4 +256,22 @@ function deleteCourseList(courseIndex, selectedValues) {
             }
         });
     }
+    deleteApi(); 
+}
+
+function deleteApi() {
+    const formData = new FormData();
+    formData.append("CourseList", JSON.stringify(CourseList));
+    fetch('/deleteCourseList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            CourseList = data.CourseList;           
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+    
 }
