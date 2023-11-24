@@ -103,6 +103,8 @@ const Testimonials = [
 ];
 
 let videoEidList = ['9dhAEj7bZ28'];
+const multer = require('multer');
+const dataflow = multer();
 
 router.route("/").get((req, res) => {
     res.render("adminHome", {
@@ -120,10 +122,40 @@ router.route("/test").get((req, res) => {
     });
 })
 
+router.route("/getCourseList").get((req, res) => {
+    res.json({ CourseList });
+})
+
+router.route("/addCourseNormalList").post(dataflow.any(), (req, res) => {
+    const data = req.body;
+    CourseList.push(data);
+    console.log("make api request for databasechange");
+    res.json({
+        message: "Course Data Updated",
+        CourseList,
+        formdata: req.body
+    });
+})
+
+router.route("/addCourseSubList").post(dataflow.any(), (req, res) => {
+    const data = {
+        Title: req.body.Title,
+        SubTitle: JSON.parse(req.body.SubTitle)
+    }
+
+
+    CourseList.push(data);
+    console.log("make api request for databasechange");
+    res.json({
+        message: "Course Data Updated",
+        CourseList,
+    });
+})
+
 router.route("/addCourse").get((req, res) => {
     res.render("courses/addCourse", {
         message: "add Course",
-        CourseList: [{ Title: 'Sample Course' }],
+        CourseList,
     });
 })
 
@@ -169,7 +201,7 @@ router.route("/deleteProduct").get((req, res) => {
 //     });
 // })
 
-const multer = require('multer');
+
 // Set up storage using multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -215,8 +247,7 @@ router.route("/addPhoto").get((req, res) => {
     }
 });
 
-const uploadVideomul = multer();
-router.post('/uploadVideo', uploadVideomul.any(), (req, res) => {
+router.post('/uploadVideo', dataflow.any(), (req, res) => {
     // After successful upload, you can redirect or send a response
 
     const videoId = req.body.videoId;
@@ -236,22 +267,22 @@ router.route("/addVideo").get((req, res) => {
 })
 
 const testimonialStorage = multer.diskStorage({
-    destination: function (req, file, cb) {        
+    destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '../../public/images/testimonials'));
     },
-    filename: function (req, file, cb) {        
+    filename: function (req, file, cb) {
         const fileName = Date.now() + path.extname(file.originalname);
-        req.testimonialImagePath = path.join(__dirname, '../../public/images/testimonials', fileName);        
+        req.testimonialImagePath = path.join(__dirname, '../../public/images/testimonials', fileName);
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
 
 const testimonialUpload = multer({ storage: testimonialStorage });
 router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
-    try {               
+    try {
         const testimonialName = req.body['Testimonial Name'];
-        const testimonialDescription = req.body['Testimonial Description'];       
-              
+        const testimonialDescription = req.body['Testimonial Description'];
+
         Testimonials.push({
             name: testimonialName,
             desc: testimonialDescription,
@@ -263,7 +294,7 @@ router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'
     // Respond to the client as needed
     res.json({
         message: 'Received Testimonial Data',
-        Testimonials        
+        Testimonials
     });
 })
 

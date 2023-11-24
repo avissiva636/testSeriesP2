@@ -7,11 +7,7 @@
 
     <br>
 
-    <!-- Title Input Box -->
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required>
 
-    <br>
 
     <!-- Subtitle with Yes/No Radio Buttons -->
     <span>Subtitle:</span>
@@ -21,29 +17,34 @@
     <label for="yesSubtitle">Yes</label>
     <br>
     <input type="radio" id="noSubtitle" name="subtitle" value="noSubtitle"
-        onclick="toggleVisibility('noSubtitle','subtitleDetails','descriptionDetails')" >
+        onclick="toggleVisibility('noSubtitle','subtitleDetails','descriptionDetails')">
     <label for="noSubtitle">No</label>
 
     <br>
 
-    <div id="descriptionDetails">
+    <div id="descriptionDetails" style="display: none; flex-direction: column;">
         <label for="quill-editornormal">Description:</label>
         <div id="quill-editornormal" aria-label="Editor for describing something"></div>
     </div>
 
 
     <div id="subtitleDetails" style="display: none; flex-direction: column;">
+        <!-- Title Input Box -->
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <br>
+        
         <!-- Sub Button Input Box -->
-        <button type="button" id="subButtonBtn" 
-        onclick="toggleVisibility('yesSubtitle','subtDescVisiblity')">New Sub</button>
+        <button type="button" id="subButtonBtn" onclick="toggleVisibility('yesSubtitle','subtDescVisiblity')">New
+            Sub</button>
         <br>
 
         <ul id="todoList"></ul>
 
         <div id="subtDescVisiblity" style="display: none; flex-direction: column;">
             <!-- Title Input Box -->
-            <label for="subTitle">Sub Title:</label>
-            <input type="text" id="subTitle" name="subTitle" required>
+            <label for="subTitleInput">Sub Title:</label>
+            <input type="text" id="subTitleInput" name="subTitleInput" required>
             <br>
 
             <!-- Description Input Box -->
@@ -51,12 +52,12 @@
             <div id="quill-editorSub" name="description"></div>
             <br>
 
-            <button type="button" id="addBtn" onclick="addTodo()">Add</button>
+            <button type="button" onclick="addTodo()">Add</button>
         </div>
 
     </div>
 
     <br><br>
     <!-- Submit Button -->
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" onclick="handleAddCourseSubmit()">
 </form>
