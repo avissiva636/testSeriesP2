@@ -45,7 +45,6 @@ const editSubTitle = (elementToRemove) => {
 
     const todoList = document.getElementById("todoList");
     const indexToRemove = todos.findIndex(todo => todo.title === title);
-    console.log(description)
     todos.splice(indexToRemove, 1);
 
     todoList.removeChild(elementToRemove.parentNode);
@@ -71,7 +70,7 @@ function addTodo() {
     var descriptionJSON = JSON.stringify(description);
 
     // Add values to the array
-    todos.push({ title: title, description: descriptionJSON });
+    todos.push({ Title: title, Description: description });
 
     var subTitleElement = document.createElement("li");
 
@@ -119,15 +118,13 @@ function handleAddCourseSubmit() {
         const formData = new FormData();
         formData.append("Title",title);
         formData.append("SubTitle", JSON.stringify(todos));
-        console.log("todos",todos)
         fetch('/addCourseSubList', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then(data => {
-                CourseList = data.CourseList;
-       
+                CourseList = data.CourseList;                
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
