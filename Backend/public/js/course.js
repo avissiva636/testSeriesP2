@@ -3,24 +3,24 @@ let CourseList = [];
 
 function fetchCourseData() {
     return fetch('/getCourseList')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json(); // Assuming the response is in JSON format
-      })
-      .then(data => {
-        CourseList = data.CourseList;
-        // Now you can use the CourseList array with the fetched data
-      })
-      .catch(error => {
-        // Handle errors that occurred during the fetch
-        console.error('Error during fetch:', error);
-      });
-  }
-  
-  // Call the function to initiate the fetch operation
-  fetchCourseData();
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            CourseList = data.CourseList;
+            // Now you can use the CourseList array with the fetched data
+        })
+        .catch(error => {
+            // Handle errors that occurred during the fetch
+            console.error('Error during fetch:', error);
+        });
+}
+
+// Call the function to initiate the fetch operation
+fetchCourseData();
 
 document.addEventListener('change', function (event) {
     var target = event.target;
@@ -45,8 +45,8 @@ document.addEventListener('change', function (event) {
             });
             // The course has subtitles            
             toggleVisibility("yesSubtitle", "subtitleVisiblity", "descriptionVisiblity");
-        } else {            
-            quillDes.setContents(selectedCourseData.Description);             
+        } else {
+            quillDes.setContents(selectedCourseData.Description);
             toggleVisibility("noSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         }
 
@@ -182,7 +182,7 @@ function updateAddSubTitle() {
     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
 }
 
-function fetchUpdateCourseList() {    
+function fetchUpdateCourseList() {
     const formData = new FormData();
     formData.append("CourseList", JSON.stringify(CourseList));
 
@@ -192,13 +192,13 @@ function fetchUpdateCourseList() {
     })
         .then(response => response.json())
         .then(data => {
-            CourseList = data.CourseList;           
+            CourseList = data.CourseList;
         })
         .catch(error => {
             console.error('Error uploading file:', error);
         });
 
-        // location.reload();
+    // location.reload();
 
 }
 
@@ -207,17 +207,17 @@ function deleteCourse() {
 
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
-    
     if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
-        var kpscCourseLength =CourseList.find(course => course.Title === deleteCourseSelect.value)?.SubTitle?.length;
-        if(kpscCourseLength>0){
+        // It will not delete course if it has subTitle
+        var kpscCourseLength = CourseList.find(course => course.Title === deleteCourseSelect.value)?.SubTitle?.length;
+        if (kpscCourseLength > 0) {
             return;
-        }        
-        
+        }
+
         // Get the index of the currently selected option
         var selectedIndex = deleteCourseSelect.selectedIndex;
 
-        if (selectedIndex !== -1 ) {
+        if (selectedIndex !== -1) {
             // Remove the currently selected option
             deleteCourseSelect.remove(selectedIndex);
             deleteCourseList(selectedIndex - 1)
@@ -256,7 +256,7 @@ function deleteCourseList(courseIndex, selectedValues) {
             }
         });
     }
-    deleteApi(); 
+    deleteApi();
 }
 
 function deleteApi() {
@@ -268,10 +268,9 @@ function deleteApi() {
     })
         .then(response => response.json())
         .then(data => {
-            CourseList = data.CourseList;           
+            CourseList = data.CourseList;
         })
         .catch(error => {
             console.error('Error uploading file:', error);
         });
-    
 }
