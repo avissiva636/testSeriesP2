@@ -9,7 +9,7 @@ const app = express();
 
 port = process.env.PORT || 5000;
 
-// connectDb();
+connectDb();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../public/views"));
 

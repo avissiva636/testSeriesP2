@@ -129,7 +129,7 @@ router.route("/getCourseList").get((req, res) => {
     res.json({ CourseList });
 })
 
-router.route("/addCourseNormalList").post(dataflow.any(), async (req, res) => {    
+router.route("/addCourseNormalList").post(dataflow.any(), async (req, res) => {
     const data = {
         Title: req.body.Title,
         Description: JSON.parse(req.body.Description)
@@ -137,10 +137,10 @@ router.route("/addCourseNormalList").post(dataflow.any(), async (req, res) => {
 
     CourseList.push(data);
 
-    // const course = await Course.create({
-    //     Title:data.Title,
-    //     SubTitle:data.SubTitle,
-    // });
+    const course = await Course.create({
+        Title: data.Title,
+        Description: data.Description,
+    });
 
     res.json({
         message: "Course Data Updated",
@@ -159,8 +159,6 @@ router.route("/addCourseSubList").post(dataflow.any(), async (req, res) => {
         SubTitle: data.SubTitle,
     });
 
-    console.log(course)
-
     CourseList.push(data);
     res.json({
         message: "Course Data Updated",
@@ -175,12 +173,101 @@ router.route("/addCourse").get((req, res) => {
     });
 })
 
-router.route("/updateCourseList").post(dataflow.any(), (req, res) => {
-    const data = req.body;
+router.route("/updateCourseList").post(dataflow.any(), async (req, res) => {
+    // const data = req.body;
     CourseList = JSON.parse(req.body.CourseList);
+    console.log("update", CourseList);
+    const course = await Course.collection.replaceOne(
+        {},
+        { courses: CourseList },
+        { upsert: true },
+        (err, result) => {
+            // Handle errors or do something with the result
+        }
+    );
+
+    console.log(course);
     res.json({
         message: "Course Data Updated",
         CourseList
+    });
+})
+
+router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
+    // const data = req.body;
+    const updateCourseList = JSON.parse(req.body.updateCourseList);
+    //  console.log("update", CourseList);
+    // const newEntry = {
+    //     Title: selectedCourse.value,
+    //     SubTitle: { Title: updateSubTitle.value, Description: updateQuillEditorSub },
+    //     Change: "UPDATE"
+    // };
+    console.log(updateCourseList)
+
+    // for (const ucourse of updateCourseList) {
+    //     try {
+    //         await Course.updateOne(
+    //             { Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title },
+    //             {
+    //                 $addToSet: {
+    //                     SubTitle: ucourse.SubTitle,
+    //                 },
+    //                 $set: {
+    //                     "SubTitle.$": ucourse.SubTitle,
+    //                 },
+    //             },
+    //             { upsert: true }
+    //         );
+    //         console.log(`Document updated successfully`);
+    //     } catch (err) {
+    //         console.error(`Error updating document: ${err}`);
+    //     }
+    // }
+
+    for (const ucourse of updateCourseList) {
+        try {
+            // Check if SubTitle exists
+            const existingCourse = await Course.findOne({ Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title });
+
+            if (existingCourse) {
+                // SubTitle exists, update it
+                await Course.updateOne(
+                    { Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title },
+                    {
+                        $set: {
+                            "SubTitle.$": ucourse.SubTitle,
+                        },
+                    }
+                );
+
+                console.log(`Document updated successfully`);
+            } else {
+                // SubTitle doesn't exist, add it
+                await Course.updateOne(
+                    { Title: ucourse.Title },
+                    {
+                        $addToSet: {
+                            SubTitle: ucourse.SubTitle,
+                        },
+                    },
+                    { upsert: true }
+                );
+
+                console.log(`Document added successfully`);
+            }
+
+
+        } catch (err) {
+            console.error(`Error updating document: ${err}`);
+        }
+    }
+
+
+
+    //  console.log(course);
+    res.json({
+        message: "Course Data Updated",
+        CourseList: req.body.updateCourseList
     });
 })
 

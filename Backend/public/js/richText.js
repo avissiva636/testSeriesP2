@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.body.addEventListener('click', function (event) {
     if (event.target.id === 'yesSubtitle') {
-      console.log("first")
       var quillEditorSub = document.getElementById('quill-editorSub');
       quillEditorSub.innerHTML = '';
       const editor = document.createElement("div");
