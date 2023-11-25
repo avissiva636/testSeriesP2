@@ -3,6 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const path = require("path");
 
+const { courseModel: Course } = require("../database/index");
+
 let CourseList = [
     {
         Title: "IAS",
@@ -103,13 +105,14 @@ let Testimonials = [
 ];
 
 let videoEidList = ['9dhAEj7bZ28'];
+
 const multer = require('multer');
 const dataflow = multer();
 
 router.route("/").get((req, res) => {
     res.render("adminHome", {
-        message: "update",
-        CourseList: [{ Title: 'Sample Course' }],
+        message: "adminHome",
+        // CourseList: [{ Title: 'Sample Course' }],
     });
     // res.status(200).json({message:"hello"});
 })
@@ -126,9 +129,19 @@ router.route("/getCourseList").get((req, res) => {
     res.json({ CourseList });
 })
 
-router.route("/addCourseNormalList").post(dataflow.any(), (req, res) => {
-    const data = req.body;
+router.route("/addCourseNormalList").post(dataflow.any(), async (req, res) => {    
+    const data = {
+        Title: req.body.Title,
+        Description: JSON.parse(req.body.Description)
+    };
+
     CourseList.push(data);
+
+    // const course = await Course.create({
+    //     Title:data.Title,
+    //     SubTitle:data.SubTitle,
+    // });
+
     res.json({
         message: "Course Data Updated",
         CourseList,
@@ -136,12 +149,17 @@ router.route("/addCourseNormalList").post(dataflow.any(), (req, res) => {
     });
 })
 
-router.route("/addCourseSubList").post(dataflow.any(), (req, res) => {
+router.route("/addCourseSubList").post(dataflow.any(), async (req, res) => {
     const data = {
         Title: req.body.Title,
         SubTitle: JSON.parse(req.body.SubTitle)
     }
+    const course = await Course.create({
+        Title: data.Title,
+        SubTitle: data.SubTitle,
+    });
 
+    console.log(course)
 
     CourseList.push(data);
     res.json({
@@ -431,7 +449,7 @@ router.post("/uploadDeleteTestimonial", dataflow.any(), (req, res) => {
         // Check if the file exists before attempting to delete
         if (fs.existsSync(photoPath)) {
             // Delete the file
-            fs.unlinkSync(photoPath);    
+            fs.unlinkSync(photoPath);
         } else {
             console.log(`File ${photoPath} does not exist.`);
         }
@@ -441,7 +459,7 @@ router.post("/uploadDeleteTestimonial", dataflow.any(), (req, res) => {
             Testimonials
         });
     } catch (error) {
-        console.log("error",error.message)
+        console.log("error", error.message)
     }
 })
 
