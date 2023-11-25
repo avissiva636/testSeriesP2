@@ -1,5 +1,6 @@
 //updateCourse
 let CourseList = [];
+let updateCourseList = [];
 
 function fetchCourseData() {
     return fetch('/getCourseList')
@@ -120,6 +121,34 @@ function handleSubtitleSelection() {
     quillUp.setContents(description);
 }
 
+function updateAddSubTitle() {
+
+    var selectedCourse = document.getElementById('course');
+    var title = document.getElementById("upAddsubTitle");
+
+    var description = quillUpAdd.getContents();
+
+
+    // Find the target course in CourseList
+    var targetCourse = CourseList.find(course => course.Title === selectedCourse.value);
+    targetCourse.SubTitle.push({ Title: title.value, Description: description });
+
+    addSubtitleOption({ Title: title.value, Description: description })
+
+    updateCourseList.push({
+        Title: selectedCourse.value,
+        SubTitle: { Title: title.value, Description: description },
+        Change: "ADD"
+    })
+
+    // Clear input fields
+    title.value = "";
+    quillUpAdd.setText("");
+    // description.value = ""
+
+    toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
+}
+
 function updateCourseListSubtitle() {
     var selectedCourse = document.getElementById('course');
     var updateSubTitle = document.getElementById("updatesubTitle");
@@ -138,11 +167,66 @@ function updateCourseListSubtitle() {
         return course;
     });
 
+    const newEntry = {
+        Title: selectedCourse.value,
+        SubTitle: { Title: updateSubTitle.value, Description: updateQuillEditorSub },
+        Change: "UPDATE"
+    };
+
+    let isEntryUpdated = false;
+    updateCourseList = updateCourseList.reduce((accumulator, item) => {
+        // Check if SubTitle.Title already exists
+        if (item.SubTitle.Title === originalSubTitleName && item.Title === newEntry.Title) {
+            // If it does, replace the existing entry
+            accumulator.push(newEntry);
+            isEntryUpdated = true;
+        } else {
+            // If it doesn't, keep the existing entry
+            accumulator.push(item);
+        }
+        return accumulator;
+    }, []);
+
+    if (!isEntryUpdated) {
+        updateCourseList.push(newEntry);
+    }
+
+    // updateCourseList.push({
+    //     Title: selectedCourse.value,
+    //     SubTitle: { Title: updateSubTitle.value, Description: updateQuillEditorSub },
+    //     Change: "UPDATE"
+    // })
+
     updateSubTitle.value = "";
     // updateQuillEditorSub.value = "";
     quillUp.setText("");
     toggleVisibility("noSubtitle", "subtitleContent");
 
+}
+
+function fetchUpdateCourseSubList() {
+    const formData = new FormData();
+
+    formData.append("updateCourseList", JSON.stringify(updateCourseList));
+
+    updateCourseList.forEach(ucourse => {
+        console.log("first", ucourse)
+    });
+    fetch('/updateCourseSubList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            // CourseList = data.CourseList;
+            console.log(data.CourseList)
+
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+
+    loadSection('updateCourse');
 }
 
 
@@ -158,28 +242,6 @@ function updateCourseListDescrition() {
     });
 
     fetchUpdateCourseList();
-}
-
-function updateAddSubTitle() {
-
-    var selectedCourse = document.getElementById('course');
-    var title = document.getElementById("upAddsubTitle");
-
-    var description = quillUpAdd.getContents();
-
-
-    // Find the target course in CourseList
-    var targetCourse = CourseList.find(course => course.Title === selectedCourse.value);
-    targetCourse.SubTitle.push({ Title: title.value, Description: description });
-
-    addSubtitleOption({ Title: title.value, Description: description })
-
-    // Clear input fields
-    title.value = "";
-    quillUpAdd.setText("");
-    // description.value = ""
-
-    toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
 }
 
 function fetchUpdateCourseList() {
@@ -198,6 +260,7 @@ function fetchUpdateCourseList() {
             console.error('Error uploading file:', error);
         });
 
+    loadSection('updateCourse');
     // location.reload();
 
 }
