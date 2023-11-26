@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require("path");
 
 const { courseModel: Course } = require("../database/index");
+const { productModel: Product } = require("../database/index");
 
 // let CourseList = [
 //     {
@@ -57,64 +58,76 @@ async function setCourseList() {
 
 setCourseList();
 
-let productList = [
-    {
-        mainProduct: "KAS Mains notes",
-        subProducts: [
-            { name: "Subproduct 1", link: "wrotea" },
-            { name: "Subproduct 2", link: "wroteb" },
-            { name: "Subproduct 3", link: "wrotec" },
-        ],
-    },
-    {
-        mainProduct: "KAS Prelims notes",
-        subProducts: [
-            { name: "Subproduct A", link: "dheara" },
-            { name: "Subproduct B", link: "dhearb" },
-            { name: "Subproduct C", link: "dhearc" },
-        ],
-    },
-    {
-        mainProduct: "Current affairs magazines",
-        subProducts: [
-            { name: "Subproduct X", link: "goodlea" },
-            { name: "Subproduct Y", link: "goodleb" },
-            { name: "Subproduct Z", link: "goodlec" },
-        ],
-    },
-    {
-        mainProduct: "SAAD Material",
-        subProducts: [
-            { name: "Subproduct I", link: "youtubea" },
-            { name: "Subproduct II", link: "youtubeb" },
-            { name: "Subproduct III", link: "youtubec" },
-        ],
-    },
-    {
-        mainProduct: "KPSC Group C Material",
-        subProducts: [
-            { name: "Subproduct Alpha", link: "gmaila" },
-            { name: "Subproduct Beta", link: "gmailb" },
-            { name: "Subproduct Gama", link: "gmailc" },
-        ],
-    },
-    {
-        mainProduct: "PSI/ ESI Material",
-        subProducts: [
-            { name: "Subproduct 4", link: "checka" },
-            { name: "Subproduct 5", link: "checkb" },
-            { name: "Subproduct 6", link: "checkc" },
-        ],
-    },
-    {
-        mainProduct: "FDA & SDA Material",
-        subProducts: [
-            { name: "Subproduct 11", link: "materiala" },
-            { name: "Subproduct 12", link: "materialb" },
-            { name: "Subproduct 13", link: "materialc" },
-        ],
-    },
-];
+// let productList = [
+//     {
+//         mainProduct: "KAS Mains notes",
+//         subProducts: [
+//             { name: "Subproduct 1", link: "wrotea" },
+//             { name: "Subproduct 2", link: "wroteb" },
+//             { name: "Subproduct 3", link: "wrotec" },
+//         ],
+//     },
+//     {
+//         mainProduct: "KAS Prelims notes",
+//         subProducts: [
+//             { name: "Subproduct A", link: "dheara" },
+//             { name: "Subproduct B", link: "dhearb" },
+//             { name: "Subproduct C", link: "dhearc" },
+//         ],
+//     },
+//     {
+//         mainProduct: "Current affairs magazines",
+//         subProducts: [
+//             { name: "Subproduct X", link: "goodlea" },
+//             { name: "Subproduct Y", link: "goodleb" },
+//             { name: "Subproduct Z", link: "goodlec" },
+//         ],
+//     },
+//     {
+//         mainProduct: "SAAD Material",
+//         subProducts: [
+//             { name: "Subproduct I", link: "youtubea" },
+//             { name: "Subproduct II", link: "youtubeb" },
+//             { name: "Subproduct III", link: "youtubec" },
+//         ],
+//     },
+//     {
+//         mainProduct: "KPSC Group C Material",
+//         subProducts: [
+//             { name: "Subproduct Alpha", link: "gmaila" },
+//             { name: "Subproduct Beta", link: "gmailb" },
+//             { name: "Subproduct Gama", link: "gmailc" },
+//         ],
+//     },
+//     {
+//         mainProduct: "PSI/ ESI Material",
+//         subProducts: [
+//             { name: "Subproduct 4", link: "checka" },
+//             { name: "Subproduct 5", link: "checkb" },
+//             { name: "Subproduct 6", link: "checkc" },
+//         ],
+//     },
+//     {
+//         mainProduct: "FDA & SDA Material",
+//         subProducts: [
+//             { name: "Subproduct 11", link: "materiala" },
+//             { name: "Subproduct 12", link: "materialb" },
+//             { name: "Subproduct 13", link: "materialc" },
+//         ],
+//     },
+// ];
+
+let productList = []
+async function setProductList() {
+    try {
+        const retrievedProduct = await Product.find();
+        productList = retrievedProduct;
+    } catch (error) {
+        console.error('Error setting CourseList:', error);
+    }
+}
+
+setProductList();
 
 let Testimonials = [
     {
@@ -307,11 +320,16 @@ router.route("/getProductList").get((req, res) => {
     res.json({ productList });
 })
 
-router.route("/addProductList").post(dataflow.any(), (req, res) => {
+router.route("/addProductList").post(dataflow.any(), async (req, res) => {
     const data = {
         mainProduct: req.body.mainProduct,
         subProducts: JSON.parse(req.body.subProducts)
     }
+
+    await Product.create({
+        mainProduct: data.mainProduct,
+        subProducts: data.subProducts,
+    })
 
     productList.push(data);
     res.json({
