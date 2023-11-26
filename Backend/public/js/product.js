@@ -1,5 +1,7 @@
 let productList = [];
 let productTodo = [];
+let updateProductList = [];
+
 function fetchProductData() {
     return fetch('/getProductList')
         .then(response => {
@@ -94,7 +96,7 @@ const editProduct = (elementToRemove) => {
 
 function handleUpdateProduct() {
     var updateProductSelect = document.getElementById('updateProduct');
-    originalSubTitleName = updateProductSelect.value;
+    // originalSubTitleName = updateProductSelect.value;
     var selectedProduct = updateProductSelect.options[updateProductSelect.selectedIndex];
 
     var subproductSelect = document.getElementById('updateSubProduct');
@@ -169,6 +171,30 @@ function updateSubProductList() {
         return product;
     });
 
+    const newEntry = {
+        mainProduct: selectedProduct.value,
+        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value },
+        Change: "UPDATE"
+    };
+
+    let isEntryUpdated = false;
+    updateProductList = updateProductList.reduce((accumulator, item) => {
+        // Check if SubTitle.Title already exists
+        if (item.subProducts.name === originalSubProductName && item.mainProduct === newEntry.mainProduct) {
+            // If it does, replace the existing entry
+            accumulator.push(newEntry);
+            isEntryUpdated = true;
+        } else {
+            // If it doesn't, keep the existing entry
+            accumulator.push(item);
+        }
+        return accumulator;
+    }, []);
+
+    if (!isEntryUpdated) {
+        updateProductList.push(newEntry);
+    }
+
     updateSubProduct.value = "";
     updatesubProductLink.value = ""
     toggleVisibility("noSubtitle", "updateSelectProduct");
@@ -190,6 +216,12 @@ function updateAddSubProduct() {
 
     addSubProductOption({ name: upAddSubProductName.value, link: upAddSubProductLink.value })
 
+    updateProductList.push({
+        mainProduct: selectedProduct.value,
+        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value },
+        Change: "ADD"
+    })
+
     // Clear input fields
     upAddSubProductName.value = "";
     upAddSubProductLink.value = "";
@@ -200,7 +232,8 @@ function updateAddSubProduct() {
 
 function fetchUpdateProductData() {
     const formData = new FormData();
-    formData.append("productList", JSON.stringify(productList));
+    formData.append("updateProductList", JSON.stringify(updateProductList));
+    console.log(updateProductList)
 
 
     fetch('/updateProductList', {
@@ -210,12 +243,14 @@ function fetchUpdateProductData() {
         .then(response => response.json())
         .then(data => {
             productList = data.productList;
+            updateProductList=[];
+            loadSection('updateProduct');
         })
         .catch(error => {
             console.error('Error uploading file:', error);
         });
 
-    // location.reload();
+   
 
 }
 function deleteProduct() {

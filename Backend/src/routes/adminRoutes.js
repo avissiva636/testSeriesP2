@@ -289,9 +289,9 @@ router.route("/deleteSubCourseList").post(dataflow.any(), async (req, res) => {
 
     try {
         for (const dcourse of selectedsubCourses) {
-        
+
             console.log(dcourse)
-             await Course.findOneAndUpdate(
+            await Course.findOneAndUpdate(
                 { Title: coursetoDelete },
                 { $pull: { SubTitle: { Title: dcourse } } },
                 { new: true }
@@ -300,8 +300,8 @@ router.route("/deleteSubCourseList").post(dataflow.any(), async (req, res) => {
     } catch (err) {
         console.error(`Error updating document: ${err}`);
     }
-    
-    await setCourseList(); 
+
+    await setCourseList();
 
     res.json({
         message: "Course Data Deleted",
@@ -345,9 +345,44 @@ router.route("/addProduct").get((req, res) => {
     });
 })
 
-router.route("/updateProductList").post(dataflow.any(), (req, res) => {
+router.route("/updateProductList").post(dataflow.any(), async (req, res) => {
 
-    productList = JSON.parse(req.body.productList);
+    const updateProductList = JSON.parse(req.body.updateProductList);
+
+    for (const uproduct of updateProductList) {
+        try {
+            // Check if SubTitle exists
+            const existingProduct = await Product.findOne({ mainProduct: uproduct.mainProduct, "subProducts.name": uproduct.subProducts.name });
+
+            if (existingProduct) {
+                // SubTitle exists, update it
+                await Product.updateOne(
+                    { mainProduct: uproduct.mainProduct, "subProducts.name": uproduct.subProducts.name },
+                    {
+                        $set: {
+                            "subProducts.$": uproduct.subProducts,
+                        },
+                    }
+                );
+            } else {
+                // SubTitle doesn't exist, add it
+                await Product.updateOne(
+                    { mainProduct: uproduct.mainProduct },
+                    {
+                        $addToSet: {
+                            subProducts: uproduct.subProducts,
+                        },
+                    },
+                    { upsert: true }
+                );
+            }
+        } catch (err) {
+            console.error(`Error updating document: ${err}`);
+        }
+    }
+
+    await setProductList();
+
     res.json({
         message: "Product Data Updated",
         productList,
