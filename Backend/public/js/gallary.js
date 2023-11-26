@@ -90,7 +90,7 @@ function uploadvideo() {
         })
             .then(response => response.json())
             .then(data => {
-                // You can update the UI or show a success message here
+                // You can update the UI or show a success message here                
                 form.reset();
                 updateVideoGallery(data.videos);
             })
@@ -113,7 +113,7 @@ function updateVideoGallery(updatedVideos) {
         const iframe = document.createElement('iframe');
         iframe.width = '300px';
         iframe.height = '200px';
-        iframe.src = `https://www.youtube.com/embed/${video}`;
+        iframe.src = `https://www.youtube.com/embed/${video.videoid}`;
         iframe.title = 'YouTube video player';
         iframe.frameBorder = '0';
         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
@@ -133,7 +133,7 @@ function updateVideoGallery(updatedVideos) {
 }
 
 function deleteVideo(elementToRemove) {
-
+    
     const formData = new FormData();
     formData.append('videoIdToDelete', elementToRemove);
 

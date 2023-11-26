@@ -5,6 +5,7 @@ const path = require("path");
 
 const { courseModel: Course } = require("../database/index");
 const { productModel: Product } = require("../database/index");
+const { videoModel: Video } = require("../database/index");
 
 // let CourseList = [
 //     {
@@ -123,7 +124,7 @@ async function setProductList() {
         const retrievedProduct = await Product.find();
         productList = retrievedProduct;
     } catch (error) {
-        console.error('Error setting CourseList:', error);
+        console.error('Error setting productList:', error);
     }
 }
 
@@ -137,7 +138,17 @@ let Testimonials = [
     }
 ];
 
-let videoEidList = ['9dhAEj7bZ28'];
+// let videoEidList = ['9dhAEj7bZ28'];
+let videoEidList = [];
+async function setvideoEidList() {
+    try {
+        const retrievedVideo = await Video.find();
+        videoEidList = retrievedVideo;
+    } catch (error) {
+        console.error('Error setting videoEidList:', error);
+    }
+}
+setvideoEidList()
 
 const multer = require('multer');
 const dataflow = multer();
@@ -408,7 +419,7 @@ router.route("/deleteProductList").post(dataflow.any(), async (req, res) => {
             for (const dproduct of subProduct) {
                 await Product.findOneAndUpdate(
                     { mainProduct: producttoDelete },
-                    { $pull: { subProducts: { name: dproduct} } },
+                    { $pull: { subProducts: { name: dproduct } } },
                     { new: true }
                 );
             }
@@ -505,11 +516,13 @@ router.route("/deletePhoto").post(dataflow.any(), (req, res) => {
 
 })
 
-router.post('/uploadVideo', dataflow.any(), (req, res) => {
+router.post('/uploadVideo', dataflow.any(), async (req, res) => {
     // After successful upload, you can redirect or send a response
-
     const videoId = req.body.videoId;
-    videoEidList.push(videoId);
+
+    // videoEidList.push(videoId);
+    await Video.create({ videoid: videoId })
+    await setvideoEidList()
 
     res.json({
         message: 'video Id successfully!',
@@ -524,13 +537,20 @@ router.route("/addVideo").get((req, res) => {
     });
 })
 
-router.route("/deleteVideo").post(dataflow.any(), (req, res) => {
+router.route("/deleteVideo").post(dataflow.any(), async (req, res) => {
 
     // Assuming you have the filename you want to delete
     const videoIdToDelete = req.body.videoIdToDelete;
 
-    videoEidList = videoEidList.filter(item => item !== videoIdToDelete);
-    res.json({ message: videoEidList })
+    await Video.deleteOne({ _id: videoIdToDelete })
+
+    await setvideoEidList()
+
+    // videoEidList = videoEidList.filter(item => item !== videoIdToDelete);
+    res.json({
+        message: "Video Deleted",
+        videoEidList: videoEidList
+    })
 })
 
 const testimonialStorage = multer.diskStorage({
@@ -559,6 +579,8 @@ router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'
             desc: testimonialDescription,
             photo: req.testimonialImagePath
         })
+
+        
     } catch (error) {
         console.log(error.message)
     }
@@ -577,6 +599,7 @@ router.route("/addTestimonial").get((req, res) => {
 })
 
 router.post("/uploadUpdateTestimonial", dataflow.any(), (req, res) => {
+    
     try {
         const testimonialName = req.body.UpdateTestimonialName;
         const testimonialDescription = req.body.UpdateTestimonialDescription;
