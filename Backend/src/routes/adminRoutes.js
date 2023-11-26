@@ -396,9 +396,29 @@ router.route("/updateProduct").get((req, res) => {
     });
 })
 
-router.route("/deleteProductList").post(dataflow.any(), (req, res) => {
+router.route("/deleteProductList").post(dataflow.any(), async (req, res) => {
+    const producttoDelete = JSON.parse(req.body.producttoDelete);
+    const category = req.body.category;
+    if (category === "MAIN") {
+        await Product.deleteOne({ mainProduct: producttoDelete });
+    }
+    else if (category === "SUB") {
+        const subProduct = JSON.parse(req.body.subProduct);
+        try {
+            for (const dproduct of subProduct) {
+                await Product.findOneAndUpdate(
+                    { mainProduct: producttoDelete },
+                    { $pull: { subProducts: { name: dproduct} } },
+                    { new: true }
+                );
+            }
+        } catch (err) {
+            console.error(`Error updating document: ${err}`);
+        }
+    }
 
-    productList = JSON.parse(req.body.productList);
+    await setProductList();
+
     res.json({
         message: "Product Data Deleted",
         productList,

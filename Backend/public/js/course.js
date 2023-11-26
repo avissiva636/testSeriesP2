@@ -291,7 +291,6 @@ function deleteCourse() {
         }
         toggleVisibility("noSubtitle", "deletesubtitleVisiblity");
     });
-    console.log(coursetoDelete,selectedValues)
     fetchdeleteSubCourseList(coursetoDelete,selectedValues)
     // deleteCourseList(deleteCourseSelect.selectedIndex - 1, selectedValues);
 

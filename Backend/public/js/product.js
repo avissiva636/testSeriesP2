@@ -255,7 +255,7 @@ function fetchUpdateProductData() {
 }
 function deleteProduct() {
     var deleteProductSelect = document.getElementById('deleteProduct');
-
+    var producttoDelete = deleteProductSelect.value;
     var deleteSubproductSelect = document.getElementById('deletesubproduct');
     var selectedValues = Array.from(deleteSubproductSelect.selectedOptions).map(option => option.value);
 
@@ -271,8 +271,9 @@ function deleteProduct() {
         if (selectedIndex !== -1) {
             // Remove the currently selected option
             deleteProductSelect.remove(selectedIndex);
+            deleteProductList(selectedIndex - 1);
+            fetchDeleteProductList("MAIN",producttoDelete);
         }
-        deleteProductList(selectedIndex - 1)
         return;
     }
 
@@ -286,13 +287,12 @@ function deleteProduct() {
         toggleVisibility("noSubtitle", "deletesubproductVisiblity");
     });
     deleteProductList(deleteProductSelect.selectedIndex - 1, selectedValues);
-
+    fetchDeleteProductList("SUB",producttoDelete,selectedValues);
 }
 
 function deleteProductList(productIndex, selectedValues) {
     if (selectedValues === null || selectedValues === undefined) {
         productList.splice(productIndex, 1)
-        fetchDeleteProductList();
         return;
     }
 
@@ -308,12 +308,15 @@ function deleteProductList(productIndex, selectedValues) {
             }
         });
     }
-    fetchDeleteProductList();
 }
 
-function fetchDeleteProductList() {
+function fetchDeleteProductList(category,producttoDelete,subProduct) {
     const formData = new FormData();
-    formData.append("productList", JSON.stringify(productList));
+    formData.append("category",category)
+    formData.append("producttoDelete", JSON.stringify(producttoDelete));
+    if(category==="SUB"){
+        formData.append("subProduct", JSON.stringify(subProduct));
+    }
 
 
     fetch('/deleteProductList', {
@@ -322,7 +325,8 @@ function fetchDeleteProductList() {
     })
         .then(response => response.json())
         .then(data => {
-            productList = data.productList;            
+            productList = data.productList;   
+            console.log(data.productList)         
         })
         .catch(error => {
             console.error('Error uploading file:', error);
