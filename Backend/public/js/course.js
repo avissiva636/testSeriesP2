@@ -206,12 +206,8 @@ function updateCourseListSubtitle() {
 
 function fetchUpdateCourseSubList() {
     const formData = new FormData();
-
     formData.append("updateCourseList", JSON.stringify(updateCourseList));
 
-    updateCourseList.forEach(ucourse => {
-        console.log("first", ucourse)
-    });
     fetch('/updateCourseSubList', {
         method: 'POST',
         body: formData

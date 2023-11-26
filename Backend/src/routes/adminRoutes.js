@@ -37,6 +37,13 @@ let CourseList = [
     },
 ];
 
+// let CourseList =[]
+// async function setCourseList() {
+//     const retrievedCourse = await Course.find();
+//     CourseList = retrievedCourse;
+// }
+// setCourseList();
+
 let productList = [
     {
         mainProduct: "KAS Mains notes",
@@ -110,9 +117,8 @@ const multer = require('multer');
 const dataflow = multer();
 
 router.route("/").get((req, res) => {
-    res.render("adminHome", {
+    res.status(200).render("adminHome", {
         message: "adminHome",
-        // CourseList: [{ Title: 'Sample Course' }],
     });
     // res.status(200).json({message:"hello"});
 })
@@ -194,36 +200,8 @@ router.route("/updateCourseList").post(dataflow.any(), async (req, res) => {
 })
 
 router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
-    // const data = req.body;
     const updateCourseList = JSON.parse(req.body.updateCourseList);
-    //  console.log("update", CourseList);
-    // const newEntry = {
-    //     Title: selectedCourse.value,
-    //     SubTitle: { Title: updateSubTitle.value, Description: updateQuillEditorSub },
-    //     Change: "UPDATE"
-    // };
-    console.log(updateCourseList)
-
-    // for (const ucourse of updateCourseList) {
-    //     try {
-    //         await Course.updateOne(
-    //             { Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title },
-    //             {
-    //                 $addToSet: {
-    //                     SubTitle: ucourse.SubTitle,
-    //                 },
-    //                 $set: {
-    //                     "SubTitle.$": ucourse.SubTitle,
-    //                 },
-    //             },
-    //             { upsert: true }
-    //         );
-    //         console.log(`Document updated successfully`);
-    //     } catch (err) {
-    //         console.error(`Error updating document: ${err}`);
-    //     }
-    // }
-
+   
     for (const ucourse of updateCourseList) {
         try {
             // Check if SubTitle exists
@@ -239,8 +217,6 @@ router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
                         },
                     }
                 );
-
-                console.log(`Document updated successfully`);
             } else {
                 // SubTitle doesn't exist, add it
                 await Course.updateOne(
@@ -252,22 +228,17 @@ router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
                     },
                     { upsert: true }
                 );
-
-                console.log(`Document added successfully`);
             }
-
-
         } catch (err) {
             console.error(`Error updating document: ${err}`);
         }
     }
 
+// setCourseList()
 
-
-    //  console.log(course);
     res.json({
         message: "Course Data Updated",
-        CourseList: req.body.updateCourseList
+        CourseList: CourseList
     });
 })
 
