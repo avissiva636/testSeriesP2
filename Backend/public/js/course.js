@@ -214,9 +214,7 @@ function fetchUpdateCourseSubList() {
     })
         .then(response => response.json())
         .then(data => {
-            // CourseList = data.CourseList;
-            console.log(data.CourseList)
-
+            CourseList = data.CourseList;
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -237,14 +235,15 @@ function updateCourseListDescrition() {
         return course;
     });
 
-    fetchUpdateCourseList();
+    fetchUpdateCourseList(selectedCourse.value, updateDescription);
 }
 
-function fetchUpdateCourseList() {
+function fetchUpdateCourseList(selectedCourse, updateDescription) {
     const formData = new FormData();
-    formData.append("CourseList", JSON.stringify(CourseList));
+    formData.append("selectedCourse", JSON.stringify(selectedCourse));
+    formData.append("updateDescription", updateDescription);
 
-    fetch('/updateCourseList', {
+    fetch('/uploadUpdateCourseList', {
         method: 'POST',
         body: formData
     })
@@ -257,13 +256,11 @@ function fetchUpdateCourseList() {
         });
 
     loadSection('updateCourse');
-    // location.reload();
-
 }
 
 function deleteCourse() {
     var deleteCourseSelect = document.getElementById('deleteCourse');
-
+    var coursetoDelete = deleteCourseSelect.value;
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
     if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
@@ -280,6 +277,7 @@ function deleteCourse() {
             // Remove the currently selected option
             deleteCourseSelect.remove(selectedIndex);
             deleteCourseList(selectedIndex - 1)
+            fetchDeleteNormalCourseList(coursetoDelete)
         }
         return;
     }
@@ -293,14 +291,33 @@ function deleteCourse() {
         }
         toggleVisibility("noSubtitle", "deletesubtitleVisiblity");
     });
-    deleteCourseList(deleteCourseSelect.selectedIndex - 1, selectedValues);
+    console.log(coursetoDelete,selectedValues)
+    fetchdeleteSubCourseList(coursetoDelete,selectedValues)
+    // deleteCourseList(deleteCourseSelect.selectedIndex - 1, selectedValues);
 
+}
+
+function fetchDeleteNormalCourseList(deleteData) {
+    const formData = new FormData();
+    formData.append("DeleteData", JSON.stringify(deleteData));
+    console.log("deleting", deleteData);
+    fetch('/deleteNormalCourseList', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            CourseList = data.CourseList;
+            alert(`${deleteData} deleted`)
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
 }
 
 function deleteCourseList(courseIndex, selectedValues) {
     if (selectedValues === null || selectedValues === undefined) {
         CourseList.splice(courseIndex, 1)
-        deleteApi();
         return
     }
     if (courseIndex !== -1) {
@@ -318,10 +335,12 @@ function deleteCourseList(courseIndex, selectedValues) {
     deleteApi();
 }
 
-function deleteApi() {
+function fetchdeleteSubCourseList(coursetoDelete,selectedValues) {
     const formData = new FormData();
-    formData.append("CourseList", JSON.stringify(CourseList));
-    fetch('/deleteCourseList', {
+    formData.append("coursetoDelete", JSON.stringify(coursetoDelete));
+    formData.append("selectedValues", JSON.stringify(selectedValues));
+
+    fetch('/deleteSubCourseList', {
         method: 'POST',
         body: formData
     })

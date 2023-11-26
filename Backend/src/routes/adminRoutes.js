@@ -5,44 +5,57 @@ const path = require("path");
 
 const { courseModel: Course } = require("../database/index");
 
-let CourseList = [
-    {
-        Title: "IAS",
-        Description: { "ops": [{ "insert": "IASdes\n" }] },
-    },
-    {
-        Title: "KAS",
-        Description: { "ops": [{ "insert": "KASdes\n" }] },
-    },
-    {
-        Title: "SAAD",
-        Description: { "ops": [{ "insert": "SAADdes\n" }] },
-    },
-    {
-        Title: "KPSC Prelims",
-        SubTitle: [
-            {
-                Title: "CTI",
-                Description: { "ops": [{ "insert": "CTIdes\n" }] },
-            },
-            {
-                Title: "AE/JE",
-                Description: { "ops": [{ "insert": "AE/JEdes\n" }] },
-            },
-            {
-                Title: "Group C",
-                Description: { "ops": [{ "insert": "Group Cdes\n" }] },
-            },
-        ],
-    },
-];
+// let CourseList = [
+//     {
+//         Title: "IAS",
+//         Description: { "ops": [{ "insert": "IASdes\n" }] },
+//     },
+//     {
+//         Title: "KAS",
+//         Description: { "ops": [{ "insert": "KASdes\n" }] },
+//     },
+//     {
+//         Title: "SAAD",
+//         Description: { "ops": [{ "insert": "SAADdes\n" }] },
+//     },
+//     {
+//         Title: "KPSC Prelims",
+//         SubTitle: [
+//             {
+//                 Title: "CTI",
+//                 Description: { "ops": [{ "insert": "CTIdes\n" }] },
+//             },
+//             {
+//                 Title: "AE/JE",
+//                 Description: { "ops": [{ "insert": "AE/JEdes\n" }] },
+//             },
+//             {
+//                 Title: "Group C",
+//                 Description: { "ops": [{ "insert": "Group Cdes\n" }] },
+//             },
+//         ],
+//     },
+// ];
 
-// let CourseList =[]
+// let CourseList = []
 // async function setCourseList() {
-//     const retrievedCourse = await Course.find();
-//     CourseList = retrievedCourse;
+//     Course.find()
+//         .then((retrievedCourse) => { CourseList = retrievedCourse; })
+//         .catch((error) => { console.log('Error setting CourseList:', error) });
 // }
 // setCourseList();
+
+let CourseList = []
+async function setCourseList() {
+    try {
+        const retrievedCourse = await Course.find();
+        CourseList = retrievedCourse;
+    } catch (error) {
+        console.error('Error setting CourseList:', error);
+    }
+}
+
+setCourseList();
 
 let productList = [
     {
@@ -131,7 +144,8 @@ router.route("/test").get((req, res) => {
     });
 })
 
-router.route("/getCourseList").get((req, res) => {
+router.route("/getCourseList").get(async (req, res) => {
+    await setCourseList()
     res.json({ CourseList });
 })
 
@@ -143,7 +157,7 @@ router.route("/addCourseNormalList").post(dataflow.any(), async (req, res) => {
 
     CourseList.push(data);
 
-    const course = await Course.create({
+    await Course.create({
         Title: data.Title,
         Description: data.Description,
     });
@@ -160,7 +174,7 @@ router.route("/addCourseSubList").post(dataflow.any(), async (req, res) => {
         Title: req.body.Title,
         SubTitle: JSON.parse(req.body.SubTitle)
     }
-    const course = await Course.create({
+    await Course.create({
         Title: data.Title,
         SubTitle: data.SubTitle,
     });
@@ -179,29 +193,24 @@ router.route("/addCourse").get((req, res) => {
     });
 })
 
-router.route("/updateCourseList").post(dataflow.any(), async (req, res) => {
+router.route("/uploadUpdateCourseList").post(dataflow.any(), async (req, res) => {
     // const data = req.body;
-    CourseList = JSON.parse(req.body.CourseList);
-    console.log("update", CourseList);
-    const course = await Course.collection.replaceOne(
-        {},
-        { courses: CourseList },
-        { upsert: true },
-        (err, result) => {
-            // Handle errors or do something with the result
-        }
-    );
+    // CourseList = JSON.parse(req.body.CourseList);
+    const selectedCourse = JSON.parse(req.body.selectedCourse);
+    const updateDescription = JSON.parse(req.body.updateDescription);
 
-    console.log(course);
+    await Course.findOneAndUpdate({ Title: selectedCourse }, { Description: updateDescription });
+    await setCourseList()
+
     res.json({
-        message: "Course Data Updated",
+        message: "Course Description Updated",
         CourseList
     });
 })
 
 router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
     const updateCourseList = JSON.parse(req.body.updateCourseList);
-   
+
     for (const ucourse of updateCourseList) {
         try {
             // Check if SubTitle exists
@@ -234,7 +243,7 @@ router.route("/updateCourseSubList").post(dataflow.any(), async (req, res) => {
         }
     }
 
-// setCourseList()
+    // setCourseList()
 
     res.json({
         message: "Course Data Updated",
@@ -249,9 +258,38 @@ router.route("/updateCourse").get((req, res) => {
     });
 })
 
-router.route("/deleteCourseList").post(dataflow.any(), (req, res) => {
-    const data = req.body;
-    CourseList = JSON.parse(req.body.CourseList);
+router.route("/deleteNormalCourseList").post(dataflow.any(), async (req, res) => {
+    const DeleteData = JSON.parse(req.body.DeleteData);
+    // CourseList = JSON.parse(req.body.CourseList);
+    await Course.deleteOne({ Title: DeleteData });
+    await setCourseList();
+
+    res.json({
+        message: "Normal Course Data Deleted",
+        CourseList
+    });
+})
+
+router.route("/deleteSubCourseList").post(dataflow.any(), async (req, res) => {
+    const coursetoDelete = JSON.parse(req.body.coursetoDelete);
+    const selectedsubCourses = JSON.parse(req.body.selectedValues);
+
+    try {
+        for (const dcourse of selectedsubCourses) {
+        
+            console.log(dcourse)
+             await Course.findOneAndUpdate(
+                { Title: coursetoDelete },
+                { $pull: { SubTitle: { Title: dcourse } } },
+                { new: true }
+            );
+        }
+    } catch (err) {
+        console.error(`Error updating document: ${err}`);
+    }
+    
+    await setCourseList(); 
+
     res.json({
         message: "Course Data Deleted",
         CourseList

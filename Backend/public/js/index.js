@@ -102,7 +102,7 @@ function handleAddCourseSubmit() {
             .then(response => response.json())
             .then(data => {
                 CourseList = data.CourseList;
-                loadSection('addCourse')
+                loadSection('addCourse');
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -123,7 +123,8 @@ function handleAddCourseSubmit() {
         })
             .then(response => response.json())
             .then(data => {
-                CourseList = data.CourseList;                
+                CourseList = data.CourseList;      
+                loadSection('addCourse');          
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
