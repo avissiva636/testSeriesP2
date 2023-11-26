@@ -8,15 +8,15 @@ import CourseDescription from "./components/CourseDescription";
 import ListAllCourses from "./components/ListAllCourses";
 import Navigationbar from "./components/Navigationbar";
 import PhotoPage from "./components/PhotoPage";
-import './components/css/style.scss';
+import "./components/css/style.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import VideoPage from "./components/VideoPage";
-import { useEffect } from "react";
 import CurrentAffairsMainPage from "./components/CurrentAffairsMainPage";
 import ResultPage from "./components/ResultPage";
 import DemoClass from "./components/DemoClass";
-import Footer from "./components/Footer";
-import SocialLinks from "./components/SocialLinks";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsAndConditions from "./components/TermsAndConditions";
+import RefundPolicy from "./components/RefundPolicy";
 function App() {
   // useEffect(() => {
   //   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -26,14 +26,13 @@ function App() {
       <Router>
         <InspiroContext>
           <Navigationbar />
-          <SocialLinks />
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/Products" element={<Products />}></Route>
             <Route path="/ContactUs" element={<ContactUs />}></Route>
             <Route path="/WhyInspiro" element={<WhyInspiro />}></Route>
             <Route path="/ResultPage" element={<ResultPage />} />
-            <Route path="/DemoClass" element={<DemoClass />}/>
+            <Route path="/DemoClass" element={<DemoClass />} />
             <Route
               path="/CourseDescription"
               element={<CourseDescription />}
@@ -45,6 +44,12 @@ function App() {
               path="CurrentAffairsMainPage"
               element={<CurrentAffairsMainPage />}
             />
+            <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+            <Route
+              path="/TermsAndConditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="/RefundPolicy" element={<RefundPolicy />} />
           </Routes>
         </InspiroContext>
       </Router>

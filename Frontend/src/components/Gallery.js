@@ -4,10 +4,10 @@ import "./css/Gallery.css";
 const Gallery = () => {
   const navigate = useNavigate();
   const photoHandler = () => {
-    navigate("/PhotoPage")
+    navigate("PhotoPage")
   }
   const videoHandler = () => {
-    navigate("/VideoPage")
+    navigate("VideoPage")
   }
   return (
     <div>

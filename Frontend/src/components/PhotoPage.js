@@ -1,3 +1,5 @@
+import ContactUsHomePage from "./ContactUsHomePage";
+import Footer from "./Footer";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const PhotoPage = () => {
@@ -14,6 +16,13 @@ const PhotoPage = () => {
           </div>
         ))}
       </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <ContactUsHomePage />
+      <Footer />
     </div>
   );
 };

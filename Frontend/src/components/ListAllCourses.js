@@ -1,123 +1,118 @@
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
 import { useInspiroCrud } from "./context/InspiroContext";
-import Navigationbar from "./Navigationbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CourseDescription from "./CourseDescription";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const ListAllCourses = () => {
   const { Courses } = useInspiroCrud();
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubCourse, setSelectedSubCourse] = useState(null);
-  const navigate = useNavigate();
+  const location = useLocation();
+  let initialTitle = location.state.data.Title;
+  let initialSubarr = location.state.data.subarr;
+  const [a, setA] = useState(initialTitle);
+  const [b, setB] = useState(initialSubarr);
 
-  const handleCourseClick = (index, subarr) => {
+  useEffect(() => {
+    if (location.state.data) {
+      setA(location.state.data.Title);
+      setB(location.state.data.subarr);
+    }
+  }, [location.state.data]);
+
+  const handleCourseClick = (index, Title, subarr) => {
     if (selectedCourse === index) {
       setSelectedCourse(null);
     } else {
       setSelectedCourse(index);
       setSelectedSubCourse(null);
+      setA(Title);
+      setB(subarr);
     }
   };
 
-  const handleSubtitleClick = (index) => {
+  const handleSubtitleClick = (index, Title, subarr) => {
     if (selectedSubCourse === index) {
       setSelectedSubCourse(null);
     } else {
       setSelectedSubCourse(index);
+      setA(Title);
+      setB(subarr);
     }
   };
   return (
     <div>
-      {Courses.map((course, index) => {
-        if (course.SubTitle) {
-          return course.SubTitle.map((subCourse, subIndex) => (
-            <div key={subIndex} onClick={() => handleSubtitleClick(subIndex)}>
-              <ul>{subCourse.Title}</ul>
-              {selectedSubCourse === subIndex && (
-                <CourseDescription
-                  Title={subCourse.Title}
-                  subarr={subCourse.subarr}
-                />
-              )}
-            </div>
-          ));
-        } else {
-          return (
-            <div
-              key={index}
-              onClick={() => handleCourseClick(index, course.subarr)}
-            >
-              {course.Title}
-              {selectedCourse === index &&
-                course.subarr &&
-                course.subarr.length > 0 && (
-                  <CourseDescription
-                    Title={course.Title}
-                    subarr={course.subarr}
-                  />
-                )}
-            </div>
-          );
-        }
-      })}
+      <div className="courses__page">
+        <div className="courses__header">Courses offered</div>
+        {Courses.map((course, index) => {
+          let Title;
+
+          if (course.SubTitle) {
+            Title = course.SubTitle.map((subCourse, subIndex) => (
+              <div className="d-flex">
+                <div
+                  className="col-3 text__title"
+                  key={subIndex}
+                  onClick={() =>
+                    handleSubtitleClick(
+                      subIndex,
+                      subCourse.Title,
+                      subCourse.subarr
+                    )
+                  }
+                >
+                  <div className="text__left">{subCourse.Title}</div>
+                </div>
+                <div className="col-9 text__description">
+                  {" "}
+                  {selectedSubCourse === subIndex && (
+                    <CourseDescription
+                      Title={subCourse.Title}
+                      subarr={subCourse.subarr}
+                    />
+                  )}
+                </div>
+              </div>
+            ));
+          } else {
+            Title = (
+              <div className="d-flex">
+                <div
+                  className="col-3 text__title"
+                  onClick={() =>
+                    handleCourseClick(index, course.Title, course.subarr)
+                  }
+                >
+                  <div className="text__left">{course.Title}</div>
+                </div>
+                <div className="col-9 text__description">
+                  {selectedCourse === index &&
+                    course.subarr &&
+                    course.subarr.length > 0 && (
+                      <CourseDescription
+                        Title={course.Title}
+                        subarr={course.subarr}
+                      />
+                    )}
+                </div>
+              </div>
+            );
+          }
+          return <div className="test5">{Title}</div>;
+        })}
+      </div>
+      <div className="col-9 text__description">
+        <CourseDescription Title={a} subarr={b} />
+      </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <ContactUsHomePage />
       <Footer />
     </div>
   );
 };
 export default ListAllCourses;
-
-// import React, { useState } from 'react';
-
-// const TabbedContent = () => {
-//   const [activeTab, setActiveTab] = useState(0);
-
-//   const handleTabClick = (index) => {
-//     setActiveTab(index);
-//   };
-
-//   const tabData = [
-//     { title: 'GS Comprehensive Programme' },
-//     { title: 'General Studies Extensive'},
-//     { title: 'GS 2-Year Foundation'},
-//     { title: 'GS 500+ Programme'},
-//     { title: 'Essay Writing Programme'},
-//   ];
-
-//   return (
-//     <div className="d-flex course__content">
-//       <div className="card col-xl-3 col-lg-4 course__header">
-//         <div className="side-header d-flex justify-content-center">
-//           <span>Courses Offered</span>
-//         </div>
-//         <div className="side-menu">
-//           <div className="side-nav">
-//             <ul>
-//               {tabData.map((tab, index) => (
-//                 <li key={index} className={activeTab === index ? 'active' : ''}>
-//                   <a className='tab-title' href={tab.link} onClick={() => handleTabClick(index)}>
-//                     {tab.title}
-//                   </a>
-//                 </li>
-//               ))}
-//             </ul>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="card col-xl-9 col-lg-8">
-//         <div className="tab-content">
-//           {tabData.map((tab, index) => (
-//             <div key={index} className={activeTab === index ? 'tab-pane active' : 'tab-pane'}>
-//               <h2>{tab.title}</h2>
-//               {/* Add content specific to each tab if needed */}
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TabbedContent;

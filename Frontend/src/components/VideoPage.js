@@ -1,3 +1,5 @@
+import ContactUsHomePage from "./ContactUsHomePage";
+import Footer from "./Footer";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useInspiroCrud } from "./context/InspiroContext";
 
@@ -13,6 +15,13 @@ const VideoPage = () => {
           </div>
         ))}
       </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <ContactUsHomePage />
+      <Footer />
     </div>
   );
 };

@@ -96,7 +96,7 @@ export const InspiroContext = ({ children }) => {
       SubTitle: "",
     },
     {
-      Title: "Karnataka Public Service Commission Prelims",
+      Title: "KPSC Prelims",
       SubTitle: [
         {
           Title: "CTI",

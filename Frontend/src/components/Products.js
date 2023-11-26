@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useInspiroCrud } from "./context/InspiroContext";
 import "./css/Products.css";
 import Footer from "./Footer";
+import ContactUsHomePage from "./ContactUsHomePage";
 
 const Products = () => {
   const { products } = useInspiroCrud();
@@ -14,7 +15,9 @@ const Products = () => {
   return (
     <div>
       <div>
-        <h1 className="heading">Our Products</h1>
+        <b>
+          <h1 className="heading">Our Products</h1>
+        </b>
         <div className="product-list">
           {products.map((product, index) => (
             <div
@@ -41,6 +44,12 @@ const Products = () => {
             </div>
           ))}
         </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <ContactUsHomePage />
         <Footer />
       </div>
     </div>

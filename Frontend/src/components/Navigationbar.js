@@ -15,9 +15,12 @@ const Navigationbar = () => {
   const [avatarDropdown, setavatarDropdown] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubtitle, setSelectedSubtitle] = useState(null);
-  const [showGallery, setShowGallery] = useState(false);
   const { Courses } = useInspiroCrud();
+  const [showGallery, setShowGallery] = useState(false);
 
+  const toggleDropdownGallery = () => {
+    setShowGallery(!showGallery);
+  };
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -28,9 +31,6 @@ const Navigationbar = () => {
     setavatarDropdown(!avatarDropdown);
   };
 
-  const toggleDropdownGallery = () => {
-    setShowGallery(!showGallery);
-  };
   const toggleCoursesDropDoem = () => {
     setShowCourses(!showCourses);
   };
@@ -38,12 +38,12 @@ const Navigationbar = () => {
   const photoHandler = () => {
     toggleDropdownGallery();
     toggleDropdown();
-    navigate("/PhotoPage");
+    navigate("PhotoPage");
   };
   const videoHandler = () => {
     toggleDropdownGallery();
     toggleDropdown();
-    navigate("/VideoPage");
+    navigate("VideoPage");
   };
 
   const handleCourseClick = (index, Title, subarr) => {
@@ -54,7 +54,7 @@ const Navigationbar = () => {
     } else {
       setSelectedCourse(index);
       if (Title !== "KPSC Prelims") {
-        navigate("/ListAllCourses", {
+        navigate("ListAllCourses", {
           state: { data: { Title, subarr } },
         });
       }
@@ -64,7 +64,7 @@ const Navigationbar = () => {
   const handleSubtitleClick = (subarr, Title) => {
     toggleCoursesDropDoem();
     setSelectedSubtitle(subarr);
-    navigate("/ListAllCourses", {
+    navigate("ListAllCourses", {
       state: { data: { Title, subarr } },
     });
   };
@@ -74,41 +74,12 @@ const Navigationbar = () => {
   // };
 
   const handleResultPage = () => {
-    navigate("/ResultPage");
+    navigate("ResultPage");
   };
 
   const handleDemoClass = () => {
-    navigate("/DemoClass");
+    navigate("DemoClass");
   };
-
-  // const courseItems = useMemo(() => {
-  //   return Courses.map((course, index) => (
-  //     <div key={index}>
-  //       <div
-  //         onClick={() => handleCourseClick(index, course.Title)}
-  //         className="course-title"
-  //       >
-  //         {course.Title}
-  //       </div>
-  //       {selectedCourse === index &&
-  //         Array.isArray(course.SubTitle) &&
-  //         course.SubTitle.map((subTitle, subIndex) => (
-  //           <div
-  //             key={subIndex}
-  //             onClick={() => handleSubtitleClick(subTitle.subarr)}
-  //             className="sub-Title"
-  //           >
-  //             {subTitle.Title}
-  //           </div>
-  //         ))}
-  //     </div>
-  //   ));
-  // }, [Courses, selectedCourse]);
-
-  // useEffect(() => {
-  //   if (selectedCourse !== null) {
-  //   }
-  // }, [selectedCourse]);
   return (
     <div className="navigation__container d-flex justify-content-between">
       <div>
@@ -118,8 +89,8 @@ const Navigationbar = () => {
         <Link to={"/"}>
           <HomeOutlinedIcon className="home-icon"></HomeOutlinedIcon>
         </Link>
-        <div className="about-us">
-          <div className="about-us-arrow">
+        <div className="about-us header__hover">
+          <div className="about-us-arrow notify__header">
             About Us <KeyboardArrowDownOutlinedIcon />
           </div>
           {
@@ -130,24 +101,28 @@ const Navigationbar = () => {
 
               <div onClick={handleResultPage}>Our Results</div>
               <div onClick={handleDemoClass}>Demo Classes</div>
-              {/* <div onClick={toggleDropdownGallery}> */}
               <div
                 className="navigation__gallery"
-                onClick={toggleDropdownGallery}
+                onMouseEnter={toggleDropdownGallery}
+                onMouseLeave={toggleDropdownGallery} // Close dropdown when leaving
               >
                 Gallery <KeyboardArrowDownOutlinedIcon />
               </div>
+              {showGallery && (
+                <div className="navigation__gallery-dropdown">
+                  <div className="sub-Title" onClick={photoHandler}>
+                    <div>Photo</div>
+                  </div>
+                  <div className="sub-Title mt-3" onClick={videoHandler}>
+                    Video
+                  </div>
+                </div>
+              )}
             </div>
           }
         </div>
 
-        {showGallery && (
-          <div className="navigation__gallery-dropdown">
-            <div onClick={photoHandler}>Photo</div>
-            <div onClick={videoHandler}>Video</div>
-          </div>
-        )}
-        <div className="courses">
+        <div className="courses header__hover notify__header">
           Courses <KeyboardArrowDownOutlinedIcon />
           {
             <div className="courses-dropdown-content">
@@ -161,32 +136,39 @@ const Navigationbar = () => {
                   >
                     {course.Title}
                   </div>
-                  {selectedCourse === index &&
-                    Array.isArray(course.SubTitle) &&
-                    course.SubTitle.map((subTitle, subIndex) => (
-                      <div
-                        key={subIndex}
-                        onClick={() =>
-                          handleSubtitleClick(subTitle.subarr, subTitle.Title)
-                        }
-                        className="sub-Title"
-                      >
-                        {subTitle.Title}
-                      </div>
-                    ))}
+                  <div className="test123">
+                    {selectedCourse === index &&
+                      Array.isArray(course.SubTitle) &&
+                      course.SubTitle.map((subTitle, subIndex) => (
+                        <div
+                          key={subIndex}
+                          onClick={() =>
+                            handleSubtitleClick(subTitle.subarr, subTitle.Title)
+                          }
+                          className="sub-Title"
+                        >
+                          <div className=" mt-3">{subTitle.Title}</div>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               ))}
             </div>
           }
         </div>
 
-        <div>
-          <a href="https://www.instamojo.com/inspiroiaskas">Current Affairs</a>
+        <div className="header__hover">
+          <a
+            className="current__affairs"
+            href="https://www.instamojo.com/inspiroiaskas"
+          >
+            Current Affairs
+          </a>
         </div>
-        <div>Notifications</div>
+        <div className="header__hover notify__header">Notifications</div>
 
         <a
-          className="navigation__test"
+          className="navigation__test header__hover"
           href="http://exam.inspiroias.in"
           target="_blank"
         >

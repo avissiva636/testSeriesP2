@@ -15,6 +15,11 @@ const DemoClass = () => {
           </div>
         ))}
       </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <ContactUsHomePage />
       <Footer />
     </div>

@@ -127,8 +127,8 @@ button:hover {
 
 .gallery__card {
   position: relative;
-  width: 200px; /* Adjust the width as needed */
-  height: 300px; /* Adjust the height as needed */
+  // width: 200px; /* Adjust the width as needed */
+  // height: 300px; /* Adjust the height as needed */
   overflow: hidden;
 }
 
@@ -214,4 +214,52 @@ button:hover {
   display: flex;
   justify-content: center;
   padding: 5px;
+}
+
+.i-sidemenu {
+  position: fixed;
+  top: 35%;
+  z-index: 9999;
+
+  .sidemenu-hovered{
+      width: 50px !important;
+      min-width: 50px !important;
+  }
+  
+  .sidebar-content{
+      background-image: linear-gradient(to right, red, blue);
+      // background-image: linear-gradient(
+      //   to right,
+      //   $primary-color-1,
+      //   $primary-color-2
+      // ) !important;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+  
+      li {
+          margin: 10px 0 !important;
+          &:first-child{
+              margin-top: 0 !important;
+          }
+  
+          .item-content{
+              margin-left: 11px;
+
+              &:hover {
+                  margin-left: 0;
+                  transition: all 500ms ease;
+              }
+          }
+      }
+  }
+  
+  .sidemenu-hover.toggled{
+      width: 60px !important;
+      min-width: 60px !important;
+  }
+}
+
+.service__icon{
+  margin-block: 15px;
+  margin-inline: 6px;
 }

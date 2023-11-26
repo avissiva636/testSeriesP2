@@ -1,6 +1,6 @@
 import Navigationbar from "./Navigationbar";
 import Gallery from "./Gallery";
-
+import Sidebar from "./sidemenu";
 import StudentFeedback from "./StudentsFeedback";
 import Footer from "./Footer";
 import FrequentlyAskedQuestions from "./FrequentlyAskedQuestions";
@@ -12,6 +12,7 @@ const HomePage = () => {
   return (
     <div className="landing__page">
       <PopularCourse />
+      <Sidebar />
       <ProductsHomePage />
       <br />
       <br />

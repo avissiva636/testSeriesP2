@@ -1,12 +1,22 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const handlePrivacyPolicy = () => {
+    navigate("/PrivacyPolicy");
+  };
+  const handleRefundPolicy = () => {
+    navigate("/RefundPolicy");
+  };
+  const handleTermsAndConditions = () => {
+    navigate("/TermsAndConditions");
+  };
   return (
     <>
       {" "}
@@ -62,15 +72,15 @@ const Footer = () => {
         <div className="footer-disclaimer">
           <div>
             <p>
-              <a href="/privacy-policy" className="link">
+              <a className="link" onClick={handlePrivacyPolicy}>
                 Privacy Policy
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="/terms-and-conditions" className="link">
+              <a className="link" onClick={handleTermsAndConditions}>
                 Terms and Conditions
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="/refund-and-cancellation-policy" className="link">
+              <a className="link" onClick={handleRefundPolicy}>
                 Refund and Cancellation Policy
               </a>
             </p>
