@@ -299,7 +299,6 @@ function deleteCourse() {
 function fetchDeleteNormalCourseList(deleteData) {
     const formData = new FormData();
     formData.append("DeleteData", JSON.stringify(deleteData));
-    console.log("deleting", deleteData);
     fetch('/deleteNormalCourseList', {
         method: 'POST',
         body: formData

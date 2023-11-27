@@ -87,12 +87,12 @@ function handleAddCourseSubmit() {
     var radios = document.getElementsByName('subtitle');    
     
     if (radios[1].checked) {
-        var fcourse = document.getElementById("fcourse").value;
+        var ftitle = document.getElementById("title").value;
         var description = quillNormal.getContents();
         // Convert Delta to JSON        
         var descriptionJSON = JSON.stringify(description);
         const formData = new FormData();
-        formData.append("Title", fcourse);
+        formData.append("Title", ftitle);
         formData.append("Description", descriptionJSON);
 
         fetch('/addCourseNormalList', {
