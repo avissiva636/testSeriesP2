@@ -33,8 +33,8 @@ function handleTestimonial() {
         .then(response => response.json())
         .then(data => {
             // You can update the UI or show a success message here
-            form.reset();
             Testimonials=data.Testimonials;            
+            form.reset();
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -60,6 +60,8 @@ function handleUpdateSubmitTestimonial() {
     const UpdateTestimonialName = document.getElementById('UpdateTestimonialName');
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
     const formData = new FormData();
+    
+    formData.append('updateTestimonialData', updateTestimonialData);
     formData.append('UpdateTestimonialName', UpdateTestimonialName.value);
     formData.append('UpdateTestimonialDescription', UpdateTestimonialDescription.value);
 

@@ -6,6 +6,7 @@ const path = require("path");
 const { courseModel: Course } = require("../database/index");
 const { productModel: Product } = require("../database/index");
 const { videoModel: Video } = require("../database/index");
+const { testimonialsModel: Testimonial } = require("../database/index");
 
 // let CourseList = [
 //     {
@@ -130,13 +131,25 @@ async function setProductList() {
 
 setProductList();
 
-let Testimonials = [
-    {
-        name: "vijay",
-        desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
-        photo: "images/testimonials/4.jpg"
+// let Testimonials = [
+//     {
+//         name: "vijay",
+//         desc: "I came here to get some help with my prelims. Individual guidance is quite beneficial.I was able to complete the syllabus according to the schedule.Worth for money.",
+//         photo: "images/testimonials/4.jpg"
+//     }
+// ];
+
+let Testimonials = [];
+
+async function setTestimonials() {
+    try {
+        const retrievedTestimonial = await Testimonial.find();
+        Testimonials = retrievedTestimonial;
+    } catch (error) {
+        console.error('Error setting Testimonials:', error);
     }
-];
+}
+setTestimonials();
 
 // let videoEidList = ['9dhAEj7bZ28'];
 let videoEidList = [];
@@ -569,18 +582,25 @@ router.route("/gettestimoniallist").get((req, res) => {
 })
 
 const testimonialUpload = multer({ storage: testimonialStorage });
-router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), (req, res) => {
+router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), async (req, res) => {
     try {
         const testimonialName = req.body['Testimonial Name'];
         const testimonialDescription = req.body['Testimonial Description'];
 
-        Testimonials.push({
+        // Testimonials.push({
+        //     name: testimonialName,
+        //     desc: testimonialDescription,
+        //     photo: req.testimonialImagePath
+        // })
+
+        Testimonial.create({
             name: testimonialName,
             desc: testimonialDescription,
             photo: req.testimonialImagePath
         })
 
-        
+        await setTestimonials();
+
     } catch (error) {
         console.log(error.message)
     }
@@ -598,22 +618,20 @@ router.route("/addTestimonial").get((req, res) => {
     });
 })
 
-router.post("/uploadUpdateTestimonial", dataflow.any(), (req, res) => {
-    
+router.post("/uploadUpdateTestimonial", dataflow.any(), async (req, res) => {
+
     try {
-        const testimonialName = req.body.UpdateTestimonialName;
+        const testimonialOldName = req.body.updateTestimonialData;
+        const testimonialNewName = req.body.UpdateTestimonialName;
         const testimonialDescription = req.body.UpdateTestimonialDescription;
 
-        Testimonials = Testimonials.map((testimonial) => {
-            if (testimonial.name === testimonialName) {
-                return {
-                    ...testimonial,
-                    name: testimonialName,
-                    desc: testimonialDescription,
-                };
-            }
-            return testimonial;
-        });
+        await Testimonial.findOneAndUpdate(
+            { name: testimonialOldName },
+            { $set: { name: testimonialNewName, desc: testimonialDescription } },
+            { new: true }
+        );
+
+        await setTestimonials();
 
         res.json({
             message: 'Updated Testimonial Data',
@@ -631,25 +649,40 @@ router.route("/updateTestimonial").get((req, res) => {
     });
 })
 
-router.post("/uploadDeleteTestimonial", dataflow.any(), (req, res) => {
+router.post("/uploadDeleteTestimonial", dataflow.any(), async (req, res) => {
     try {
         const deleteTestimonial = req.body.deleteTestimonial;
-        const indexToRemove = Testimonials.findIndex(testimonial => testimonial.name === deleteTestimonial);
-        const photoPath = Testimonials[indexToRemove].photo;
-        Testimonials.splice(indexToRemove, 1)
+        // const indexToRemove = Testimonials.findIndex(testimonial => testimonial.name === deleteTestimonial);
 
-        // Check if the file exists before attempting to delete
-        if (fs.existsSync(photoPath)) {
-            // Delete the file
-            fs.unlinkSync(photoPath);
+        const deletedTestimonial = await Testimonial.findOneAndDelete({ name: deleteTestimonial });
+        // const deletedTestimonial = await Testimonial.findOne({ name: deleteTestimonial });
+
+        if (deletedTestimonial) {
+            const photoPath = deletedTestimonial.photo;
+            console.log(photoPath)
+            if (fs.existsSync(photoPath)) {
+                // Delete the file
+                console.log("executing")
+                fs.unlinkSync(photoPath);
+            } else {
+                console.log(`File ${photoPath} does not exist.`);
+            }
+            console.log('Deleted Testimonial:', deletedTestimonial);
         } else {
-            console.log(`File ${photoPath} does not exist.`);
+            console.log('Testimonial not found or already deleted.');
         }
+        await setTestimonials();
+
         // Respond to the client as needed
         res.json({
-            message: `File ${photoPath} deleted successfully.`,
+            message: `File ${deletedTestimonial.photo} deleted successfully.`,
             Testimonials
         });
+
+
+        // Testimonials.splice(indexToRemove, 1)
+
+        // // Check if the file exists before attempting to delete
     } catch (error) {
         console.log("error", error.message)
     }
