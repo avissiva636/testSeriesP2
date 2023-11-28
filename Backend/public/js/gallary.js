@@ -91,8 +91,9 @@ function uploadvideo() {
             .then(response => response.json())
             .then(data => {
                 // You can update the UI or show a success message here                
-                form.reset();
-                updateVideoGallery(data.videos);
+                // form.reset();
+                loadSection('addVideo');
+                // updateVideoGallery(data.videos);
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -101,36 +102,37 @@ function uploadvideo() {
     }
 }
 
-function updateVideoGallery(updatedVideos) {
+//Not use currently
+// function updateVideoGallery(updatedVideos) {
 
-    const videoContainer = document.getElementById('videoContainer');
-    videoContainer.innerHTML = '';
+//     const videoContainer = document.getElementById('videoContainer');
+//     videoContainer.innerHTML = '';
 
-    updatedVideos.forEach(video => {
-        const imageWrapper = document.createElement('div');
-        imageWrapper.className = 'imageWrapper';
+//     updatedVideos.forEach(video => {
+//         const imageWrapper = document.createElement('div');
+//         imageWrapper.className = 'imageWrapper';
 
-        const iframe = document.createElement('iframe');
-        iframe.width = '300px';
-        iframe.height = '200px';
-        iframe.src = `https://www.youtube.com/embed/${video.videoid}`;
-        iframe.title = 'YouTube video player';
-        iframe.frameBorder = '0';
-        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-        iframe.allowFullscreen = true;
+//         const iframe = document.createElement('iframe');
+//         iframe.width = '300px';
+//         iframe.height = '200px';
+//         iframe.src = `https://www.youtube.com/embed/${video.videoid}`;
+//         iframe.title = 'YouTube video player';
+//         iframe.frameBorder = '0';
+//         iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+//         iframe.allowFullscreen = true;
 
-        const deleteIcon = document.createElement('span');
-        deleteIcon.className = 'deleteIcon';
-        deleteIcon.innerHTML = '❌';
-        deleteIcon.onclick = function () {
-            deleteVideo(video);
-        };
+//         const deleteIcon = document.createElement('span');
+//         deleteIcon.className = 'deleteIcon';
+//         deleteIcon.innerHTML = '❌';
+//         deleteIcon.onclick = function () {
+//             deleteVideo(video);
+//         };
 
-        imageWrapper.appendChild(iframe);
-        imageWrapper.appendChild(deleteIcon);
-        videoContainer.appendChild(imageWrapper);
-    });
-}
+//         imageWrapper.appendChild(iframe);
+//         imageWrapper.appendChild(deleteIcon);
+//         videoContainer.appendChild(imageWrapper);
+//     });
+// }
 
 function deleteVideo(elementToRemove) {
     
