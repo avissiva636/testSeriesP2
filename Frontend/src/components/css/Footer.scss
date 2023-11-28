@@ -129,29 +129,21 @@
   background-color: unset !important;
 }
 
-.test123 {
-  position: absolute;
-  // display: none;
-  right: -40px;
-  padding: 30px;
-  bottom: -110px;
-  background-color: white;
-}
+
 
 .course__content {
   display: flex;
-  min-width: 300px;
 }
-.text__description {
-  position: absolute;
-  right: 0;
-  top: 175px;
-}
+
 
 .text__left {
   display: flex;
   justify-content: center;
-  padding-block: 7px;
+  padding: 5px;
+  align-items: center;
+  min-width: 450px;
+  max-width: 450px;
+  height: 50px;
   border: 1px solid grey;
 }
 
@@ -161,14 +153,97 @@
   display: flex;
   /* min-width: 300px; */
   justify-content: center;
-  width: 353px;
+  width: 450px;
+  min-width: 450px;
+  max-width: 450px;
   height: 50px;
-  border-radius: 10px 10px 0px 0px;
   padding: 5px;
   font-size: 30px;
 }
 
-.courses__page {
-  margin-top: 100px;
-  margin-left: 30px;
+
+/* Responsive styles for smaller screens */
+@media (max-width: 992px) {
+  .footer-text {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-text > div {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+
+  .footer-disclaimer {
+    padding: 15px;
+  }
+  .address__text{
+    justify-content: center;
+  }
+  .feature__card{
+    margin-top: 50px !important;
+  }
+  .demo__content{
+    flex-wrap: wrap;
+  }
+}
+
+
+
+//result page responsive
+
+
+@media (max-width: 768px) {
+  .card__result{
+    margin-top: 30px;
+  }
+
+  .result__container {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+  }
+.popular-courses-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .course-list{
+    display: block;
+  }
+}
+
+
+}
+
+.video-responsive {
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+  margin: 0 auto;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .video-responsive {
+    max-width: 100%; /* Set to 100% for smaller screens */
+  }
+  .product-item {
+    height: 200px !important;
+    min-width: 300px !important;
+  }
+
+  .navigation__container{
+padding: 30px !important;
+  }
+
+  .view-more-button {
+    margin-right: unset !important ;
+  }
+  .view__products{
+    justify-content: center;
+  }
 }

@@ -103,31 +103,10 @@ color: red;
       }
     }   
 }
- 
-// h1:after {
-//   content: "";
-//   width: 65px;
-//   height: 4px;
-//   background: red;
-//   margin: 15px auto;
-//   display: block;
-// }
-
-
-// .popular-courses-container{
-//   background-image: url("./images//img2.jpg");
-// background-repeat: no-repeat;
-// background-size: cover;
-// padding: 30px;
-
-// h1{
-//   display: flex;
-//   justify-content: center;
-// }
-// }
 
 .features{
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .result__icon{
@@ -147,4 +126,40 @@ color: red;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+/* Add your existing styles */
+
+@media (max-width: 768px) {
+ .team__card{
+  margin-left: unset !important;
+  width: unset !important;
+ }
+ .slick-dots {
+  width: 100% !important;
+ }
+ .card__text-position{
+  background-color: white;
+ }
+ .future__content {
+  padding: 40px 10px 40px 20px !important;
+ }
+
+
+}
+
+@media (max-width: 400px) {
+  .slick-prev {
+    display: inline-block;
+    left: 30px !important;
+    margin-top: 280px; /* Adjust as needed */
+    z-index: 3;
+  }
+  .slick-next{
+  right: unset !important;
+  margin-top: 280px;
+  left: 60px !important;
+  z-index: 3;
+  }
 }

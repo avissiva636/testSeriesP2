@@ -113,7 +113,6 @@ const WhyInspiro = () => {
         <li>Highly relevant printed materials</li>
       </ol></div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

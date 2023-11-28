@@ -42,9 +42,11 @@ const ListAllCourses = () => {
     }
   };
   return (
-    <div>
-      <div className="courses__page">
-        <div className="courses__header">Courses offered</div>
+    <>
+    <div className="courses__full-content mb-5">
+      <div className="courses__page col-xl-3 col-lg-3 col-md-12">
+        <div className="courses__header">Courses offered</div> 
+       
         {Courses.map((course, index) => {
           let Title;
 
@@ -52,7 +54,7 @@ const ListAllCourses = () => {
             Title = course.SubTitle.map((subCourse, subIndex) => (
               <div className="d-flex">
                 <div
-                  className="col-3 text__title"
+                  className="text__title"
                   key={subIndex}
                   onClick={() =>
                     handleSubtitleClick(
@@ -62,16 +64,7 @@ const ListAllCourses = () => {
                     )
                   }
                 >
-                  <div className="text__left">{subCourse.Title}</div>
-                </div>
-                <div className="col-9 text__description">
-                  {" "}
-                  {selectedSubCourse === subIndex && (
-                    <CourseDescription
-                      Title={subCourse.Title}
-                      subarr={subCourse.subarr}
-                    />
-                  )}
+                  <div className="text__left">{subCourse.Title }</div>
                 </div>
               </div>
             ));
@@ -79,22 +72,12 @@ const ListAllCourses = () => {
             Title = (
               <div className="d-flex">
                 <div
-                  className="col-3 text__title"
+                  className="text__title"
                   onClick={() =>
                     handleCourseClick(index, course.Title, course.subarr)
                   }
                 >
                   <div className="text__left">{course.Title}</div>
-                </div>
-                <div className="col-9 text__description">
-                  {selectedCourse === index &&
-                    course.subarr &&
-                    course.subarr.length > 0 && (
-                      <CourseDescription
-                        Title={course.Title}
-                        subarr={course.subarr}
-                      />
-                    )}
                 </div>
               </div>
             );
@@ -102,7 +85,7 @@ const ListAllCourses = () => {
           return <div className="test5">{Title}</div>;
         })}
       </div>
-      <div className="col-9 text__description">
+      <div className="col-xl-9 col-lg-9 col-md-12 text__description">
         <CourseDescription Title={a} subarr={b} />
       </div>
       <br></br>
@@ -110,9 +93,10 @@ const ListAllCourses = () => {
       <br></br>
       <br></br>
       <br></br>
-      <ContactUsHomePage />
-      <Footer />
+     
     </div>
+    <ContactUsHomePage /> 
+    </>
   );
 };
 export default ListAllCourses;

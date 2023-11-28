@@ -3,7 +3,7 @@
 const CourseDescription = (props) => {
   console.log(props.subarr[0].Desc);
   return (
-      <div className="card">
+      <div className="card1">
         <h2>{props.Title}</h2>
         <p>{props.subarr[0]?.Syllabus}</p>
       </div>

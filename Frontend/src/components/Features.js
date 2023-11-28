@@ -7,7 +7,7 @@ const Features = () => {
       </div>
 
       <div class="features d-flex mt-5">
-        <div class="features__card col-3 p-5">
+        <div class="features__card col-xl-3 col-lg-3 col-md-12 p-5">
           <h2>Professional & Expert</h2>
           <p>
             India topmost civil service trainers are working with us to share
@@ -16,7 +16,7 @@ const Features = () => {
             Sebastian, Dr. Muhammad Basheer, and many more!
           </p>
         </div>
-        <div class="features__card col-3 p-5">
+        <div class="features__card feature__card col-xl-3 col-lg-3 col-md-12 p-5">
           <h2>Reasonable Course Fees</h2>
           <p>
             Get access to high-quality content, study materials, and online IAS
@@ -26,7 +26,7 @@ const Features = () => {
             with our innovative online civil service coaching.
           </p>
         </div>
-        <div class="features__card col-3 p-5">
+        <div class="features__card feature__card col-xl-3 col-lg-3 col-md-12 p-5">
           <h2>Visual Learning Experience</h2>
           <p>
             Experience a unique opportunity for visual learning, featuring

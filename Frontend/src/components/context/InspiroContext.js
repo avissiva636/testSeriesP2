@@ -130,6 +130,41 @@ export const InspiroContext = ({ children }) => {
         },
       ],
     },
+    {
+      Title: "KEA",
+      SubTitle: [
+        {
+          Title: "Topic 1",
+          subarr: [
+            {
+              Syllabus: "Another sub section 1",
+              Fees: "100100",
+              Portions: "Some content here",
+            },
+          ],
+        },
+        {
+          Title: "Topic 2",
+          subarr: [
+            {
+              Syllabus: "Started developing on 27th Nov",
+              Fees: "100200",
+              Portions: "Some content here",
+            },
+          ],
+        },
+        {
+          Title: "Topic 3",
+          subarr: [
+            {
+              Syllabus: "We will make it whatever issue comes",
+              Fees: "100030",
+              Portions: "Some content here",
+            },
+          ],
+        },
+      ],
+    },
   ];
   const ImageList = [
     {
@@ -192,7 +227,7 @@ export const InspiroContext = ({ children }) => {
     {
       id: "2",
       name: "stephen",
-      desc: "The way lecturers communicate and maintain the explanation of the topics is extremely outstanding. They are wonderful teachers and highly professional in their daily work. You must have patience to comprehend, though, as you cannot expect your lecturers to complete everything for you if you rush them. They also assist you in resolving any questions you may have and ensure that no one feels embarrassed sharing their opinions about the subjects covered in class. Overall I would suggest you to be a part of this classes and excel in your career.",
+      desc: "The way lecturers communicate and maintain the explanation of the topics is extremely outstanding. They are wonderful teachers and highly professional in their daily work. You must have patience to comprehend, though, as you cannot expect your lecturers to complete everything for you if you rush them. They also assist you in resolving any questions.",
       rating: "5",
     },
     {

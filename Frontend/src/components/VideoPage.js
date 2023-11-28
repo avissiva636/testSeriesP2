@@ -21,7 +21,6 @@ const VideoPage = () => {
       <br></br>
       <br></br>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

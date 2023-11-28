@@ -22,7 +22,7 @@ const ProductsHomePage = () => {
             />
           ))}
         </div>
-        <div className="d-flex justify-content-end"><Link to={"/Products"}>
+        <div className="d-flex justify-content-end view__products"><Link to={"/Products"}>
           <button className="view-more-button">View More</button>
         </Link></div>
         

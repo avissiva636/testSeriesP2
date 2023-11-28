@@ -28,7 +28,7 @@
 
 /* Style for the right section (Map, Form, etc.) */
 .right-section {
-  padding-left: 100px;
+  padding-left: 50px;
 }
 
 /* Style for each individual contact item */
@@ -212,54 +212,34 @@ button:hover {
 .sub-Title {
   color: black;
   display: flex;
+  cursor: pointer;
   justify-content: center;
   padding: 5px;
-}
 
-.i-sidemenu {
-  position: fixed;
-  top: 35%;
-  z-index: 9999;
-
-  .sidemenu-hovered{
-      width: 50px !important;
-      min-width: 50px !important;
-  }
-  
-  .sidebar-content{
-      background-image: linear-gradient(to right, red, blue);
-      // background-image: linear-gradient(
-      //   to right,
-      //   $primary-color-1,
-      //   $primary-color-2
-      // ) !important;
-      border-top-right-radius: 50px;
-      border-bottom-right-radius: 50px;
-  
-      li {
-          margin: 10px 0 !important;
-          &:first-child{
-              margin-top: 0 !important;
-          }
-  
-          .item-content{
-              margin-left: 11px;
-
-              &:hover {
-                  margin-left: 0;
-                  transition: all 500ms ease;
-              }
-          }
-      }
-  }
-  
-  .sidemenu-hover.toggled{
-      width: 60px !important;
-      min-width: 60px !important;
+  &:hover{
+    color: red;
   }
 }
 
-.service__icon{
-  margin-block: 15px;
-  margin-inline: 6px;
+@media (max-width: 768px) {
+  .right-section {
+    padding-left: 0;
+  }
+  .contact-container{
+    flex-direction: column;
+  }
+  .input-group input, .input-group textarea {
+    width: 90%;
+  }
+
+  .heading__content{
+    padding: 30px;
+  }
+
+  .i-sidemenu .sidemenu-hover.toggled {
+    width: 45px !important;
+    min-width: 45px !important;
 }
+}
+
+

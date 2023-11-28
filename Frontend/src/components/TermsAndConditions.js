@@ -40,7 +40,6 @@ const TermsAndConditions = () => {
         </p>
       </div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

@@ -29,7 +29,6 @@ const RefundPolicy = () => {
         <p>inspiroschools@gmail.com</p>
       </div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

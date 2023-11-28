@@ -70,7 +70,6 @@ const PrivacyPolicy = () => {
         </p>
       </div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

@@ -1,0 +1,112 @@
+Inspiro
+
+Change webinar to Notifications
+Features is secondary
+Add popular courses section in front page
+Courses - 
+Notifications should add from backend, user should able to short the display order.
+Contact us should include that which courses students are interested to choose section.
+Key word search features
+Attach instamojo links in first page
+Attach previous year question paper
+Current affairs link to kas moksha 
+
+
+
+Reference - shankarIAS, Insights on India, als ias, vajram ias,
+
+Primary vision - previous year question papers - this will include in instamojo, courses, instamojo,
+
+First page:
+1. Courses from - refer insightsias
+2. Products - Refer kas moksha - courses can be add dynamically & each heading need sub sections and while clicking on those sub sections redirect to instamojo
+    1. KAS Mains notes
+    2. KAS prelims notes
+    3. Current affairs magazines
+    4. SAAD Material
+    5. KPSC Group C Material
+    6. PSI/ ESI Material
+    7. FDA & SDA Material
+3. Photos & Videos Gallery
+4. Feedbacks
+5. FAQ
+
+
+Notifications:
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Replace profile to Our results
+Add photos to each features
+include whatsapp and twitter icons
+Notification - refer carnataka careers
+remove contact us from navigator and replace it with Test series
+
+
+
+
+.popular-courses-container {
+  text-align: center;
+  margin: 20px;
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .course-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+
+    .course-item {
+      background-color: #fff;
+      box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+        0 5px 15px 0 rgba(37, 44, 97, 0.15);
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px 0 rgba(136, 144, 195, 0.4),
+          0 10px 20px 0 rgba(37, 44, 97, 0.3);
+      }
+
+      h2 {
+        font-size: 18px;
+        padding: 20px;
+        margin: 0;
+        text-decoration: none;
+        color: #333;
+        transition: 0.3s;
+      }
+    }
+  }
+
+  .course__btn {
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+
+      &:hover {
+        background-color: #45a049;
+      }
+
+      svg {
+        margin-left: 5px;
+      }
+    }
+  }
+}

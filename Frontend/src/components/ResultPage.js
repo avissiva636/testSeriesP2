@@ -8,7 +8,7 @@ import mortar from "./css/images/mortarboard.png"
 const ResultPage = () => {
   return (
     <div>
-      <div class="container mt-4">
+      <div class="container result__container mt-4">
   <div class="row">
     <div class="col-md-3">
       <div class="card__result">
@@ -52,7 +52,6 @@ const ResultPage = () => {
   </div>
 </div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

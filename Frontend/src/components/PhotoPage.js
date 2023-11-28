@@ -22,7 +22,6 @@ const PhotoPage = () => {
       <br></br>
       <br></br>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

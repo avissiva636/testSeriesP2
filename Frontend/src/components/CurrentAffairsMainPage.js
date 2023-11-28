@@ -19,7 +19,6 @@ const CurrentAffairsMainPage = () => {
         ))}
       </div>
       <ContactUsHomePage />
-      <Footer />
     </div>
   );
 };

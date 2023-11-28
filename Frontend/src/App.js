@@ -17,6 +17,9 @@ import DemoClass from "./components/DemoClass";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
 import RefundPolicy from "./components/RefundPolicy";
+import Sidebar from "./components/sidemenu";
+import SubProducts from "./components/SubProducts";
+import Footer from "./components/Footer";
 function App() {
   // useEffect(() => {
   //   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -26,6 +29,7 @@ function App() {
       <Router>
         <InspiroContext>
           <Navigationbar />
+          <Sidebar />
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/Products" element={<Products />}></Route>
@@ -50,7 +54,9 @@ function App() {
               element={<TermsAndConditions />}
             />
             <Route path="/RefundPolicy" element={<RefundPolicy />} />
+            <Route path="SubProducts" element={<SubProducts />} />
           </Routes>
+          <Footer />
         </InspiroContext>
       </Router>
     </div>

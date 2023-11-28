@@ -32,7 +32,8 @@
 .view-more-button {
     background-color: #e51123;
     color: #fff;
-    margin-right: 76px;
+    margin-right: 620px;
+    margin-top: 20px;
     padding: 10px 20px;
     border: none;
     cursor: pointer;

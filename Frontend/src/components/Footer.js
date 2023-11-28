@@ -26,7 +26,7 @@ const Footer = () => {
           <Col lg={6}>
             <h2 className="text-light head-text">Inspiro</h2>
             <div className="contact-info">
-              <address className="d-flex text-light">
+              <address className="d-flex text-light address__text">
                 #508, Second Floor, 10th Main Road, 18th Cross Road,<br></br>{" "}
                 MRCR Layout, Vijaya Nagar, Bengaluru – 560 040
               </address>

@@ -12,7 +12,6 @@ const HomePage = () => {
   return (
     <div className="landing__page">
       <PopularCourse />
-      <Sidebar />
       <ProductsHomePage />
       <br />
       <br />
@@ -38,8 +37,6 @@ const HomePage = () => {
       <br />
       <br />
       <ContactUsHomePage />
-      {/* <br /> */}
-      <Footer />
     </div>
   );
 };

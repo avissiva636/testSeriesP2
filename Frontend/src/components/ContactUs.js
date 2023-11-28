@@ -23,7 +23,7 @@ const ContactUs = () => {
         <p>Home &gt;&gt; Contact Us</p>
       </div>
       <div className="contact-container p-4">
-          <Col lg={3} className="left-section p-3">
+          <Col lg={3} md={5} sm={12} className="left-section mb-5 p-3">
             <h4>Address</h4>
             <p className="left-item">#508, Second Floor,</p>
             <p className="left-item">10th Main Road, 18th Cross Road</p>
@@ -57,7 +57,7 @@ const ContactUs = () => {
             </a>
           </div>
           </Col>
-          <Col lg={9} className="right-section">
+          <Col lg={9} md={7} sm={12} className="right-section mb-5">
             <div className="quick-contact">
               <h2>Quick Contact</h2>
               <Form>
@@ -96,7 +96,6 @@ const ContactUs = () => {
             </div>
           </Col>
       </div>
-      <Footer />
     </div>
   );
 };
