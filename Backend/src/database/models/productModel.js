@@ -6,7 +6,12 @@ const productschema = mongoose.Schema({
         required: [true, "please add the product name"],
     },
     subProducts: {
-        type: [String],
+        type: [
+            {
+                name: String,
+                link: String
+            }
+        ],
         required: [true, "please add the subprodudcts"],
     },
 
