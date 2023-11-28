@@ -1,19 +1,25 @@
 import { Email } from "@mui/icons-material";
-import "./css/ContactUsHomePage.css";
 import { Link } from "react-router-dom";
 
 const ContactUsHomePage = () => {
   return (
-    <div className="center">
+    <div className="future__content">
       <div>
-        <h1>Your Future Is Calling</h1>
+        <h1>
+          <b>Your Future Is Calling</b>
+        </h1>
+        <br></br>
       </div>
       <div>
         <p>
-          Contact us for registration, seat availability, feedback or complaints
+          <b>
+            Contact us for registration, seat availability, feedback or
+            complaints
+          </b>
         </p>
       </div>
-      <Link to={"./ContactUs"}>
+      <br></br>
+      <Link to={"/ContactUs"}>
         <button>
           <Email /> CONTACT US
         </button>

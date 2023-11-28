@@ -1,29 +1,44 @@
 import React from "react";
-import "./css/Footer.css";
-import { Link, useNavigate } from "react-router-dom";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import { Container, Row, Col } from "react-bootstrap";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
+  const handlePrivacyPolicy = () => {
+    navigate("/PrivacyPolicy");
+  };
+  const handleRefundPolicy = () => {
+    navigate("/RefundPolicy");
+  };
+  const handleTermsAndConditions = () => {
+    navigate("/TermsAndConditions");
+  };
   return (
-    <div>
+    <>
+      {" "}
       <div className="footer">
-        <div className="footer-section">
-          <div className="about-us">
-            <h3>About Us</h3>
-            <p>
-              How it will be if highly motivated and dedicated coaching experts
-              from Delhi come together to start a school, the sole purpose of
-              which is to provide high-end focused guidance to the aspirants to
-              crack one of the toughest exams? Inspiro School of Civil Services
-              is the outcome of such a team.
-            </p>
+        {/* <Container className="test"> */}
+        <Row className="footer-text col-12">
+          <Col lg={6}>
+            <h2 className="text-light head-text">Inspiro</h2>
+            <div className="contact-info">
+              <address className="d-flex text-light address__text">
+                #508, Second Floor, 10th Main Road, 18th Cross Road,<br></br>{" "}
+                MRCR Layout, Vijaya Nagar, Bengaluru – 560 040
+              </address>
+            </div>
+          </Col>
+          <Col lg={3} className="">
+            <h3 className="text-light">Connect us</h3>
+            <aside className="footer__mail">inspiroschools@gmail.com</aside>
+            <aside className="text-light mb-3"> 08041327777</aside>
             <div className="social-icons">
               <a href="#">
-                <FacebookIcon />
+                <FacebookRoundedIcon />
               </a>
               <a href="#">
                 <InstagramIcon />
@@ -35,11 +50,9 @@ const Footer = () => {
                 <YouTubeIcon />
               </a>
             </div>
-          </div>
-        </div>
-        <div className="footer-section">
-          <div className="company">
-            <h3>Company</h3>
+          </Col>
+          <Col lg={3} className="mb-4 footer__right">
+            <h3 className="text-light">Quick links</h3>
             <ul>
               <li>
                 <a href="#">Current Affairs</a>
@@ -47,53 +60,40 @@ const Footer = () => {
               <li>
                 <a href="#">Courses</a>
               </li>
-              <Link to={"/WhyInspiro"}>
-                <li>
-                  <a href="#">Why Inspire</a>
-                </li>
-              </Link>
-              <Link to={"/ContactUs"}>
-                <li>
-                  <a>Contact Us</a>
-                </li>
-              </Link>
+              <li>
+                <a href="#">Why Inspire</a>
+              </li>
+              <li>
+                <a href="#">Contact Us</a>
+              </li>
             </ul>
-          </div>
-        </div>
-        <div className="footer-section">
-          <div className="address">
-            <h3>Address</h3>
-            <address>
-              #508, Second Floor,
-              <br />
-              10th Main Road, 18th Cross Road,
-              <br />
-              MRCR Layout, Vijayanagar,
-              <br />
-              Bengaluru - 560040
-            </address>
-            <div className="contact-info">
-              <p>Tel: 08041327777</p>
-              <p>Email: inspiroschools@gmail.com</p>
-            </div>
+          </Col>
+        </Row>
+        <div className="footer-disclaimer">
+          <div>
+            <p>
+              <a className="link" onClick={handlePrivacyPolicy}>
+                Privacy Policy
+              </a>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <a className="link" onClick={handleTermsAndConditions}>
+                Terms and Conditions
+              </a>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <a className="link" onClick={handleRefundPolicy}>
+                Refund and Cancellation Policy
+              </a>
+            </p>
           </div>
         </div>
       </div>
-      <div className="footer-disclaimer">
-        <div>
-          <p>
-            Privacy Policy | Terms and Conditions | Refund and Cancellation
-            Policy
-          </p>
-        </div>
-        <div>
-          <p>
-            Copyright 2023. Inspiro IAS Academy All Rights Reserved | Website
-            Design and Development :{" "}
-          </p>
-        </div>
+      <div className="footer__bottom">
+        <aside className="text-light">
+          Copyright 2023. Inspiro IAS Academy All Rights Reserved | Website
+          Design and Development :{""}
+        </aside>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -3,26 +3,29 @@ import Footer from "./Footer";
 import CallIcon from "@mui/icons-material/Call";
 import { Email } from "@mui/icons-material";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import "./css/ContactUs.css";
 import { useEffect } from "react";
+import { Row, Col, Form } from "react-bootstrap";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+
 const ContactUs = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0); // Scrolls to the top of the page
-      }, []);
-    return (
-      <div>
-        <Navigationbar />
-        <div className="heading-container">
-            <img src="/Users/jagan/Documents/Projects/inspiroias/Frontend/src/components/contact-banner.jpg" alt="contact-banner"/>
-        <h1 >Contact Us</h1>  
-          <p>Home &gt;&gt; Contact Us</p>
-        </div>
-        <div className="contact-container">
-          <div className="left-section">
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+  }, []);
+
+  return (
+    <div>
+      {/* <Navigationbar /> */}
+      <div className="heading-container">
+        <h1>Contact Us</h1>
+        <p>Home &gt;&gt; Contact Us</p>
+      </div>
+      <div className="contact-container p-4">
+          <Col lg={3} md={5} sm={12} className="left-section mb-5 p-3">
             <h4>Address</h4>
-            <p className="left-item">
-               #508, Second Floor,
-            </p>
+            <p className="left-item">#508, Second Floor,</p>
             <p className="left-item">10th Main Road, 18th Cross Road</p>
             <p className="left-item">MRCR Layout, Vijayanagar</p>
             <p className="left-item">Bengaluru - 560040</p>
@@ -36,44 +39,65 @@ const ContactUs = () => {
               <AccessTimeFilledIcon />
               Monday - Friday: 09.00 AM - 06.00 PM
             </p>
-            <p className="left-item">Sunday & Saturday: 8.00 AM - 10.00 PM</p>
+            <p className="left-item">
+            <AccessTimeFilledIcon />
+            Sunday & Saturday: 8.00 AM - 10.00 PM</p>
+            <div className="social-icons text-center">
+            <a href="#">
+              <FacebookIcon />
+            </a>
+            <a href="#">
+              <InstagramIcon />
+            </a>
+            <a href="#">
+              <LinkedInIcon />
+            </a>
+            <a href="#">
+              <YouTubeIcon />
+            </a>
           </div>
-          <div className="right-section">
+          </Col>
+          <Col lg={9} md={7} sm={12} className="right-section mb-5">
             <div className="quick-contact">
               <h2>Quick Contact</h2>
-              <form>
-                <div className="input-group">
-                  <label>Name:</label>
-                  <input type="text" name="name" required />
-                </div>
-                <div className="input-group">
-                  <label>Email:</label>
-                  <input type="email" name="email" required />
-                </div>
-                <div className="input-group">
-                  <label>Phone Number:</label>
-                  <input type="tel" name="phone" required />
-                </div>
-                <div className="input-group">
-                  <label>Qualification:</label>
-                  <input type="text" name="qualification" />
-                </div>
-                <div className="input-group">
-                  <label>Place:</label>
-                  <input type="text" name="place" />
-                </div>
-                <div className="input-group">
+              <Form>
+                <Row>
+                  <Col md={6} className="input-group">
+                    <label>Name:</label>
+                    <input type="text" name="name" required />
+                  </Col>
+                  <Col md={6} className="input-group">
+                    <label>Email:</label>
+                    <input type="email" name="email" required />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6} className="input-group">
+                    <label>Phone Number:</label>
+                    <input type="tel" name="phone" required />
+                  </Col>
+                  <Col md={6} className="input-group">
+                    <label>Qualification:</label>
+                    <input type="text" name="qualification" />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6} className="input-group">
+                    <label>Place:</label>
+                    <input type="text" name="place" />
+                  </Col>
+                  <div className="input-group">
                   <label>Your Message:</label>
                   <textarea name="message" required></textarea>
                 </div>
-                <button type="submit">Submit</button>
-              </form>
+                </Row>
+                <div><button className="submit__btn" type="submit">Submit</button></div>
+              </Form>
             </div>
-          </div>
-        </div>
-        <Footer />
+          </Col>
       </div>
-    );
-  };
-  
+    </div>
+  );
+};
+
 export default ContactUs;

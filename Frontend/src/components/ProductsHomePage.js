@@ -6,7 +6,7 @@ import ProductCardDisplay from "./ProductCardDisplay";
 
 const ProductsHomePage = () => {
   const { products } = useInspiroCrud();
-  const [hoveredProduct, setHoveredProduct] = useState(null);
+  // const [hoveredProduct, setHoveredProduct] = useState(null);
 
   return (
     <div>
@@ -17,14 +17,15 @@ const ProductsHomePage = () => {
             <ProductCardDisplay
               key={product.mainProduct}
               product={product}
-              hoveredProduct={hoveredProduct}
-              setHoveredProduct={setHoveredProduct}
+              // hoveredProduct={hoveredProduct}
+              // setHoveredProduct={setHoveredProduct}
             />
           ))}
         </div>
-        <Link to={"/Products"}>
+        <div className="d-flex justify-content-end view__products"><Link to={"/Products"}>
           <button className="view-more-button">View More</button>
-        </Link>
+        </Link></div>
+        
       </div>
     </div>
   );

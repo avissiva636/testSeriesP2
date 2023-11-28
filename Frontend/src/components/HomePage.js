@@ -1,6 +1,6 @@
 import Navigationbar from "./Navigationbar";
 import Gallery from "./Gallery";
-
+import Sidebar from "./sidemenu";
 import StudentFeedback from "./StudentsFeedback";
 import Footer from "./Footer";
 import FrequentlyAskedQuestions from "./FrequentlyAskedQuestions";
@@ -10,8 +10,7 @@ import ProductsHomePage from "./ProductsHomePage";
 
 const HomePage = () => {
   return (
-    <div>
-      <Navigationbar></Navigationbar>
+    <div className="landing__page">
       <PopularCourse />
       <ProductsHomePage />
       <br />
@@ -38,8 +37,6 @@ const HomePage = () => {
       <br />
       <br />
       <ContactUsHomePage />
-      <br />
-      <Footer />
     </div>
   );
 };
