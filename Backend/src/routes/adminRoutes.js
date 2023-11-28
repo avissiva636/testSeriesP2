@@ -364,7 +364,7 @@ router.route("/addProductList").post(dataflow.any(), async (req, res) => {
 
 router.route("/addProduct").get((req, res) => {
     res.render("products/addProduct", {
-        message: "delete Course",
+        message: "add product",
         productList: productList,
     });
 })
