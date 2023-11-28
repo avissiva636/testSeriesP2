@@ -344,18 +344,46 @@ router.route("/getProductList").get((req, res) => {
     res.json({ productList });
 })
 
-router.route("/addProductList").post(dataflow.any(), async (req, res) => {
-    const data = {
-        mainProduct: req.body.mainProduct,
-        subProducts: JSON.parse(req.body.subProducts)
+const productStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../../public/images/products'));
+    },
+    filename: function (req, file, cb) {
+        const fileName = Date.now() + path.extname(file.originalname);
+        // req.productImagePath = path.join(__dirname, '../../public/images/products', fileName);
+        req.productImagePaths = req.productImagePaths || []; // Initialize an array if not present
+        req.productImagePaths.push(path.join(__dirname, '../../public/images/products', fileName));
+        cb(null, Date.now() + path.extname(file.originalname));
     }
+});
+
+
+const productUpload = multer({ storage: productStorage });
+// router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), async (req, res) => {
+//     try {
+//         const testimonialName = req.body['Testimonial Name'];
+
+router.route("/addProductList").post(productUpload.array('photo'), async (req, res) => {
+    // const data = {
+    //     mainProduct: req.body.mainProduct,
+    //     subProducts: JSON.parse(req.body.subProducts)
+    // }
+
+    var mainProduct = req.body.mainProduct;
+    var subProducts = JSON.parse(req.body.subProducts);
+    const productImagePaths = req.productImagePaths;
+
+    subProducts.forEach((subProduct, index) => {
+        subProduct.photo = productImagePaths[index];
+    });
 
     await Product.create({
-        mainProduct: data.mainProduct,
-        subProducts: data.subProducts,
+        mainProduct: mainProduct,
+        subProducts: subProducts,
     })
+    await setProductList();
 
-    productList.push(data);
+    // productList.push(data);
     res.json({
         message: "Product Data Updated",
         productList,
@@ -364,7 +392,7 @@ router.route("/addProductList").post(dataflow.any(), async (req, res) => {
 
 router.route("/addProduct").get((req, res) => {
     res.render("products/addProduct", {
-        message: "delete Course",
+        message: "add product",
         productList: productList,
     });
 })
@@ -420,6 +448,24 @@ router.route("/updateProduct").get((req, res) => {
     });
 })
 
+function getProductPhoto(mainProduct, subProductNames) {
+    const product = productList.find(p => p.mainProduct === mainProduct);
+
+    if (product) {
+        return product.subProducts
+            .filter(subProduct => subProductNames.includes(subProduct.name))
+            .map(subProduct => subProduct.photo);
+
+        // return subProductNames.map(subProductName => {
+        //     const subProduct = product.subProducts.find(s => s.name === subProductName);
+        //     return subProduct ? subProduct.photo : null;
+        // }
+        // );
+    }
+
+    return [];
+}
+
 router.route("/deleteProductList").post(dataflow.any(), async (req, res) => {
     const producttoDelete = JSON.parse(req.body.producttoDelete);
     const category = req.body.category;
@@ -435,6 +481,16 @@ router.route("/deleteProductList").post(dataflow.any(), async (req, res) => {
                     { $pull: { subProducts: { name: dproduct } } },
                     { new: true }
                 );
+                var photoLinks = getProductPhoto(producttoDelete,subProduct);
+                
+                // Delete the file
+                photoLinks.forEach((photo) => {                    
+                    if (fs.existsSync(photo)) {
+                        fs.unlinkSync(photo);                        
+                    } else {
+                        console.log(`File ${photo} does not exist.`);
+                    }
+                });
             }
         } catch (err) {
             console.error(`Error updating document: ${err}`);
