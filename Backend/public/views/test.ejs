@@ -19,3 +19,9 @@
   </body>
   
   </html>
+
+  
+router.route("/loginAdmin").get((req, res) => {
+  res.status(200).render("login");
+  // res.status(200).json({message:"hello"});
+})
