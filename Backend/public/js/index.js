@@ -123,6 +123,7 @@ function handleAddCourseSubmit() {
         })
             .then(response => response.json())
             .then(data => {
+                 todos=[];
                 CourseList = data.CourseList;      
                 loadSection('addCourse');          
             })
@@ -134,7 +135,5 @@ function handleAddCourseSubmit() {
     else {
         alert("please choose any option before submit")
     }
-
-    // location.reload();
 
 } 
