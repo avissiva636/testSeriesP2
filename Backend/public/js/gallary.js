@@ -16,9 +16,9 @@ function uploadFile() {
         .then(response => response.json())
         .then(data => {
             // You can update the UI or show a success message here
-            form.reset();
-
-            updateImageGallery(data.files);
+            // form.reset();
+            loadSection('addPhoto')
+            // updateImageGallery(data.files);
 
         })
         .catch(error => {
@@ -27,37 +27,38 @@ function uploadFile() {
         });
 }
 
-function updateImageGallery(updatedFiles) {
+//Not use currently
+// function updateImageGallery(updatedFiles) {
 
-    // Get the image container element
-    const imageContainer = document.getElementById('imageContainer');
+//     // Get the image container element
+//     const imageContainer = document.getElementById('imageContainer');
 
-    // Clear the existing content of the container
-    imageContainer.innerHTML = '';
+//     // Clear the existing content of the container
+//     imageContainer.innerHTML = '';
 
-    // Append the new images to the container
-    updatedFiles.forEach(file => {
-        const imageWrapper = document.createElement('div');
-        imageWrapper.className = 'imageWrapper';
+//     // Append the new images to the container
+//     updatedFiles.forEach(file => {
+//         const imageWrapper = document.createElement('div');
+//         imageWrapper.className = 'imageWrapper';
 
-        const newImage = document.createElement('img');
-        newImage.src = "/images/" + file;
-        newImage.alt = file;
-        newImage.style.maxWidth = "300px";
-        newImage.style.maxHeight = "200px";
+//         const newImage = document.createElement('img');
+//         newImage.src = "/images/" + file;
+//         newImage.alt = file;
+//         newImage.style.maxWidth = "300px";
+//         newImage.style.maxHeight = "200px";
 
-        const deleteIcon = document.createElement('span');
-        deleteIcon.className = 'deleteIcon';
-        deleteIcon.innerHTML = '❌';
-        deleteIcon.onclick = function () {
-            deleteImage(file);
-        };
+//         const deleteIcon = document.createElement('span');
+//         deleteIcon.className = 'deleteIcon';
+//         deleteIcon.innerHTML = '❌';
+//         deleteIcon.onclick = function () {
+//             deleteImage(file);
+//         };
 
-        imageWrapper.appendChild(newImage);
-        imageWrapper.appendChild(deleteIcon);
-        imageContainer.appendChild(imageWrapper);
-    });
-}
+//         imageWrapper.appendChild(newImage);
+//         imageWrapper.appendChild(deleteIcon);
+//         imageContainer.appendChild(imageWrapper);
+//     });
+// }
 
 function deleteImage(deleteFile) {
     const formData = new FormData();
@@ -135,7 +136,7 @@ function uploadvideo() {
 // }
 
 function deleteVideo(elementToRemove) {
-    
+
     const formData = new FormData();
     formData.append('videoIdToDelete', elementToRemove);
 
