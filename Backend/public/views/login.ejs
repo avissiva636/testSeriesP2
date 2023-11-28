@@ -59,7 +59,7 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form action="your_server_side_script.php" method="post">
+        <form method="post">
             <div class="input-group">
                 <label for="adminUserName">Username:</label>
                 <input type="text" id="adminUserName" name="username" required>
@@ -68,17 +68,39 @@
                 <label for="adminUserPassword">Password:</label>
                 <input type="password" id="adminUserPassword" name="password" required>
             </div>
-            <button type="submit" class="login-btn">Submit</button>
+            <button type="submit" class="login-btn" onclick="loginSubmit(event)">Submit</button>
         </form>
     </div>
 
+    <script>
+        function loginSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById("adminUserName");
+            const password = document.getElementById("adminUserPassword");
+
+            const formData = new FormData();
+            formData.append("name", name.value);
+            formData.append("password", password.value);
+
+            // fetch("/api/users/login")
+            // http://localhost:5001/api/users/login
+            fetch('http://localhost:5001/api/users/login', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                });
+        }
+
+    </script>
 </body>
-<script>
-    const name = document.getElementById("adminUserName");
-    const password = document.getElementById("adminUserPassword");
-
-    fetch("/api/users/login")
-
-</script>
 
 </html>

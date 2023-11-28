@@ -4,11 +4,11 @@
 
     <label for="mainProductName">Product Title</label>
     <input type="text" id="mainProductName" name="mainProductName" required>
-    
-    <div id="productDetails" >
+
+    <div id="productDetails">
         <!-- Sub Button Input Box -->
-        <button type="button" id="subButtonBtn" 
-        onclick="toggleVisibility('yesSubtitle','addProductVisiblity')">New Produdct</button>
+        <button type="button" id="subButtonBtn" onclick="toggleVisibility('yesSubtitle','addProductVisiblity')">New
+            Produdct</button>
         <br>
 
         <ul id="ProductUlList"></ul>
@@ -22,6 +22,10 @@
             <!-- Description Input Box -->
             <label for="subProductLink">Product Link</label>
             <input type="text" id="subProductLink" name="product" required>
+            <br>
+
+            <label for="productPhoto">Photo:</label>
+            <input type="file" id="productPhoto" name="productPhoto" accept="image/*" required>
             <br>
 
             <button type="button" id="addBtn" onclick="addProductTodo()">Add</button>

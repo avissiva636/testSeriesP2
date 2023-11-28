@@ -4,6 +4,7 @@ const errorHandler = require("./util/middleware/errorHandler");
 const {connectDb} = require("./database");
 const path = require("path");
 const ejs = require('ejs');
+const cors = require('cors')
 
 const app = express();
 
@@ -13,6 +14,7 @@ connectDb();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../public/views"));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const publicPath = path.join(__dirname, '..', 'public/js');

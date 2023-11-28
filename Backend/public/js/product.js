@@ -29,11 +29,16 @@ function addProductTodo() {
     var subProductName = document.getElementById("subProductName").value;
     var subProductLink = document.getElementById("subProductLink").value;
     var ProductUlList = document.getElementById("ProductUlList");
+    var productPhoto = document.getElementById("productPhoto");
+    // if photo was not uploaded, go back
+    if (productPhoto.files.length < 1) {
+        return
+    }
 
     var subTitleElement = document.createElement("li");
     subTitleElement.innerHTML = `<p id="${subProductName}" data-title="${subProductName}" data-description='${subProductLink}'  onclick="editProduct(this)"><strong> ${subProductName} </strong></p> `;
     ProductUlList.appendChild(subTitleElement);
-    productTodo.push({ name: subProductName, link: subProductLink });
+    productTodo.push({ name: subProductName, link: subProductLink, photo: productPhoto.files[0] });
 
     // Clear input fields
     document.getElementById("subProductName").value = "";
@@ -50,6 +55,9 @@ function handleSubmitProduct() {
 
 
     const formData = new FormData();
+    productTodo.forEach(subProduct => {
+        formData.append("photo", subProduct.photo);
+      })
     formData.append("mainProduct", mainProductName.value);
     formData.append("subProducts", JSON.stringify(productTodo));
 
@@ -77,9 +85,9 @@ const editProduct = (elementToRemove) => {
     const description = elementToRemove.getAttribute('data-description');
 
     const ProductUlList = document.getElementById("ProductUlList");
-
+    
     ProductUlList.removeChild(elementToRemove.parentNode);
-
+   
     const indexToRemove = productTodo.findIndex(todo => todo.name === title.value);
     productTodo.splice(indexToRemove, 1);
 
@@ -243,14 +251,14 @@ function fetchUpdateProductData() {
         .then(response => response.json())
         .then(data => {
             productList = data.productList;
-            updateProductList=[];
+            updateProductList = [];
             loadSection('updateProduct');
         })
         .catch(error => {
             console.error('Error uploading file:', error);
         });
 
-   
+
 
 }
 function deleteProduct() {
@@ -272,7 +280,7 @@ function deleteProduct() {
             // Remove the currently selected option
             deleteProductSelect.remove(selectedIndex);
             deleteProductList(selectedIndex - 1);
-            fetchDeleteProductList("MAIN",producttoDelete);
+            fetchDeleteProductList("MAIN", producttoDelete);
         }
         return;
     }
@@ -287,7 +295,7 @@ function deleteProduct() {
         toggleVisibility("noSubtitle", "deletesubproductVisiblity");
     });
     deleteProductList(deleteProductSelect.selectedIndex - 1, selectedValues);
-    fetchDeleteProductList("SUB",producttoDelete,selectedValues);
+    fetchDeleteProductList("SUB", producttoDelete, selectedValues);
 }
 
 function deleteProductList(productIndex, selectedValues) {
@@ -310,11 +318,11 @@ function deleteProductList(productIndex, selectedValues) {
     }
 }
 
-function fetchDeleteProductList(category,producttoDelete,subProduct) {
+function fetchDeleteProductList(category, producttoDelete, subProduct) {
     const formData = new FormData();
-    formData.append("category",category)
+    formData.append("category", category)
     formData.append("producttoDelete", JSON.stringify(producttoDelete));
-    if(category==="SUB"){
+    if (category === "SUB") {
         formData.append("subProduct", JSON.stringify(subProduct));
     }
 
@@ -325,8 +333,8 @@ function fetchDeleteProductList(category,producttoDelete,subProduct) {
     })
         .then(response => response.json())
         .then(data => {
-            productList = data.productList;   
-            console.log(data.productList)         
+            productList = data.productList;
+            console.log(data.productList)
         })
         .catch(error => {
             console.error('Error uploading file:', error);
