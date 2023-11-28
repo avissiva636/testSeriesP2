@@ -181,6 +181,13 @@ router.route("/test").get((req, res) => {
     });
 })
 
+
+  
+router.route("/loginAdmin").get((req, res) => {
+    res.status(200).render("login");
+    // res.status(200).json({message:"hello"});
+  })
+
 router.route("/getCourseList").get(async (req, res) => {
     await setCourseList()
     res.json({ CourseList });
