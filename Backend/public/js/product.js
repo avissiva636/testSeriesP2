@@ -57,7 +57,7 @@ function handleSubmitProduct() {
     const formData = new FormData();
     productTodo.forEach(subProduct => {
         formData.append("photo", subProduct.photo);
-      })
+    })
     formData.append("mainProduct", mainProductName.value);
     formData.append("subProducts", JSON.stringify(productTodo));
 
@@ -85,9 +85,9 @@ const editProduct = (elementToRemove) => {
     const description = elementToRemove.getAttribute('data-description');
 
     const ProductUlList = document.getElementById("ProductUlList");
-    
+
     ProductUlList.removeChild(elementToRemove.parentNode);
-   
+
     const indexToRemove = productTodo.findIndex(todo => todo.name === title.value);
     productTodo.splice(indexToRemove, 1);
 
@@ -138,6 +138,7 @@ function addSubProductOption(subproduct) {
 }
 
 var originalSubProductName;
+var seletctedProductImage;
 function handleSubProductSelection() {
     toggleVisibility("noSubtitle", "updateSelectProduct");
     var selectedProduct = document.getElementById('updateProduct');
@@ -150,15 +151,15 @@ function handleSubProductSelection() {
     var updatesubProductLink = document.getElementById("updatesubProductLink");
 
     //getting descrition from productList
-    var selectedLink = productList
+    var selectedProductContent = productList
         .find(product => product.mainProduct === selectedProduct.value)
         ?.subProducts
-        .find(subproduct => subproduct.name === selectedOption.value)
-        ?.link;
+        .find(subproduct => subproduct.name === selectedOption.value);
 
+    seletctedProductImage = selectedProductContent?.photo;
     //setting value
     updatesubProductName.value = selectedOption.value;
-    updatesubProductLink.value = selectedLink;
+    updatesubProductLink.value = selectedProductContent?.link;
 }
 
 function updateSubProductList() {
@@ -171,7 +172,11 @@ function updateSubProductList() {
         if (product.mainProduct === selectedProduct.value) {
             product.subProducts = product.subProducts.map(subproduct => {
                 if (subproduct.name === originalSubProductName) {
-                    return { name: updateSubProduct.value, link: updatesubProductLink.value };
+                    return {
+                        name: updateSubProduct.value,
+                        link: updatesubProductLink.value,
+                        photo: subproduct.photo
+                    };
                 }
                 return subproduct;
             });
@@ -179,26 +184,30 @@ function updateSubProductList() {
         return product;
     });
 
+    //UpdateProductList Array
     const newEntry = {
         mainProduct: selectedProduct.value,
-        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value },
+        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:seletctedProductImage },
         Change: "UPDATE"
     };
 
+    //It will execute only if there is preUpdate happened
+    //Reduce multipleUpdates of same component to singleUpdate
     let isEntryUpdated = false;
     updateProductList = updateProductList.reduce((accumulator, item) => {
         // Check if SubTitle.Title already exists
         if (item.subProducts.name === originalSubProductName && item.mainProduct === newEntry.mainProduct) {
-            // If it does, replace the existing entry
+            // If it does, replace the existing entry            
             accumulator.push(newEntry);
             isEntryUpdated = true;
         } else {
-            // If it doesn't, keep the existing entry
+            //Creating New Product while upgrade
             accumulator.push(item);
         }
         return accumulator;
     }, []);
 
+    //if update happened to a compound for first time
     if (!isEntryUpdated) {
         updateProductList.push(newEntry);
     }
@@ -217,6 +226,11 @@ function updateAddSubProduct() {
     var selectedProduct = document.getElementById('updateProduct');
     var upAddSubProductName = document.getElementById("upAddSubProductName");
     var upAddSubProductLink = document.getElementById("upAddSubProductLink");
+    var updateProductPhoto = document.getElementById("updateProductPhoto");
+    // if photo was not uploaded, go back
+    if (updateProductPhoto.files.length < 1) {
+        return
+    }
 
     // Find the target product in ProductList
     var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
@@ -226,7 +240,7 @@ function updateAddSubProduct() {
 
     updateProductList.push({
         mainProduct: selectedProduct.value,
-        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value },
+        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: productPhoto.files[0] },
         Change: "ADD"
     })
 
@@ -240,6 +254,9 @@ function updateAddSubProduct() {
 
 function fetchUpdateProductData() {
     const formData = new FormData();
+    updateProductList.forEach(subProduct => {
+        formData.append("prodUpPhoto", subProduct.subProducts.photo);
+    })
     formData.append("updateProductList", JSON.stringify(updateProductList));
     console.log(updateProductList)
 
