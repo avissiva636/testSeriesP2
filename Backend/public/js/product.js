@@ -240,7 +240,7 @@ function updateAddSubProduct() {
 
     updateProductList.push({
         mainProduct: selectedProduct.value,
-        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: productPhoto.files[0] },
+        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: updateProductPhoto.files[0] },
         Change: "ADD"
     })
 
@@ -258,7 +258,6 @@ function fetchUpdateProductData() {
         formData.append("prodUpPhoto", subProduct.subProducts.photo);
     })
     formData.append("updateProductList", JSON.stringify(updateProductList));
-    console.log(updateProductList)
 
 
     fetch('/updateProductList', {
@@ -351,7 +350,6 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
         .then(response => response.json())
         .then(data => {
             productList = data.productList;
-            console.log(data.productList)
         })
         .catch(error => {
             console.error('Error uploading file:', error);
