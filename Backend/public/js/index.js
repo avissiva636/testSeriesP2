@@ -84,9 +84,10 @@ function addTodo() {
 }
 
 function handleAddCourseSubmit() {
-    var radios = document.getElementsByName('subtitle');    
-    
+    var radios = document.getElementsByName('subtitle');
+
     if (radios[1].checked) {
+        var button = document.getElementById("submitButton")
         var ftitle = document.getElementById("title").value;
         var description = quillNormal.getContents();
         // Convert Delta to JSON        
@@ -95,6 +96,7 @@ function handleAddCourseSubmit() {
         formData.append("Title", ftitle);
         formData.append("Description", descriptionJSON);
 
+        button.disabled = true;
         fetch('/addCourseNormalList', {
             method: 'POST',
             body: formData
@@ -105,32 +107,39 @@ function handleAddCourseSubmit() {
                 loadSection('addCourse');
             })
             .catch(error => {
+                alert("Not updated");
+                button.disabled=false;
                 console.error('Error uploading file:', error);
             });
     }
     else if (radios[0].checked) {
+        var button = document.getElementById("submitButton")
         var title = document.getElementById("title").value;
         var subTitleInput = document.getElementById("subTitleInput").value;
         var description = quillSub.getContents();
         var descriptionJSON = JSON.stringify(description);
-        
+
         const formData = new FormData();
-        formData.append("Title",title);
+        formData.append("Title", title);
         formData.append("SubTitle", JSON.stringify(todos));
+
+        button.disabled = true;
         fetch('/addCourseSubList', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then(data => {
-                 todos=[];
-                CourseList = data.CourseList;      
-                loadSection('addCourse');          
+                todos = [];
+                CourseList = data.CourseList;
+                loadSection('addCourse');
             })
             .catch(error => {
+                alert("Not updated");
+                button.disabled=false;
                 console.error('Error uploading file:', error);
             });
-      
+
     }
     else {
         alert("please choose any option before submit")
