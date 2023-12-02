@@ -556,6 +556,21 @@ router.post('/upload', upload.single('image'), (req, res) => {
     });
 });
 
+router.route("/getphotolist").get((req, res) => {
+    try {
+        const files = fs.readdirSync(path.join(__dirname, '../../public/images'), { withFileTypes: true });
+        
+        const onlyNonFolderItems = files
+            .filter((item) => !item.isDirectory())
+            .map((item) => item.name);
+
+       
+        res.json({ files: onlyNonFolderItems });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 router.route("/addPhoto").get((req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
@@ -593,6 +608,13 @@ router.route("/deletePhoto").post(dataflow.any(), (req, res) => {
     }
 
 })
+
+router.get('/getvideolist', async (req, res) => {
+    await setvideoEidList()
+    res.json({
+        videos: videoEidList,
+    });
+});
 
 router.post('/uploadVideo', dataflow.any(), async (req, res) => {
     // After successful upload, you can redirect or send a response
