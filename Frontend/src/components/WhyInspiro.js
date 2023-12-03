@@ -1,15 +1,13 @@
 import Features from "./Features";
-import Footer from "./Footer";
 import { useEffect } from "react";
-import Navigationbar from "./Navigationbar";
-import ContactUs from "./ContactUs";
 import ContactUsHomePage from "./ContactUsHomePage";
 const WhyInspiro = () => {
+  const backgroundImageUrl = 'url("/css/images/whyInspiro.jpg")';
   useEffect(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
   }, []);
   return (
-    <div className="inspiro__content">
+    <div className="inspiro__content" style={{backgroundImage: backgroundImageUrl}}>
    <div className="p-5">   <h1>About Us</h1>
       <p>
         How it will be if highly motivated and dedicated coaching experts from

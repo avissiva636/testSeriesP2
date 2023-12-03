@@ -12,7 +12,6 @@ const Navigationbar = () => {
   const [showCourses, setShowCourses] = useState(false);
   const [avatarDropdown, setavatarDropdown] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  // const [selectedSubtitle, setSelectedSubtitle] = useState(null);
   const { Courses } = useInspiroCrud();
   const [showGallery, setShowGallery] = useState(false);
 
@@ -63,7 +62,7 @@ const Navigationbar = () => {
     navigate("VideoPage");
   };
 
-  const handleCourseClick = (index, Title, subarr) => {
+  const handleCourseClick = (index, Title, Description) => {
     // if (window.innerWidth <= 768) {
     //   toggleCoursesDropDoem();
     // }
@@ -74,25 +73,31 @@ const Navigationbar = () => {
     setSelectedCourse(selectedCourse === index ? null : index);
 
     if (
-      Title !== "KPSC Prelims" &&
+      Title !== "KPSC" &&
       Title !== "KEA"
       // window.innerWidth > 768
     ) {
       navigate("ListAllCourses", {
-        state: { data: { Title, subarr } },
+        state: { data: { Title, Description } },
       });
     }
   };
 
-  const handleSubtitleClick = (subarr, Title) => {
+  const handleSubtitleClick = (Description, Title) => {
     toggleCoursesDropDoem();
     setheaderShowDropdown(false);
     setShowDropdown(false);
     setShowCourses(false);
     // setSelectedSubtitle(subarr);
     navigate("ListAllCourses", {
-      state: { data: { Title, subarr } },
+      state: { data: { Title, Description } },
     });
+  };
+  const handleWhyInspiroPage = () => {
+    navigate("WhyInspiro");
+    setheaderShowDropdown(false);
+    setShowDropdown(false);
+    setShowCourses(false);
   };
 
   const handleResultPage = () => {
@@ -113,6 +118,9 @@ const Navigationbar = () => {
     setheaderShowDropdown(false);
     setShowDropdown(false);
     setShowCourses(false);
+  };
+  const handleNotification = () => {
+    navigate("NotificationMain");
   };
 
   return (
@@ -152,10 +160,10 @@ const Navigationbar = () => {
             </div>
             {
               <div className="dropdown-content">
-                <div onClick={toggleDropdown}>
+                {/* <div onClick={toggleDropdown}>
                   <Link to={"/WhyInspiro"}>Why Inspiro</Link>
-                </div>
-
+                </div> */}
+                <div onClick={handleWhyInspiroPage}>Why Inspiro</div>
                 <div onClick={handleResultPage}>Our Results</div>
                 <div onClick={handleDemoClass}>Demo Classes</div>
                 <div
@@ -189,7 +197,11 @@ const Navigationbar = () => {
                     course.Title === "KEA" ? (
                       <div
                         onClick={() =>
-                          handleCourseClick(index, course.Title, course.subarr)
+                          handleCourseClick(
+                            index,
+                            course.Title,
+                            course.Description
+                          )
                         }
                         className="course-title"
                       >
@@ -199,7 +211,11 @@ const Navigationbar = () => {
                     ) : (
                       <div
                         onClick={() =>
-                          handleCourseClick(index, course.Title, course.subarr)
+                          handleCourseClick(
+                            index,
+                            course.Title,
+                            course.Description
+                          )
                         }
                         className="course-title"
                       >
@@ -216,7 +232,7 @@ const Navigationbar = () => {
                             key={subIndex}
                             onClick={() =>
                               handleSubtitleClick(
-                                subTitle.subarr,
+                                subTitle.Description,
                                 subTitle.Title
                               )
                             }
@@ -236,11 +252,17 @@ const Navigationbar = () => {
             <a
               className="current__affairs"
               href="https://www.instamojo.com/inspiroiaskas"
+              target="_blank"
             >
               Current Affairs
             </a>
           </div>
-          <div className="header__hover notify__header">Notifications</div>
+          <div
+            className="header__hover notify__header"
+            onClick={handleNotification}
+          >
+            Notifications
+          </div>
 
           <a
             className="navigation__test header__hover"

@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
-import Footer from "./Footer";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const VideoPage = () => {
-  const { Video } = useInspiroCrud();
+  const { Video, getVideoList } = useInspiroCrud();
+  useEffect(() => {
+    getVideoList();
+  }, []);
   return (
     <div>
       <h1 className="d-flex justify-content-center my-5">Video Gallery</h1>

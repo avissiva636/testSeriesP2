@@ -1,12 +1,16 @@
-
+import QuillTextEditor from "./QuillTextEditor";
 
 const CourseDescription = (props) => {
-  console.log(props.subarr[0].Desc);
+  const { Title, Description } = props;
+  console.log(Description);
+
   return (
-      <div className="card1">
-        <h2>{props.Title}</h2>
-        <p>{props.subarr[0]?.Syllabus}</p>
+    <div className="card1">
+      <h2>{Title}</h2>
+      <div>
+        <QuillTextEditor description={Description} />
       </div>
+    </div>
   );
 };
 export default CourseDescription;

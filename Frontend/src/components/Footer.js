@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { useNavigate } from "react-router-dom";
+import { useInspiroCrud } from "./context/InspiroContext";
 
 const Footer = () => {
+  const { Courses, getCourseList } = useInspiroCrud();
+  useEffect(() => {
+    getCourseList();
+  }, []);
+  const coursesToShow = Courses.slice(0, 3);
   const navigate = useNavigate();
   const handlePrivacyPolicy = () => {
     navigate("/PrivacyPolicy");
@@ -16,6 +22,20 @@ const Footer = () => {
   };
   const handleTermsAndConditions = () => {
     navigate("/TermsAndConditions");
+  };
+  const handleWhyInspiro = () => {
+    navigate("/WhyInspiro");
+  };
+  const handleContactUs = () => {
+    navigate("/ContactUs");
+  };
+  const handleCourses = () => {
+    const Title = coursesToShow[0].Title;
+    console.log(Title);
+    const Description = coursesToShow[0].Description;
+    navigate("ListAllCourses", {
+      state: { data: { Title, Description } },
+    });
   };
   return (
     <>
@@ -37,16 +57,22 @@ const Footer = () => {
             <aside className="footer__mail">inspiroschools@gmail.com</aside>
             <aside className="text-light mb-3"> 08041327777</aside>
             <div className="social-icons">
-              <a href="#">
+              <a
+                href="https://www.facebook.com/groups/inspiroschools/"
+                target="_blank"
+              >
                 <FacebookRoundedIcon />
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/inspiroias/" target="_blank">
                 <InstagramIcon />
               </a>
-              <a href="#">
+              <a
+                href="https://in.linkedin.com/in/inspiro-ias-kas-962549230"
+                target="_blank"
+              >
                 <LinkedInIcon />
               </a>
-              <a href="#">
+              <a href="https://www.youtube.com/@InspiroIASKAS" target="_blank">
                 <YouTubeIcon />
               </a>
             </div>
@@ -55,16 +81,29 @@ const Footer = () => {
             <h3 className="text-light">Quick links</h3>
             <ul>
               <li>
-                <a href="#">Current Affairs</a>
+                <div>
+                  <a
+                    href="https://www.instamojo.com/inspiroiaskas"
+                    target="_blank"
+                  >
+                    Current Affairs
+                  </a>
+                </div>
               </li>
               <li>
-                <a href="#">Courses</a>
+                <div onClick={handleCourses}>
+                  <a href="">Courses</a>
+                </div>
               </li>
               <li>
-                <a href="#">Why Inspire</a>
+                <div onClick={handleWhyInspiro}>
+                  <a href="">Why Inspire</a>
+                </div>
               </li>
               <li>
-                <a href="#">Contact Us</a>
+                <div onClick={handleContactUs}>
+                  <a href="">Contact Us</a>
+                </div>
               </li>
             </ul>
           </Col>
@@ -72,15 +111,27 @@ const Footer = () => {
         <div className="footer-disclaimer">
           <div>
             <p>
-              <a className="link" onClick={handlePrivacyPolicy}>
+              <a
+                className="link"
+                onClick={handlePrivacyPolicy}
+                style={{ cursor: "pointer" }}
+              >
                 Privacy Policy
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <a className="link" onClick={handleTermsAndConditions}>
+              <a
+                className="link"
+                onClick={handleTermsAndConditions}
+                style={{ cursor: "pointer" }}
+              >
                 Terms and Conditions
               </a>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <a className="link" onClick={handleRefundPolicy}>
+              <a
+                className="link"
+                onClick={handleRefundPolicy}
+                style={{ cursor: "pointer" }}
+              >
                 Refund and Cancellation Policy
               </a>
             </p>

@@ -20,6 +20,7 @@ import RefundPolicy from "./components/RefundPolicy";
 import Sidebar from "./components/sidemenu";
 import SubProducts from "./components/SubProducts";
 import Footer from "./components/Footer";
+import NotificationMain from "./components/NotificationMain";
 function App() {
   // useEffect(() => {
   //   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -55,6 +56,7 @@ function App() {
             />
             <Route path="/RefundPolicy" element={<RefundPolicy />} />
             <Route path="SubProducts" element={<SubProducts />} />
+            <Route path="/NotificationMain" element={<NotificationMain />}/>
           </Routes>
           <Footer />
         </InspiroContext>

@@ -21,12 +21,12 @@ import { useNavigate } from 'react-router-dom';
     
 // }
 const socialLinks = [
-    { platform: "Facebook", link: "https://www.facebook.com/yourpage" }, 
+    { platform: "Facebook", link: "https://www.facebook.com/groups/inspiroschools/" }, 
     { platform: "WhatsApp", link: "https://wa.me/9345813146" }, // Replace with your actual WhatsApp number
     // Replace with your actual Facebook page URL
-    { platform: "Instagram", link: "https://www.instagram.com/yourusername" }, // Replace with your actual Instagram username
-    { platform: "YouTube", link: "https://www.youtube.com/yourchannel" }, // Replace with your actual YouTube channel URL
-    { platform: "Twitter", link: "https://twitter.com/yourhandle" }, // Replace with your actual Twitter handle
+    { platform: "Instagram", link: "https://www.instagram.com/inspiroias" }, // Replace with your actual Instagram username
+    { platform: "YouTube", link: "https://www.youtube.com/@InspiroIASKAS" }, // Replace with your actual YouTube channel URL
+    { platform: "Twitter", link: "https://twitter.com/inspiroiaskas" }, // Replace with your actual Twitter handle
   ];
 const Sidebar = (props) => {
   const navigate = useNavigate();
