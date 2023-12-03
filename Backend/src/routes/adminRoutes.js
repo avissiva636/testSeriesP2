@@ -782,5 +782,22 @@ router.route("/deleteTestimonial").get((req, res) => {
     });
 })
 
+router.route("/addNotification").get((req, res) => {
+    res.render("notification/addNotification", {
+        message: "add Notification",        
+    });
+})
+
+router.route("/updateNotification").get((req, res) => {
+    res.render("notification/updateNotification", {
+        message: "update Notification",        
+    });
+})
+
+router.route("/deleteNotification").get((req, res) => {
+    res.render("notification/deleteNotification", {
+        message: "delete Notification",        
+    });
+})
 
 module.exports = router;
