@@ -182,11 +182,10 @@ router.route("/test").get((req, res) => {
 })
 
 
-  
 router.route("/loginAdmin").get((req, res) => {
     res.status(200).render("login");
     // res.status(200).json({message:"hello"});
-  })
+})
 
 router.route("/getCourseList").get(async (req, res) => {
     await setCourseList()
@@ -358,8 +357,8 @@ const productStorage = multer.diskStorage({
     filename: function (req, file, cb) {
         const fileName = Date.now() + path.extname(file.originalname);
         // req.productImagePath = path.join(__dirname, '../../public/images/products', fileName);
-        req.productImagePaths = req.productImagePaths || []; // Initialize an array if not present
-        req.productImagePaths.push(path.join(__dirname, '../../public/images/products', fileName));
+        req.productImageNames = req.productImageNames || []; // Initialize an array if not present
+        req.productImageNames.push(fileName);
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
@@ -378,10 +377,11 @@ router.route("/addProductList").post(productUpload.array('photo'), async (req, r
 
     var mainProduct = req.body.mainProduct;
     var subProducts = JSON.parse(req.body.subProducts);
-    const productImagePaths = req.productImagePaths;
+    const productImageNames = req.productImageNames;
+    // const productImagePaths = req.productImagePaths;
 
     subProducts.forEach((subProduct, index) => {
-        subProduct.photo = productImagePaths[index];
+        subProduct.photo = productImageNames[index];
     });
 
     await Product.create({
@@ -404,10 +404,10 @@ router.route("/addProduct").get((req, res) => {
     });
 })
 
-router.route("/updateProductList").post(dataflow.any(), async (req, res) => {
+router.route("/updateProductList").post(productUpload.array('prodUpPhoto'), async (req, res) => {
 
     const updateProductList = JSON.parse(req.body.updateProductList);
-
+    var prodIndex = 0;
     for (const uproduct of updateProductList) {
         try {
             // Check if SubTitle exists
@@ -425,6 +425,7 @@ router.route("/updateProductList").post(dataflow.any(), async (req, res) => {
                 );
             } else {
                 // SubTitle doesn't exist, add it
+                uproduct.subProducts.photo = req.productImageNames[prodIndex++];
                 await Product.updateOne(
                     { mainProduct: uproduct.mainProduct },
                     {
@@ -488,12 +489,13 @@ router.route("/deleteProductList").post(dataflow.any(), async (req, res) => {
                     { $pull: { subProducts: { name: dproduct } } },
                     { new: true }
                 );
-                var photoLinks = getProductPhoto(producttoDelete,subProduct);
-                
+                var photoLinks = getProductPhoto(producttoDelete, subProduct);
+
                 // Delete the file
-                photoLinks.forEach((photo) => {                    
-                    if (fs.existsSync(photo)) {
-                        fs.unlinkSync(photo);                        
+                photoLinks.forEach((photo) => {
+                    prodPhoto = path.join(__dirname, '../../public/images/products', photo)
+                    if (fs.existsSync(prodPhoto)) {
+                        fs.unlinkSync(prodPhoto);
                     } else {
                         console.log(`File ${photo} does not exist.`);
                     }
@@ -554,6 +556,21 @@ router.post('/upload', upload.single('image'), (req, res) => {
     });
 });
 
+router.route("/getphotolist").get((req, res) => {
+    try {
+        const files = fs.readdirSync(path.join(__dirname, '../../public/images'), { withFileTypes: true });
+        
+        const onlyNonFolderItems = files
+            .filter((item) => !item.isDirectory())
+            .map((item) => item.name);
+
+       
+        res.json({ files: onlyNonFolderItems });
+    } catch (err) {
+        res.status(500).send('Internal Server Error');
+    }
+})
+
 router.route("/addPhoto").get((req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
@@ -591,6 +608,13 @@ router.route("/deletePhoto").post(dataflow.any(), (req, res) => {
     }
 
 })
+
+router.get('/getvideolist', async (req, res) => {
+    await setvideoEidList()
+    res.json({
+        videos: videoEidList,
+    });
+});
 
 router.post('/uploadVideo', dataflow.any(), async (req, res) => {
     // After successful upload, you can redirect or send a response
@@ -635,11 +659,11 @@ const testimonialStorage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const fileName = Date.now() + path.extname(file.originalname);
-        req.testimonialImagePath = path.join(__dirname, '../../public/images/testimonials', fileName);
+        req.testimonialImageName = fileName;
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
-
+// path.join(__dirname, '../../public/images/testimonials', fileName);
 router.route("/gettestimoniallist").get((req, res) => {
     res.json({ Testimonials });
 })
@@ -659,7 +683,7 @@ router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'
         Testimonial.create({
             name: testimonialName,
             desc: testimonialDescription,
-            photo: req.testimonialImagePath
+            photo: req.testimonialImageName
         })
 
         await setTestimonials();
@@ -721,8 +745,8 @@ router.post("/uploadDeleteTestimonial", dataflow.any(), async (req, res) => {
         // const deletedTestimonial = await Testimonial.findOne({ name: deleteTestimonial });
 
         if (deletedTestimonial) {
-            const photoPath = deletedTestimonial.photo;
-            console.log(photoPath)
+            // const photoPath = deletedTestimonial.photo;
+            const photoPath = path.join(__dirname, '../../public/images/testimonials', deletedTestimonial.photo);
             if (fs.existsSync(photoPath)) {
                 // Delete the file
                 console.log("executing")
