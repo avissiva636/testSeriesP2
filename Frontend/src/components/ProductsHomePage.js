@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./css/ProductsHomePage.css";
 import { useInspiroCrud } from "./context/InspiroContext";
 import { Link } from "react-router-dom";
 import ProductCardDisplay from "./ProductCardDisplay";
 
 const ProductsHomePage = () => {
-  const { products } = useInspiroCrud();
+  const { products, getProductList } = useInspiroCrud();
+  useEffect(() => {
+    getProductList();
+  }, []);
+  
   // const [hoveredProduct, setHoveredProduct] = useState(null);
 
   return (

@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const PhotoPage = () => {
-  const { Images } = useInspiroCrud();
-  console.log(Images);
+  const { Images, getImageList } = useInspiroCrud();
+  useEffect(() => {
+    getImageList();
+  }, []);
   return (
     <div>
       <h1 className="d-flex justify-content-center my-5">Photo Gallery</h1>

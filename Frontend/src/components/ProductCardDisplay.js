@@ -11,7 +11,7 @@ const ProductCardDisplay = ({ product, hoveredProduct, setHoveredProduct }) => {
         <h2>
           <div onClick={handleClick}>{product.mainProduct}</div>
         </h2>
-        <div className="mt-4">A JS library for developing web pages</div>
+        {/* <div className="mt-4">A JS library for developing web pages</div> */}
       </div>
       {/* <button className="product__btn">learn more</button> */}
       <div>

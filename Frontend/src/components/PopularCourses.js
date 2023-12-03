@@ -5,20 +5,33 @@ import { useInspiroCrud } from "./context/InspiroContext";
 import { useNavigate } from "react-router-dom";
 
 const PopularCourse = () => {
-  const { Courses } = useInspiroCrud();
+  const { Courses, getCourseList } = useInspiroCrud();
+  useEffect(() => {
+    getCourseList();
+  }, []);
+
   const coursesToShow = Courses.slice(0, 3); // Get the first 3 items
   const navigate = useNavigate();
   const clickHandler = () => {
     const Title = coursesToShow[0].Title;
-    const subarr = coursesToShow[0].subarr;
+    const Description = coursesToShow[0].Description;
     navigate("ListAllCourses", {
-      state: { data: { Title, subarr } },
+      state: { data: { Title, Description } },
     });
   };
-  const titleClickHandler = (Title, subarr) => {
-    console.log(Title, subarr);
+  const titleClickHandler = (Title1, Description1, course) => {
+    if (Title1 == "KPSC" || Title1 == "KEA") {
+      const Title = course.SubTitle[0].Title;
+      const Description = course.SubTitle[0].Description;
+      navigate("ListAllCourses", {
+        state: { data: { Title, Description } },
+      });
+      return;
+    }
+    const Title = Title1;
+    const Description = Description1;
     navigate("ListAllCourses", {
-      state: { data: { Title, subarr } },
+      state: { data: { Title, Description } },
     });
   };
   return (
@@ -31,7 +44,9 @@ const PopularCourse = () => {
           <div
             key={index}
             className="course-item"
-            onClick={() => titleClickHandler(course.Title, course.subarr)}
+            onClick={() =>
+              titleClickHandler(course.Title, course.Description, course)
+            }
           >
             <h2>{course.Title}</h2>
           </div>

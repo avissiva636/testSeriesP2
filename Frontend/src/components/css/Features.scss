@@ -43,7 +43,7 @@ color: red;
   .card__bg-photo {
       position: relative;
       height: 200px;
-      background: url("https://images.unsplash.com/photo-1511207538754-e8555f2bc187?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=88672068827eaeeab540f584b883cc66&auto=format&fit=crop&w=1164&q=80") no-repeat;
+      // background: url("https://images.unsplash.com/photo-1511207538754-e8555f2bc187?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=88672068827eaeeab540f584b883cc66&auto=format&fit=crop&w=1164&q=80") no-repeat;
       background-size: cover;
       backface-visibility: hidden;
 
@@ -69,8 +69,8 @@ color: red;
       margin: 0 auto;
       border-radius: 50%;
       border: 5px solid WHITE;
-      background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/156905/profile/profile-512.jpg?1530296477")
-        no-repeat;
+      // background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/156905/profile/profile-512.jpg?1530296477")
+        // no-repeat;
       background-size: contain;
   }
 

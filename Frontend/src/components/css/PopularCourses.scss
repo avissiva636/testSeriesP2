@@ -121,6 +121,7 @@ transition: 0.7s;
 
   h2{
     color: rgb(0, 0, 0) !important;
+    
   }
 
   &:hover {
@@ -150,6 +151,8 @@ transition: 0.7s;
     width: 360px !important;
     min-width: 360px !important;
     max-width: 360px !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 }
 
@@ -163,6 +166,8 @@ transition: 0.7s;
     width: 300px !important;
     min-width: 300px !important;
     max-width: 300px !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 }
 
@@ -176,6 +181,8 @@ transition: 0.7s;
     width: 280px !important;
     min-width: 280px !important;
     max-width: 280px !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 .card{
   margin-left: 50px !important;
@@ -208,6 +215,8 @@ transition: 0.7s;
     width: 100% !important;
     min-width: unset !important;
     max-width: unset !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
   }
 
   .courses__full-content{
