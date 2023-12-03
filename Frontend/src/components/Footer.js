@@ -31,7 +31,6 @@ const Footer = () => {
   };
   const handleCourses = () => {
     const Title = coursesToShow[0].Title;
-    console.log(Title);
     const Description = coursesToShow[0].Description;
     navigate("ListAllCourses", {
       state: { data: { Title, Description } },

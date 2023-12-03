@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import { useInspiroCrud } from "./context/InspiroContext";
 
 const PhotoPage = () => {
-  const { Images, getImageList } = useInspiroCrud();
+  const { Images, getImageList, apiurl } = useInspiroCrud();
   useEffect(() => {
     getImageList();
   }, []);
@@ -14,8 +14,7 @@ const PhotoPage = () => {
       <div className="gallery__photo-content">
         {Images.map((photo) => (
           <div key={photo.id}>
-            <img src={photo.url} width="300" height="200" />
-            {/* <p>{photo.description}</p> */}
+            <img src={`${apiurl}/images/${photo}`} width="300" height="200" />
           </div>
         ))}
       </div>

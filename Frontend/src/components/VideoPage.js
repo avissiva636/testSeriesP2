@@ -14,7 +14,7 @@ const VideoPage = () => {
       <div className="gallery__video-content">
         {Video.map((video, index) => (
           <div key={index}>
-            <YoutubeEmbed embedId={video.embedId} />
+            <YoutubeEmbed embedId={video.videoid} />
           </div>
         ))}
       </div>

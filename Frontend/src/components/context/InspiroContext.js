@@ -10,6 +10,7 @@ export const InspiroContext = ({ children }) => {
   const [Video, setVideos] = useState([]);
   const [Testimonial, setTestimonial] = useState([]);
   const [DemoVideo, setDemoVideo] = useState([]);
+  const apiurl = `${api.getUri()}/`;
 
   const getProductList = async () => {
     let result = await api.get("/getProductList");
@@ -28,14 +29,13 @@ export const InspiroContext = ({ children }) => {
   const getImageList = async () => {
     let result = await api.get("/getphotolist");
     if (result.data) {
-      console.log(result.data);
+      console.log(result.data.files);
       setImages(result.data.files);
     }
   };
   const getVideoList = async () => {
     let result = await api.get("/getvideolist");
     if (result.data) {
-      console.log(result.data);
       setVideos(result.data.videos);
     }
   };
@@ -315,6 +315,7 @@ export const InspiroContext = ({ children }) => {
   return (
     <inspiroContext.Provider
       value={{
+        apiurl,
         products,
         Courses,
         Images,
