@@ -10,7 +10,7 @@ const productschema = mongoose.Schema({
             {
                 name: String,
                 link: String,
-                photo:String,
+                photo: String,
             }
         ],
         required: [true, "please add the subprodudcts"],
