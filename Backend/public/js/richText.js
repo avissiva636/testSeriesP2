@@ -5,6 +5,8 @@ var quillSub;
 var quillUpAdd;
 var quillUp;
 var quillDes;
+var quillNotificationAdd;
+var quillNotificationUpdate;
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -127,41 +129,92 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'updateCourseQload') {
       var contentDiv = document.getElementById('content');
-      
-        function loadQuillDes() {
-          try {           
 
-            var quillEditorDes = document.getElementById('quillUpdateDescription');
-            quillEditorDes.innerHTML = '';
-            const editor = document.createElement("div");
-            quillEditorDes.append(editor);
-    
-            if (quillEditorDes) {
-              quillDes = new Quill(editor, {
-                theme: 'snow',
-                modules: {
-                  toolbar: [
-                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                    [{ font: [] }],
-                    [{ list: "ordered" }, { list: "bullet" }],
-                    ["bold", "italic", "underline"],
-                    [{ color: [] }, { background: [] }],
-                    [{ script: "sub" }, { script: "super" }],
-                    [{ align: [] }],
-                    ["image", "blockquote", "code-block"],
-                    ["clean"],
-                  ],
-                },
-              });
-            }            
-          } catch (error) {
-            contentDiv.removeEventListener('change', loadQuillDes);
+      function loadQuillDes() {
+        try {
+
+          var quillEditorDes = document.getElementById('quillUpdateDescription');
+          quillEditorDes.innerHTML = '';
+          const editor = document.createElement("div");
+          quillEditorDes.append(editor);
+
+          if (quillEditorDes) {
+            quillDes = new Quill(editor, {
+              theme: 'snow',
+              modules: {
+                toolbar: [
+                  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                  [{ font: [] }],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["bold", "italic", "underline"],
+                  [{ color: [] }, { background: [] }],
+                  [{ script: "sub" }, { script: "super" }],
+                  [{ align: [] }],
+                  ["image", "blockquote", "code-block"],
+                  ["clean"],
+                ],
+              },
+            });
           }
-        }        
-      
+        } catch (error) {
+          contentDiv.removeEventListener('change', loadQuillDes);
+        }
+      }
+
       contentDiv.addEventListener('change', loadQuillDes);
 
     }
   });
-
 });
+
+function loadaddNotificationQuill() {
+  var quillEditorNotificationAdd = document.getElementById('quill-addNotification');
+  quillEditorNotificationAdd.innerHTML = '';
+  const editor = document.createElement("div");
+  quillEditorNotificationAdd.append(editor);
+
+  if (quillEditorNotificationAdd) {
+    quillNotificationAdd = new Quill(editor, {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["bold", "italic", "underline"],
+          [{ color: [] }, { background: [] }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["image", "blockquote", "code-block"],
+          ["clean"],
+        ],
+      },
+    });
+  }
+}
+
+function loadupdateNotificationQuill() {
+  var quillEditorNotificationUpdate = document.getElementById('quill-UpdateNotification');
+  quillEditorNotificationUpdate.innerHTML = '';
+  const editor = document.createElement("div");
+  quillEditorNotificationUpdate.append(editor);
+
+  if (quillEditorNotificationUpdate) {
+    quillNotificationUpdate = new Quill(editor, {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ font: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["bold", "italic", "underline"],
+          [{ color: [] }, { background: [] }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ align: [] }],
+          ["image", "blockquote", "code-block"],
+          ["clean"],
+        ],
+      },
+    });
+  }
+}

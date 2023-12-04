@@ -7,6 +7,7 @@ const { courseModel: Course } = require("../database/index");
 const { productModel: Product } = require("../database/index");
 const { videoModel: Video } = require("../database/index");
 const { testimonialsModel: Testimonial } = require("../database/index");
+const { notificationModel: Notification } = require("../database/index");
 
 // let CourseList = [
 //     {
@@ -162,6 +163,17 @@ async function setvideoEidList() {
     }
 }
 setvideoEidList()
+
+let NotificationList = [];
+async function setNotificationList() {
+    try {
+        const retrievedNotification = await Notification.find();
+        NotificationList = retrievedNotification;
+    } catch (error) {
+        console.error('Error setting NotificationList:', error);
+    }
+}
+// setNotificationList()
 
 const multer = require('multer');
 const dataflow = multer();
@@ -559,12 +571,9 @@ router.post('/upload', upload.single('image'), (req, res) => {
 router.route("/getphotolist").get((req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, '../../public/images'), { withFileTypes: true });
-        
         const onlyNonFolderItems = files
             .filter((item) => !item.isDirectory())
             .map((item) => item.name);
-
-       
         res.json({ files: onlyNonFolderItems });
     } catch (err) {
         res.status(500).send('Internal Server Error');
@@ -782,21 +791,91 @@ router.route("/deleteTestimonial").get((req, res) => {
     });
 })
 
+router.post("/uploadAddNotification", async (req, res) => {
+    try {
+
+        const notificationName = req.body.notificationName;
+        const notificationDescription = req.body.notificationDescription;
+
+        await Notification.create({
+            name: notificationName,
+            description: notificationDescription
+        })
+        await setNotificationList();
+
+    } catch (error) {
+        console.log(error.message)
+    }
+    // Respond to the client as needed
+    res.json({
+        message: 'Received Notification Data',
+        NotificationList
+    });
+})
+
+router.route("/getNotificationList").get(async (req, res) => {
+    await setNotificationList();
+    res.json({ NotificationList });
+})
+
 router.route("/addNotification").get((req, res) => {
     res.render("notification/addNotification", {
-        message: "add Notification",        
+        message: "add Notification",
+    });
+})
+
+router.post("/uploadUpdateNotification", async (req, res) => {
+    try {
+        const notificationOldName = req.body.updateNotificationData;
+        const UpdateNotificationName = req.body.UpdateNotificationName;
+        const UpdateNotificationDescription = req.body.UpdateNotificationDescription;
+
+        await Notification.findOneAndUpdate(
+            { name: notificationOldName },
+            { $set: { name: UpdateNotificationName, description: UpdateNotificationDescription } },
+            { new: true }
+        );
+
+        await setNotificationList();       
+
+    } catch (error) {
+        console.log(error.message)
+    }
+    // Respond to the client as needed
+    res.json({
+        message: 'Received Notification Data',
+        NotificationList
     });
 })
 
 router.route("/updateNotification").get((req, res) => {
     res.render("notification/updateNotification", {
-        message: "update Notification",        
+        message: "update Notification",
+        NotificationList,
     });
+})
+
+router.post("/uploadDeleteNotification",  async (req, res) => {
+    try {
+        const deleteNotification = req.body.deleteNotification;
+    
+        await Notification.findOneAndDelete({ name: deleteNotification });    
+        await setNotificationList();
+
+        res.json({
+            message: "Notification Deleted",
+            NotificationList
+        });
+
+    } catch (error) {
+        console.log("error", error.message)
+    }
 })
 
 router.route("/deleteNotification").get((req, res) => {
     res.render("notification/deleteNotification", {
-        message: "delete Notification",        
+        message: "delete Notification",
+        NotificationList,
     });
 })
 
