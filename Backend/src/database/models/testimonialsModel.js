@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const testimonialsSchema = new mongoose.Schema({
+const notificationSchema = new mongoose.Schema({
     name: String,
-    desc: String, 
-    photo: String,
-});
+    description: String,
+},
+    { timestamps: true, });
 
 
 const Testimonials = mongoose.model('Testimonials', testimonialsSchema);
