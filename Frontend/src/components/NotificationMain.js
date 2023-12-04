@@ -1,24 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
-import { useInspiroCrud } from "./context/InspiroContext";
 import CourseDescription from "./CourseDescription";
+import { useLocation } from "react-router-dom";
+
 const NotificationMain = () => {
-  const { notification } = useInspiroCrud();
+  const location = useLocation();
+  const { notification } = location.state.data;
   let initialTitle = notification[0].name;
   let initialDescription = notification[0].description;
   const [a, setA] = useState(initialTitle);
   const [b, setB] = useState(initialDescription);
+
   const handleNotificationClick = (name, description) => {
     setA(name);
     setB(description);
   };
   return (
     <>
-    <div style={{textAlign: 'center', marginTop:"10px"}}><h1><b>Karnataka Carrer Notifications</b></h1></div>
+      <div style={{ textAlign: "center", marginTop: "10px" }}>
+        <h1>
+          <b>Karnataka Carrer Notifications</b>
+        </h1>
+      </div>
       <div className="courses__full-content mb-5">
-      
         <div className="courses__page col-xl-3 col-lg-3 col-md-12">
-            
           <div className="courses__header">Recent Notifications</div>
 
           {notification.map((items) => {

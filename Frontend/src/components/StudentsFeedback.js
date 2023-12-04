@@ -34,7 +34,6 @@ const StudentFeedback = () => {
             
             <div className="team__card" key={index}>
               <div className="card__bg-photo">
-              {console.log(review.photo)}
                 <div className="card__face-photo" style={{backgroundImage: `URL(${review.photo})`}}></div>
               </div>
               <div className="card__text-container">

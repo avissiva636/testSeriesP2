@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { InspiroContext } from "./components/context/InspiroContext";
+import { InspiroContext, useInspiroCrud } from "./components/context/InspiroContext";
 import HomePage from "./components/HomePage";
 import Products from "./components/Products";
 import ContactUs from "./components/ContactUs";
@@ -21,10 +21,8 @@ import Sidebar from "./components/sidemenu";
 import SubProducts from "./components/SubProducts";
 import Footer from "./components/Footer";
 import NotificationMain from "./components/NotificationMain";
+import Popup from "./components/Popup";
 function App() {
-  // useEffect(() => {
-  //   window.scrollTo(0, 0); // Scrolls to the top of the page
-  // }, []);
   return (
     <div>
       <Router>
@@ -56,11 +54,12 @@ function App() {
             />
             <Route path="/RefundPolicy" element={<RefundPolicy />} />
             <Route path="SubProducts" element={<SubProducts />} />
-            <Route path="/NotificationMain" element={<NotificationMain />}/>
+            <Route path="/NotificationMain" element={<NotificationMain />} />
           </Routes>
           <Footer />
         </InspiroContext>
       </Router>
+      <Popup />
     </div>
   );
 }

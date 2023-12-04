@@ -1,7 +1,7 @@
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
 
@@ -12,9 +12,12 @@ const Navigationbar = () => {
   const [showCourses, setShowCourses] = useState(false);
   const [avatarDropdown, setavatarDropdown] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { Courses } = useInspiroCrud();
+  const { Courses, getNotificationList, notification } = useInspiroCrud();
   const [showGallery, setShowGallery] = useState(false);
 
+  useEffect(() => {
+    getNotificationList();
+  }, []);
   const toggleMenu = () => {
     setheaderShowDropdown(!showheaderDropdown);
   };
@@ -120,7 +123,9 @@ const Navigationbar = () => {
     setShowCourses(false);
   };
   const handleNotification = () => {
-    navigate("NotificationMain");
+    navigate("NotificationMain", {
+      state: { data: { notification } },
+    });
   };
 
   return (
@@ -277,11 +282,11 @@ const Navigationbar = () => {
             <span>&#9776;</span>
           </button>
           <div className="navigation__avatar" onClick={toggleAvatar}>
-            <PersonSharpIcon />
+            <PersonSharpIcon style={{ cursor: "pointer" }} />
             {avatarDropdown && (
               <div className="dropdown-content">
                 <div>Register</div>
-                <div>Login</div>
+                <div>Admin</div>
               </div>
             )}
           </div>
