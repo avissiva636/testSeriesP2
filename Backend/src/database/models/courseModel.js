@@ -9,7 +9,8 @@ const courseSchema = new mongoose.Schema({
             Description: Object, // Array of Description subdocuments
         },
     ],
-});
+},
+    { timestamps: true, });
 
 // courseSchema.pre('validate', function () {
 //     if ((this.Description.length > 0 && this.SubTitle.length > 0) ||
