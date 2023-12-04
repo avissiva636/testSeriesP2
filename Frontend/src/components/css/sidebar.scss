@@ -1,7 +1,7 @@
 .i-sidemenu {
   position: fixed;
   top: 35%;
-  z-index: 9999;
+  z-index: 999;
   width: 50px;
   min-width: 50px;
 
@@ -51,7 +51,7 @@
 .i-sidemenu {
   position: fixed;
   right: 0; /* Set right to 0 to position the sidebar on the right side */
-  z-index: 1000; /* Adjust z-index as needed */
+  z-index: 999; /* Adjust z-index as needed */
 }
 
 .i-sidemenu .sidebar-content {

@@ -42,8 +42,10 @@ const Footer = () => {
       <div className="footer">
         {/* <Container className="test"> */}
         <Row className="footer-text col-12">
+          
           <Col lg={6}>
             <h2 className="text-light head-text">Inspiro</h2>
+            <h4 style={{color:"white", fontStyle:"italic"}}>Dedicated to one Dream. Yours.</h4>
             <div className="contact-info">
               <address className="d-flex text-light address__text">
                 #508, Second Floor, 10th Main Road, 18th Cross Road,<br></br>{" "}
