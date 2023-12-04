@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const notificationSchema = new mongoose.Schema({
+const testimonialsSchema = new mongoose.Schema({
     name: String,
     desc: String,
     photo: String,
