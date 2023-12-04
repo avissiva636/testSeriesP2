@@ -13,8 +13,16 @@ const loadSection = (filename, clickedElement) => {
         })
         .then(htmlSnippet => {
             content.innerHTML = htmlSnippet;
-        })
 
+            switch (filename) {
+                case 'addNotification':
+                    loadaddNotificationQuill();
+                    break;
+                case 'updateNotification':
+                    loadupdateNotificationQuill();
+                    break;
+            }
+        })
 };
 
 const toggleVisibility = (display, elementA, elementB) => {
@@ -108,7 +116,7 @@ function handleAddCourseSubmit() {
             })
             .catch(error => {
                 alert("Not updated");
-                button.disabled=false;
+                button.disabled = false;
                 console.error('Error uploading file:', error);
             });
     }
@@ -136,7 +144,7 @@ function handleAddCourseSubmit() {
             })
             .catch(error => {
                 alert("Not updated");
-                button.disabled=false;
+                button.disabled = false;
                 console.error('Error uploading file:', error);
             });
 
