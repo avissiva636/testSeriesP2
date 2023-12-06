@@ -21,9 +21,27 @@ const ListAllCourses = () => {
     }
   }, [location.state.data]);
 
-
-
   const handleCourseClick = (index, Title, Description) => {
+    if (window.innerWidth >= 1024) {
+      const descriptionSection = document.getElementById("descriptionSection");
+      if (descriptionSection) {
+        descriptionSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
+    } else if (window.innerWidth <= 992) {
+      const descriptionSection = document.getElementById("descriptionSection1");
+      if (descriptionSection) {
+        descriptionSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
+    }
+
     if (selectedCourse === index) {
       setSelectedCourse(null);
     } else {
@@ -35,24 +53,42 @@ const ListAllCourses = () => {
   };
 
   const handleSubtitleClick = (index, Title, Description) => {
+    if (window.innerWidth >= 1024) {
+      const descriptionSection = document.getElementById("descriptionSection");
+      if (descriptionSection) {
+        descriptionSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
+    } else if (window.innerWidth <= 992) {
+      const descriptionSection = document.getElementById("descriptionSection1");
+      if (descriptionSection) {
+        descriptionSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
+    }
     if (selectedSubCourse === index) {
       setSelectedSubCourse(null);
     } else {
       setSelectedSubCourse(index);
       setA(Title);
       setB(Description);
-      
     }
   };
 
   return (
     <>
+      <div id="descriptionSection"> </div>
       <div className="courses__full-content mb-5">
         <div className="courses__page col-xl-3 col-lg-3 col-md-12">
           <div className="courses__header">Courses offered</div>
 
           {Courses.map((course, index) => {
-            
             let Title;
 
             if (course.SubTitle != "") {
@@ -90,7 +126,10 @@ const ListAllCourses = () => {
             return <div className="test5">{Title}</div>;
           })}
         </div>
-        <div className="col-xl-9 col-lg-9 col-md-12 text__description">
+        <div
+          className="col-xl-9 col-lg-9 col-md-12 text__description"
+          id="descriptionSection1"
+        >
           <CourseDescription Title={a} Description={b} />
         </div>
         <br></br>

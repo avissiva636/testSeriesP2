@@ -1,12 +1,10 @@
-import Navigationbar from "./Navigationbar";
 import Gallery from "./Gallery";
-import Sidebar from "./sidemenu";
 import StudentFeedback from "./StudentsFeedback";
-import Footer from "./Footer";
 import FrequentlyAskedQuestions from "./FrequentlyAskedQuestions";
 import ContactUsHomePage from "./ContactUsHomePage";
 import PopularCourse from "./PopularCourses";
 import ProductsHomePage from "./ProductsHomePage";
+
 
 const HomePage = () => {
   return (

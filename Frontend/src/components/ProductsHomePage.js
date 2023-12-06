@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./css/ProductsHomePage.css";
 import { useInspiroCrud } from "./context/InspiroContext";
 import { Link } from "react-router-dom";
@@ -9,8 +9,6 @@ const ProductsHomePage = () => {
   useEffect(() => {
     getProductList();
   }, []);
-  
-  // const [hoveredProduct, setHoveredProduct] = useState(null);
 
   return (
     <div>
@@ -21,8 +19,6 @@ const ProductsHomePage = () => {
             <ProductCardDisplay
               key={product.mainProduct}
               product={product}
-              // hoveredProduct={hoveredProduct}
-              // setHoveredProduct={setHoveredProduct}
             />
           ))}
         </div>

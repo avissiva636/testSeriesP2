@@ -1,6 +1,6 @@
 import { Navigate, useNavigate } from "react-router-dom";
 
-const ProductCardDisplay = ({ product, hoveredProduct, setHoveredProduct }) => {
+const ProductCardDisplay = ({ product, hoveredProduct }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("Products");
@@ -11,9 +11,7 @@ const ProductCardDisplay = ({ product, hoveredProduct, setHoveredProduct }) => {
         <h2>
           <div onClick={handleClick}>{product.mainProduct}</div>
         </h2>
-        {/* <div className="mt-4">A JS library for developing web pages</div> */}
       </div>
-      {/* <button className="product__btn">learn more</button> */}
       <div>
         {hoveredProduct === product && (
           <ul>
