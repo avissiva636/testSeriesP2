@@ -19,7 +19,7 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
-    width: 300px; /* Adjust the width as needed */
+    width: 30px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
 }

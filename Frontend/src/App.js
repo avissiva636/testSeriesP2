@@ -22,6 +22,7 @@ import SubProducts from "./components/SubProducts";
 import Footer from "./components/Footer";
 import NotificationMain from "./components/NotificationMain";
 import Popup from "./components/Popup";
+import ScrollToTop from "./components/ScrollToTop";
 function App() {
   return (
     <div>
@@ -56,6 +57,7 @@ function App() {
             <Route path="SubProducts" element={<SubProducts />} />
             <Route path="/NotificationMain" element={<NotificationMain />} />
           </Routes>
+          <ScrollToTop />
           <Footer />
         </InspiroContext>
       </Router>

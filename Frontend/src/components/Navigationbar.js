@@ -256,7 +256,7 @@ const Navigationbar = () => {
           <div className="header__hover">
             <a
               className="current__affairs"
-              href="https://www.instamojo.com/inspiroiaskas"
+              href="https://www.kasmoksha.com/readpaper"
               target="_blank"
             >
               Current Affairs

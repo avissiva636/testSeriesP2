@@ -49,11 +49,35 @@
   background-color: darkred;
 }
 .back-button {
-  position: left;
+  text-align: left;
 }
 .sub-product-name {
   margin-top: 180px;
 }
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="text"] {
+  position: right;
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.no-results-message {
+  color: red;
+  margin-top: 10px;
+}
+
 @media (max-width: 768px) {
   .card-container {
     flex-direction: column; /* Stack cards vertically on small screens */

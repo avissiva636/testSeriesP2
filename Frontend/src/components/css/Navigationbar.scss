@@ -213,6 +213,9 @@ gap: 20px;
     width: 100%;
     z-index: 1;
   }
+  .navigation__container{
+    height: 70px;
+  }
 
   .navigation__gallery:hover .navigation__gallery-dropdown {
     display: block;

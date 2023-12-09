@@ -11,11 +11,8 @@ const Products = () => {
     window.scroll(0, 0);
   }, []);
   const { products } = useInspiroCrud();
-  // const [activeProduct, setActiveProduct] = useState(null);
 
   const handleProductClick = (product) => {
-    console.log(product);
-    // setActiveProduct(activeProduct === product ? null : product);
     navigate("/SubProducts", {
       state: { data: { product } },
     });
@@ -29,32 +26,12 @@ const Products = () => {
         </b>
         <div className="product-list">
           {products.map((product, index) => (
-            // <div
-            //   key={index}
-            //   className={`col-xl-3 col-lg-3 col-sm-12 col-xs-12 product__item ${
-            //     activeProduct === product ? "active" : ""
-            //   }`}
-            //   onClick={() => handleProductClick(product)}
-            // >
             <div
               key={index}
               className={`col-xl-3 col-lg-3 col-sm-12 col-xs-12 product__item`}
               onClick={() => handleProductClick(product)}
             >
               <h2>{product.mainProduct}</h2>
-              {/* {activeProduct === product && (
-                <div className="sub-products">
-                  <ul>
-                    {product.subProducts.map((subProduct, subIndex) => (
-                      <li key={subIndex}>
-                        <a href={subProduct.link} target="_blank">
-                          {subProduct.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )} */}
             </div>
           ))}
         </div>

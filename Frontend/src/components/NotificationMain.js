@@ -12,13 +12,17 @@ const NotificationMain = () => {
   const [b, setB] = useState(initialDescription);
 
   const handleNotificationClick = (name, description) => {
+    const descriptionSection = document.getElementById("descriptionSection");
+    if (descriptionSection) {
+      descriptionSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     setA(name);
     setB(description);
   };
   return (
     <>
       <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <h1>
+        <h1 id="descriptionSection">
           <b>Karnataka Carrer Notifications</b>
         </h1>
       </div>
