@@ -8,32 +8,36 @@ var quillDes;
 var quillNotificationAdd;
 var quillNotificationUpdate;
 
+var TOOLBAROPTIONS = [
+  ['style', ['style']],
+  ['font', ['bold', 'underline', 'clear']],
+  ['color', ['color']],
+  ['para', ['ul', 'ol', 'paragraph']],
+  ['table', ['table']],
+  ['insert', ['link', 'picture']],
+  ['view', ['codeview']]
+];
 
 document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'noSubtitle') {
       var quillEditorNormal = document.getElementById('quill-editornormal');
-      quillEditorNormal.innerHTML = '';
-      const editor = document.createElement("div");
-      quillEditorNormal.append(editor);
 
       if (quillEditorNormal) {
-        quillNormal = new Quill(editor, {
-          theme: 'snow',
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              [{ font: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["bold", "italic", "underline"],
-              [{ color: [] }, { background: [] }],
-              [{ script: "sub" }, { script: "super" }],
-              [{ align: [] }],
-              ["image", "blockquote", "code-block"],
-              ["clean"],
-            ],
-          },
+        quillNormal = $('#quill-editornormal').summernote({
+          placeholder: 'Please enter your data',
+          tabsize: 2,
+          height: 120,
+          toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],
+            ['view', ['codeview']]
+          ]
         });
       }
     }
@@ -42,26 +46,21 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     if (event.target.id === 'yesSubtitle') {
       var quillEditorSub = document.getElementById('quill-editorSub');
-      quillEditorSub.innerHTML = '';
-      const editor = document.createElement("div");
-      quillEditorSub.append(editor);
 
       if (quillEditorSub) {
-        quillSub = new Quill(editor, {
-          theme: 'snow',
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              [{ font: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["bold", "italic", "underline"],
-              [{ color: [] }, { background: [] }],
-              [{ script: "sub" }, { script: "super" }],
-              [{ align: [] }],
-              ["image", "blockquote", "code-block"],
-              ["clean"],
-            ],
-          },
+        quillSub = $('#quill-editorSub').summernote({
+          placeholder: 'Please enter your data',
+          tabsize: 2,
+          height: 120,
+          toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],
+            ['view', ['codeview']]
+          ]
         });
       }
     }
@@ -70,27 +69,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'course') {
-      var quillEditorUpAdd = document.getElementById('quill-editorSubupAdd');
-      quillEditorUpAdd.innerHTML = '';
-      const editor = document.createElement("div");
-      quillEditorUpAdd.append(editor);
+      var quillEditorUpAdd = document.getElementById('quill-editorSubupAdd');     
 
       if (quillEditorUpAdd) {
-        quillUpAdd = new Quill(editor, {
-          theme: 'snow',
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              [{ font: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["bold", "italic", "underline"],
-              [{ color: [] }, { background: [] }],
-              [{ script: "sub" }, { script: "super" }],
-              [{ align: [] }],
-              ["image", "blockquote", "code-block"],
-              ["clean"],
-            ],
-          },
+        quillUpAdd = $('#quill-editorSubupAdd').summernote({
+          placeholder: 'Please enter your data',
+          tabsize: 2,
+          height: 120,
+          toolbar: TOOLBAROPTIONS
         });
       }
     }
@@ -99,27 +85,14 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'course') {
-      var quillEditorUp = document.getElementById('quill-editorSubup');
-      quillEditorUp.innerHTML = '';
-      const editor = document.createElement("div");
-      quillEditorUp.append(editor);
+      var quillEditorUp = document.getElementById('quill-editorSubup');      
 
       if (quillEditorUp) {
-        quillUp = new Quill(editor, {
-          theme: 'snow',
-          modules: {
-            toolbar: [
-              [{ header: [1, 2, 3, 4, 5, 6, false] }],
-              [{ font: [] }],
-              [{ list: "ordered" }, { list: "bullet" }],
-              ["bold", "italic", "underline"],
-              [{ color: [] }, { background: [] }],
-              [{ script: "sub" }, { script: "super" }],
-              [{ align: [] }],
-              ["image", "blockquote", "code-block"],
-              ["clean"],
-            ],
-          },
+        quillUp = $('#quill-editorSubup').summernote({
+          placeholder: 'Please enter your data',
+          tabsize: 2,
+          height: 120,
+          toolbar: TOOLBAROPTIONS
         });
       }
     }
@@ -133,27 +106,14 @@ document.addEventListener('DOMContentLoaded', function () {
       function loadQuillDes() {
         try {
 
-          var quillEditorDes = document.getElementById('quillUpdateDescription');
-          quillEditorDes.innerHTML = '';
-          const editor = document.createElement("div");
-          quillEditorDes.append(editor);
+          var quillEditorDes = document.getElementById('quillUpdateDescription');        
 
           if (quillEditorDes) {
-            quillDes = new Quill(editor, {
-              theme: 'snow',
-              modules: {
-                toolbar: [
-                  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-                  [{ font: [] }],
-                  [{ list: "ordered" }, { list: "bullet" }],
-                  ["bold", "italic", "underline"],
-                  [{ color: [] }, { background: [] }],
-                  [{ script: "sub" }, { script: "super" }],
-                  [{ align: [] }],
-                  ["image", "blockquote", "code-block"],
-                  ["clean"],
-                ],
-              },
+            quillDes = $('#quillUpdateDescription').summernote({
+              placeholder: 'Please enter your data',
+              tabsize: 2,
+              height: 120,
+              toolbar: TOOLBAROPTIONS
             });
           }
         } catch (error) {
@@ -169,52 +129,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function loadaddNotificationQuill() {
   var quillEditorNotificationAdd = document.getElementById('quill-addNotification');
-  quillEditorNotificationAdd.innerHTML = '';
-  const editor = document.createElement("div");
-  quillEditorNotificationAdd.append(editor);
 
   if (quillEditorNotificationAdd) {
-    quillNotificationAdd = new Quill(editor, {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["bold", "italic", "underline"],
-          [{ color: [] }, { background: [] }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["image", "blockquote", "code-block"],
-          ["clean"],
-        ],
-      },
+    quillNotificationAdd = $('#quill-addNotification').summernote({
+      placeholder: 'Please enter your data',
+      tabsize: 2,
+      height: 120,
+      toolbar: TOOLBAROPTIONS
     });
   }
 }
 
 function loadupdateNotificationQuill() {
   var quillEditorNotificationUpdate = document.getElementById('quill-UpdateNotification');
-  quillEditorNotificationUpdate.innerHTML = '';
-  const editor = document.createElement("div");
-  quillEditorNotificationUpdate.append(editor);
 
   if (quillEditorNotificationUpdate) {
-    quillNotificationUpdate = new Quill(editor, {
-      theme: 'snow',
-      modules: {
-        toolbar: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["bold", "italic", "underline"],
-          [{ color: [] }, { background: [] }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ align: [] }],
-          ["image", "blockquote", "code-block"],
-          ["clean"],
-        ],
-      },
+    quillNotificationUpdate = $('#quill-UpdateNotification').summernote({
+      placeholder: 'Please enter your data',
+      tabsize: 2,
+      height: 120,
+      toolbar: TOOLBAROPTIONS
     });
   }
 }

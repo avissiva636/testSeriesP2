@@ -47,7 +47,7 @@ document.addEventListener('change', function (event) {
             // The course has subtitles            
             toggleVisibility("yesSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         } else {
-            quillDes.setContents(selectedCourseData.Description);
+            quillDes.summernote('code',selectedCourseData.Description);
             toggleVisibility("noSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         }
 
@@ -118,7 +118,7 @@ function handleSubtitleSelection() {
 
     //setting value for course, description box
     updateSubTitle.value = selectedOption.value;
-    quillUp.setContents(description);
+    quillUp.summernote('code',description);
 }
 
 function updateAddSubTitle() {
@@ -126,8 +126,7 @@ function updateAddSubTitle() {
     var selectedCourse = document.getElementById('course');
     var title = document.getElementById("upAddsubTitle");
 
-    var description = quillUpAdd.getContents();
-
+    var description = quillUpAdd.summernote('code');
 
     // Find the target course in CourseList
     var targetCourse = CourseList.find(course => course.Title === selectedCourse.value);
@@ -143,7 +142,7 @@ function updateAddSubTitle() {
 
     // Clear input fields
     title.value = "";
-    quillUpAdd.setText("");
+    quillUpAdd.summernote('empty');
     // description.value = ""
 
     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
@@ -153,7 +152,7 @@ function updateCourseListSubtitle() {
     var selectedCourse = document.getElementById('course');
     var updateSubTitle = document.getElementById("updatesubTitle");
     // var updateQuillEditorSub = document.getElementById("updatequill-editorSub");
-    var updateQuillEditorSub = quillUp.getContents();
+    var updateQuillEditorSub = quillUp.summernote('code');
 
     CourseList = CourseList.map(course => {
         if (course.Title === selectedCourse.value) {
@@ -199,7 +198,7 @@ function updateCourseListSubtitle() {
 
     updateSubTitle.value = "";
     // updateQuillEditorSub.value = "";
-    quillUp.setText("");
+    quillUp.summernote('empty');
     toggleVisibility("noSubtitle", "subtitleContent");
 
 }
@@ -226,7 +225,7 @@ function fetchUpdateCourseSubList() {
 
 function updateCourseListDescrition() {
     var selectedCourse = document.getElementById('course');
-    var updateDescription = JSON.stringify(quillDes.getContents());
+    var updateDescription = JSON.stringify(quillDes.summernote('code'));
 
     CourseList = CourseList.map(course => {
         if (course.Title === selectedCourse.value) {
