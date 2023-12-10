@@ -27,7 +27,7 @@ function handleAddNotificationSubmit(event) {
     event.preventDefault();
 
     const notificationName = document.getElementById('notificationName').value;
-    const notificationDescription = quillNotificationAdd.getContents();
+    const notificationDescription = quillNotificationAdd.summernote('code');
 
     fetch('/uploadAddNotification', {
         method: 'POST',
@@ -57,7 +57,7 @@ function handleUpdateNotification() {
     const filteredNotification = NotificationList.filter((notification) => notification.name === updateNotification.value);
 
     UpdateNotificationName.value = filteredNotification[0].name;
-    quillNotificationUpdate.setContents(filteredNotification[0].description);
+    quillNotificationUpdate.summernote('code',filteredNotification[0].description);
 }
 
 // updateNotification
@@ -68,7 +68,7 @@ function updateNotificationList() {
         return;
     }
     const UpdateNotificationName = document.getElementById('UpdateNotificationName');
-    const UpdateNotificationDescription = quillNotificationUpdate.getContents();
+    const UpdateNotificationDescription = quillNotificationUpdate.summernote('code');
 
     fetch('/uploadUpdateNotification', {
         method: 'POST',
