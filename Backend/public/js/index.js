@@ -59,7 +59,7 @@ const editSubTitle = (elementToRemove) => {
     // const updateDescription = document.getElementById("quill-editorSub");
 
     updateSubTitle.value = title;
-    quillSub.setContents(JSON.parse(description));
+    quillSub.summernote('code',JSON.parse(description));
 
     toggleVisibility('yesSubtitle', 'subtDescVisiblity')
 
@@ -69,7 +69,7 @@ const editSubTitle = (elementToRemove) => {
 function addTodo() {
     // Get values from input fields
     var title = document.getElementById("subTitleInput").value;
-    var description = quillSub.getContents();
+    var description = quillSub.summernote('code');
     var todoList = document.getElementById("todoList");
 
     // Convert Delta to JSON
@@ -85,7 +85,7 @@ function addTodo() {
 
     // Clear input fields
     document.getElementById("subTitleInput").value = "";
-    quillSub.setText("");
+    quillSub.summernote('empty');
 
 
     toggleVisibility('noSubtitle', 'subtDescVisiblity')
@@ -97,7 +97,7 @@ function handleAddCourseSubmit() {
     if (radios[1].checked) {
         var button = document.getElementById("submitButton")
         var ftitle = document.getElementById("title").value;
-        var description = quillNormal.getContents();
+        var description = quillNormal.summernote('code');
         // Convert Delta to JSON        
         var descriptionJSON = JSON.stringify(description);
         const formData = new FormData();
@@ -123,8 +123,8 @@ function handleAddCourseSubmit() {
     else if (radios[0].checked) {
         var button = document.getElementById("submitButton")
         var title = document.getElementById("title").value;
-        var subTitleInput = document.getElementById("subTitleInput").value;
-        var description = quillSub.getContents();
+        // var subTitleInput = document.getElementById("subTitleInput").value;
+        var description = quillSub.summernote('code');
         var descriptionJSON = JSON.stringify(description);
 
         const formData = new FormData();
