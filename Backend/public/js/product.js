@@ -188,6 +188,7 @@ function updateSubProductList() {
     const newEntry = {
         mainProduct: selectedProduct.value,
         subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:seletctedProductImage },
+        originalSubProductName,
         Change: "UPDATE"
     };
 
