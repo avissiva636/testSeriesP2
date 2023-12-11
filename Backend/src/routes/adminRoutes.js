@@ -544,7 +544,7 @@ router.route("/deleteProduct").get((req, res) => {
 // Set up storage using multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '../../public/images'));
+        cb(null, path.join(__dirname, '../../public/images/photo'));
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -555,12 +555,7 @@ const upload = multer({ storage: storage });
 router.post('/upload', upload.single('image'), (req, res) => {
     // After successful upload, you can redirect or send a response
 
-    const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
-
-    let index = files.indexOf('testimonials');
-    if (index !== -1) {
-        files.splice(index, 1);
-    }
+    const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
 
     res.json({
         message: 'File uploaded successfully!',
@@ -569,12 +564,9 @@ router.post('/upload', upload.single('image'), (req, res) => {
 });
 
 router.route("/getphotolist").get((req, res) => {
-    try {
-        const files = fs.readdirSync(path.join(__dirname, '../../public/images'), { withFileTypes: true });
-        const onlyNonFolderItems = files
-            .filter((item) => !item.isDirectory())
-            .map((item) => item.name);
-        res.json({ files: onlyNonFolderItems });
+    try {       
+        const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
+        res.json({ files });
     } catch (err) {
         res.status(500).send('Internal Server Error');
     }
@@ -582,13 +574,7 @@ router.route("/getphotolist").get((req, res) => {
 
 router.route("/addPhoto").get((req, res) => {
     try {
-        const files = fs.readdirSync(path.join(__dirname, '../../public/images'));
-
-        //To skip the testimonials folder
-        let index = files.indexOf('testimonials');
-        if (index !== -1) {
-            files.splice(index, 1);
-        }
+        const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
 
         res.render("gallery/addPhoto", {
             message: "Add photo",
@@ -605,7 +591,7 @@ router.route("/deletePhoto").post(dataflow.any(), (req, res) => {
     const imagenameToDelete = req.body.imagenameToDelete;
 
     res.json({ message: req.body })
-    const filePath = path.join(__dirname, '../../public/images', imagenameToDelete);
+    const filePath = path.join(__dirname, '../../public/images/photo', imagenameToDelete);
 
     // Check if the file exists before attempting to delete
     if (fs.existsSync(filePath)) {
