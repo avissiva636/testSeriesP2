@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
-const { videoModel: Video } = require("../database/index");
+const { videoModel: Video } = require("../../database/index");
+const fs = require('fs');
+const path = require("path");
 
 let videoEidList = [];
 async function setvideoEidList() {
@@ -15,7 +17,7 @@ async function setvideoEidList() {
 //@route GET /addPhoto
 //access public
 const renderAddPhoto = asyncHandler((req, res) => {
-    const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
+    const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
     res.render("gallery/addPhoto", {
         message: "Add photo",
         files,
@@ -25,7 +27,8 @@ const renderAddPhoto = asyncHandler((req, res) => {
 //@desc Display the addVideo page
 //@route GET /addVideo
 //access public
-const renderAddVideo = asyncHandler((req, res) => {
+const renderAddVideo = asyncHandler(async (req, res) => {
+    await setvideoEidList();
     res.render("gallery/addVideo", {
         message: "add video",
         videos: videoEidList,
@@ -36,7 +39,7 @@ const renderAddVideo = asyncHandler((req, res) => {
 //@route GET /getphotolist
 //access public
 const getphotolist = asyncHandler((req, res) => {
-    const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
+    const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
     res.json({ files });
 })
 
@@ -45,7 +48,7 @@ const getphotolist = asyncHandler((req, res) => {
 //access public
 const uploadImage = asyncHandler((req, res) => {
     // After successful upload, you can redirect or send a response
-    const files = fs.readdirSync(path.join(__dirname, '../../public/images/photo'));
+    const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
 
     res.json({
         message: 'File uploaded successfully!',
@@ -61,7 +64,7 @@ const deleteImage = asyncHandler((req, res) => {
     const imagenameToDelete = req.body.imagenameToDelete;
 
     res.json({ message: req.body })
-    const filePath = path.join(__dirname, '../../public/images/photo', imagenameToDelete);
+    const filePath = path.join(__dirname, '../../../public/images/photo', imagenameToDelete);
 
     // Check if the file exists before attempting to delete
     if (fs.existsSync(filePath)) {

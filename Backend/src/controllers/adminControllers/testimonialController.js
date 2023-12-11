@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { testimonialsModel: Testimonial } = require("../../database/index");
+const fs = require('fs');
+const path = require("path");
 
 let Testimonials = [];
 
@@ -19,14 +21,16 @@ const renderAddTestimonial = asyncHandler((req, res) => {
     });
 });
 
-const renderUpdateTestimonial = asyncHandler((req, res) => {
+const renderUpdateTestimonial = asyncHandler(async (req, res) => {
+    await setTestimonials();
     res.render("testimonial/updateTestimonial", {
         message: "update Testimonial",
         Testimonials,
     });
 });
 
-const renderDeleteTestimonial = asyncHandler((req, res) => {
+const renderDeleteTestimonial = asyncHandler(async (req, res) => {
+    await setTestimonials();
     res.render("testimonial/deleteTestimonial", {
         message: "delete Testimonial",
         Testimonials,
@@ -77,23 +81,20 @@ const uploadUpdateTestimonial = asyncHandler(async (req, res) => {
 
 const uploadDeleteTestimonial = asyncHandler(async (req, res) => {
     const deleteTestimonial = req.body.deleteTestimonial;
-
     const deletedTestimonial = await Testimonial.findOneAndDelete({ name: deleteTestimonial });
 
     if (deletedTestimonial) {
-        const photoPath = path.join(__dirname, '../../public/images/testimonials', deletedTestimonial.photo);
+        const photoPath = path.join(__dirname, '../../../public/images/testimonials', deletedTestimonial.photo);
         if (fs.existsSync(photoPath)) {
             fs.unlinkSync(photoPath);
         } else {
             console.log(`File ${photoPath} does not exist.`);
         }
-        console.log('Deleted Testimonial:', deletedTestimonial);
     } else {
         console.log('Testimonial not found or already deleted.');
     }
     await setTestimonials();
 
-    // Respond to the client as needed
     res.json({
         message: `File ${deletedTestimonial.photo} deleted successfully.`,
         Testimonials
