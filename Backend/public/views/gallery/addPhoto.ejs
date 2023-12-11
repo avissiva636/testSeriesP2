@@ -10,7 +10,7 @@
 <div id="imageContainer">
     <% files.forEach(file => { %>
         <div class="imageWrapper">
-            <img src="/images/<%= file %>" alt="<%= file %>" style="max-width: 300px; max-height: 200px;">
+            <img src="/images/photo/<%= file %>" alt="<%= file %>" style="max-width: 300px; max-height: 200px;">
             <span class="deleteIcon" onclick="deleteImage('<%= file %>')">❌</span>
         </div>
     <% }); %>
