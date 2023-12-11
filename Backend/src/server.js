@@ -5,6 +5,7 @@ const {connectDb} = require("./database");
 const path = require("path");
 const ejs = require('ejs');
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.set("views", path.join(__dirname, "../public/views"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 const publicPath = path.join(__dirname, '..', 'public/js');
 console.log(publicPath)
 // app.use("public",express.static( publicPath));
