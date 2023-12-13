@@ -15,27 +15,28 @@ async function setProductList() {
     }
 }
 
-function getProductPhoto(mainProduct, subProductNames) {
-    const product = productList.find(p => p.mainProduct === mainProduct);
+// function getProductPhoto(mainProduct, subProductNames) {
+//     const product = productList.find(p => p.mainProduct === mainProduct);
 
-    if (product) {
-        return product.subProducts
-            .filter(subProduct => subProductNames.includes(subProduct.name))
-            .map(subProduct => subProduct.photo);
+//     if (product) {
+//         return product.subProducts
+//             .filter(subProduct => subProductNames.includes(subProduct.name))
+//             .map(subProduct => subProduct.photo);
 
-        // return subProductNames.map(subProductName => {
-        //     const subProduct = product.subProducts.find(s => s.name === subProductName);
-        //     return subProduct ? subProduct.photo : null;
-        // }
-        // );
-    }
+//         // return subProductNames.map(subProductName => {
+//         //     const subProduct = product.subProducts.find(s => s.name === subProductName);
+//         //     return subProduct ? subProduct.photo : null;
+//         // }
+//         // );
+//     }
 
-    return [];
-}
+//     return [];
+// }
 
 //@desc Display the Add Product page
 //@route GET /addProduct
 //access public
+
 const renderProductList = asyncHandler((req, res) => {
     res.render("products/addProduct", {
         message: "add product",
@@ -57,11 +58,11 @@ const getProductList = asyncHandler(async (req, res) => {
 const addProductList = asyncHandler(async (req, res) => {
     var mainProduct = req.body.mainProduct;
     var subProducts = JSON.parse(req.body.subProducts);
-    const productImageNames = req.productImageNames;
+    // const productImageNames = req.productImageNames;
 
-    subProducts.forEach((subProduct, index) => {
-        subProduct.photo = productImageNames[index];
-    });
+    // subProducts.forEach((subProduct, index) => {
+    //     subProduct.photo = productImageNames[index];
+    // });
 
     await Product.create({
         mainProduct: mainProduct,
@@ -98,7 +99,7 @@ const updateProductList = asyncHandler(async (req, res) => {
                 );
             } else {
                 // SubTitle doesn't exist, add it
-                uproduct.subProducts.photo = req.productImageNames[prodIndex++];
+                // uproduct.subProducts.photo = req.productImageNames[prodIndex++];
                 await Product.updateOne(
                     { mainProduct: uproduct.mainProduct },
                     {
@@ -143,17 +144,17 @@ const deleteProductList = asyncHandler(async (req, res) => {
                     { $pull: { subProducts: { name: dproduct } } },
                     { new: true }
                 );
-                var photoLinks = getProductPhoto(producttoDelete, subProduct);
+                // var photoLinks = getProductPhoto(producttoDelete, subProduct);
 
-                // Delete the file
-                photoLinks.forEach((photo) => {
-                    prodPhoto = path.join(__dirname, '../../../public/images/products', photo);
-                    if (fs.existsSync(prodPhoto)) {
-                        fs.unlinkSync(prodPhoto);
-                    } else {
-                        console.log(`File ${photo} does not exist.`);
-                    }
-                });
+                // // Delete the file
+                // photoLinks.forEach((photo) => {
+                //     prodPhoto = path.join(__dirname, '../../../public/images/products', photo);
+                //     if (fs.existsSync(prodPhoto)) {
+                //         fs.unlinkSync(prodPhoto);
+                //     } else {
+                //         console.log(`File ${photo} does not exist.`);
+                //     }
+                // });
             }
         } catch (err) {
             console.error(`Error Deleting document: ${err}`);

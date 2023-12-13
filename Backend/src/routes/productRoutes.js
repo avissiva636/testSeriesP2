@@ -28,11 +28,13 @@ const productUpload = multer({ storage: productStorage });
 
 router.route("/getProductList").get(getProductList);
 
-router.route("/addProductList").post(productUpload.array('photo'), addProductList);
+// router.route("/addProductList").post(productUpload.array('photo'), addProductList);
+router.route("/addProductList").post(dataflow.any(),addProductList);
 
 router.route("/addProduct").get(renderProductList);
 
-router.route("/updateProductList").post(productUpload.array('prodUpPhoto'), updateProductList);
+// router.route("/updateProductList").post(productUpload.array('prodUpPhoto'), updateProductList);
+router.route("/updateProductList").post(dataflow.any(),updateProductList);
 
 router.route("/updateProduct").get(renderUpdateProduct);
 

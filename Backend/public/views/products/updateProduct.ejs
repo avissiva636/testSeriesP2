@@ -28,15 +28,16 @@
 
     <div id="upAddSubtDescVisiblity" style="display: none; flex-direction: column;">
         <!-- Title Input Box -->
-        <label for="upAddSubProductName">Product Name</label>
+        <label for="upAddSubProductName">Sub Product</label>
         <input type="text" id="upAddSubProductName" name="subProductName" required>
         <br>
 
         <label for="upAddSubProductLink">Product Link</label>
         <input type="text" id="upAddSubProductLink" name="subProductLink" required>
 
-        <label for="updateProductPhoto">Photo:</label>
-        <input type="file" id="updateProductPhoto" name="productPhoto" accept="image/*" required>
+        <label for="updateProductPhoto">Photo Link</label>
+        <!-- <input type="file" id="updateProductPhoto" name="productPhoto" accept="image/*" required> -->
+        <input type="text" id="updateProductPhoto" name="productPhoto" required>
         <br>
 
         <!-- Description Input Box -->
@@ -51,13 +52,16 @@
 
 <div id="updateSelectProduct" style="display: none; flex-direction: column;">
     <!-- Title Input Box -->
-    <label for="updatesubProductName">Sub Product:</label>
+    <label for="updatesubProductName">Sub Product</label>
     <input type="text" id="updatesubProductName" name="productTitle" required>
     <br>
 
-    <label for="updatesubProductLink">Product Link:</label>
+    <label for="updatesubProductLink">Product Link</label>
     <input type="text" id="updatesubProductLink" name="productLink" required>
     <br>
+
+    <label for="updatesubProductPhoto">Photo Link</label>
+    <input type="text" id="updatesubProductPhoto" name="subproductPhoto" required>
 
     <button type="button" id="updateBtn" onclick="updateSubProductList()">Update</button>
 </div>
