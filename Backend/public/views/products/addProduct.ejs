@@ -7,8 +7,9 @@
 
     <div id="productDetails">
         <!-- Sub Button Input Box -->
-        <button type="button" id="subButtonBtn" onclick="toggleVisibility('yesSubtitle','addProductVisiblity')">New
-            Produdct</button>
+        <button type="button" id="subButtonBtn" onclick="toggleVisibility('yesSubtitle','addProductVisiblity')">
+            New Produdct
+        </button>
         <br>
 
         <ul id="ProductUlList"></ul>
@@ -24,9 +25,12 @@
             <input type="text" id="subProductLink" name="product" required>
             <br>
 
-            <label for="productPhoto">Photo:</label>
-            <input type="file" id="productPhoto" name="productPhoto" accept="image/*" required>
+            <label for="productPhoto">Photo Link</label>
+            <input type="text" id="productPhoto" name="productPhoto" required>
             <br>
+            <!-- <label for="productPhoto">Photo:</label>
+            <input type="file" id="productPhoto" name="productPhoto" accept="image/*" required>
+            <br> -->
 
             <button type="button" id="addBtn" onclick="addProductTodo()">Add</button>
         </div>

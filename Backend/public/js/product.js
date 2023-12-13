@@ -31,18 +31,20 @@ function addProductTodo() {
     var ProductUlList = document.getElementById("ProductUlList");
     var productPhoto = document.getElementById("productPhoto");
     // if photo was not uploaded, go back
-    if (productPhoto.files.length < 1) {
-        return
-    }
+    // if (productPhoto.files.length < 1) {
+    //     return
+    // }
 
     var subTitleElement = document.createElement("li");
-    subTitleElement.innerHTML = `<p id="${subProductName}" data-title="${subProductName}" data-description='${subProductLink}'  onclick="editProduct(this)"><strong> ${subProductName} </strong></p> `;
+    subTitleElement.innerHTML = `<p id="${subProductName}" data-title="${subProductName}" data-description='${subProductLink}' data-photo='${productPhoto.value}'  onclick="editProduct(this)"><strong> ${subProductName} </strong></p> `;
     ProductUlList.appendChild(subTitleElement);
-    productTodo.push({ name: subProductName, link: subProductLink, photo: productPhoto.files[0] });
+    // productTodo.push({ name: subProductName, link: subProductLink, photo: productPhoto.files[0] });
+    productTodo.push({ name: subProductName, link: subProductLink, photo: productPhoto.value });
 
     // Clear input fields
     document.getElementById("subProductName").value = "";
     document.getElementById("subProductLink").value = "";
+    document.getElementById("productPhoto").value = "";
 
 
     toggleVisibility('noSubtitle', 'addProductVisiblity');
@@ -55,9 +57,9 @@ function handleSubmitProduct() {
 
 
     const formData = new FormData();
-    productTodo.forEach(subProduct => {
-        formData.append("photo", subProduct.photo);
-    })
+    // productTodo.forEach(subProduct => {
+    //     formData.append("photo", subProduct.photo);
+    // })
     formData.append("mainProduct", mainProductName.value);
     formData.append("subProducts", JSON.stringify(productTodo));
 
@@ -83,7 +85,8 @@ const editProduct = (elementToRemove) => {
 
     const title = elementToRemove.getAttribute('data-title');
     const description = elementToRemove.getAttribute('data-description');
-
+    const photo = elementToRemove.getAttribute('data-photo');
+    
     const ProductUlList = document.getElementById("ProductUlList");
 
     ProductUlList.removeChild(elementToRemove.parentNode);
@@ -93,10 +96,13 @@ const editProduct = (elementToRemove) => {
 
     const updatesubProductName = document.getElementById("subProductName");
     const updatesubProductLink = document.getElementById("subProductLink");
+    const productPhoto = document.getElementById("productPhoto");
 
     updatesubProductName.value = title;
 
     updatesubProductLink.value = description;
+
+    productPhoto.value=photo;
 
     toggleVisibility('yesSubtitle', 'addProductVisiblity')
 
@@ -138,7 +144,7 @@ function addSubProductOption(subproduct) {
 }
 
 var originalSubProductName;
-var seletctedProductImage;
+// var seletctedProductImage;
 function handleSubProductSelection() {
     toggleVisibility("noSubtitle", "updateSelectProduct");
     var selectedProduct = document.getElementById('updateProduct');
@@ -149,6 +155,7 @@ function handleSubProductSelection() {
     toggleVisibility("yesSubtitle", "updateSelectProduct", "upAddSubtDescVisiblity");
     var updatesubProductName = document.getElementById("updatesubProductName");
     var updatesubProductLink = document.getElementById("updatesubProductLink");
+    var updatesubProductPhoto = document.getElementById("updatesubProductPhoto");
 
     //getting descrition from productList
     var selectedProductContent = productList
@@ -156,38 +163,41 @@ function handleSubProductSelection() {
         ?.subProducts
         .find(subproduct => subproduct.name === selectedOption.value);
 
-    seletctedProductImage = selectedProductContent?.photo;
+    // seletctedProductImage = selectedProductContent?.photo;
     //setting value
     updatesubProductName.value = selectedOption.value;
     updatesubProductLink.value = selectedProductContent?.link;
+    updatesubProductPhoto.value = selectedProductContent?.photo;
 }
 
 function updateSubProductList() {
     var selectedProduct = document.getElementById('updateProduct');
     var updateSubProduct = document.getElementById("updatesubProductName");
     var updatesubProductLink = document.getElementById("updatesubProductLink");
+    var updatesubProductPhoto = document.getElementById("updatesubProductPhoto");
     // var updateQuillEditorSub = quillUp.getContents();
 
-    productList = productList.map(product => {
-        if (product.mainProduct === selectedProduct.value) {
-            product.subProducts = product.subProducts.map(subproduct => {
-                if (subproduct.name === originalSubProductName) {
-                    return {
-                        name: updateSubProduct.value,
-                        link: updatesubProductLink.value,
-                        photo: subproduct.photo
-                    };
-                }
-                return subproduct;
-            });
-        }
-        return product;
-    });
+    // productList = productList.map(product => {
+    //     if (product.mainProduct === selectedProduct.value) {
+    //         product.subProducts = product.subProducts.map(subproduct => {
+    //             if (subproduct.name === originalSubProductName) {
+    //                 return {
+    //                     name: updateSubProduct.value,
+    //                     link: updatesubProductLink.value,
+    //                     photo: subproduct.photo
+    //                 };
+    //             }
+    //             return subproduct;
+    //         });
+    //     }
+    //     return product;
+    // });
 
     //UpdateProductList Array
     const newEntry = {
         mainProduct: selectedProduct.value,
-        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:seletctedProductImage },
+        // subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:seletctedProductImage },
+        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:updatesubProductPhoto.value },
         originalSubProductName,
         Change: "UPDATE"
     };
@@ -229,9 +239,9 @@ function updateAddSubProduct() {
     var upAddSubProductLink = document.getElementById("upAddSubProductLink");
     var updateProductPhoto = document.getElementById("updateProductPhoto");
     // if photo was not uploaded, go back
-    if (updateProductPhoto.files.length < 1) {
-        return
-    }
+    // if (updateProductPhoto.files.length < 1) {
+    //     return
+    // }
 
     // Find the target product in ProductList
     var targetProduct = productList.find(product => product.mainProduct === selectedProduct.value);
@@ -241,7 +251,8 @@ function updateAddSubProduct() {
 
     updateProductList.push({
         mainProduct: selectedProduct.value,
-        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: updateProductPhoto.files[0] },
+        // subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: updateProductPhoto.files[0] },
+        subProducts: { name: upAddSubProductName.value, link: upAddSubProductLink.value, photo: updateProductPhoto.value },
         Change: "ADD"
     })
 
@@ -255,9 +266,9 @@ function updateAddSubProduct() {
 
 function fetchUpdateProductData() {
     const formData = new FormData();
-    updateProductList.forEach(subProduct => {
-        formData.append("prodUpPhoto", subProduct.subProducts.photo);
-    })
+    // updateProductList.forEach(subProduct => {
+    //     formData.append("prodUpPhoto", subProduct.subProducts.photo);
+    // })
     formData.append("updateProductList", JSON.stringify(updateProductList));
 
 
@@ -274,10 +285,8 @@ function fetchUpdateProductData() {
         .catch(error => {
             console.error('Error uploading file:', error);
         });
-
-
-
 }
+
 function deleteProduct() {
     var deleteProductSelect = document.getElementById('deleteProduct');
     var producttoDelete = deleteProductSelect.value;
