@@ -1,26 +1,27 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
+const { APP_SECRET } = require("../../config/index");
 
 const validateToken = asyncHandler(async (req, res, next) => {
-    let token;
-    let authHeader = req.headers.Authorization || req.headers.authorization;
-    if (authHeader && authHeader.startsWith("Bearer")) {
-        const token = authHeader.split(" ")[1];
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-            if (err) {
-                res.status(401);
-                throw new Error("User is not authorized");
-            } else {
-                req.user = decoded.user;
-                next();
-            }
-        });
+    const cookies = req.cookies;
 
-        if (!token) {
-            res.status(401);
-            throw new Error("User is not authorized or Token is missing");
+    if (!cookies?.jwt) {
+        res.status(401);
+        throw new Error("User UnAuthorized");
+    }
+    let token = cookies.jwt;
+
+    jwt.verify(token, APP_SECRET, (err, decoded) => {
+        if (err) {
+            res.status(401);            
+            throw new Error("User is not authorized");
+        } else {
+            req.user = decoded.user;
+            next();
         }
-    };
+    });
+
+
 });
 
 module.exports = validateToken;
