@@ -1,7 +1,9 @@
 let Testimonials = [];
 
 function fetchtestimonialData() {
-    return fetch('/gettestimoniallist')
+    return fetch(`${testimonialPath}/gettestimoniallist`, {
+        withCredentials: true,
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -26,14 +28,15 @@ function handleTestimonial() {
     const form = document.getElementById('testimonialForm');
     const formData = new FormData(form);
 
-    fetch('/uploadAddTestimonial', {
+    fetch(`${testimonialPath}/uploadAddTestimonial`, {
         method: 'POST',
-        body: formData
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
             // You can update the UI or show a success message here
-            Testimonials=data.Testimonials;            
+            Testimonials = data.Testimonials;
             form.reset();
         })
         .catch(error => {
@@ -60,14 +63,15 @@ function handleUpdateSubmitTestimonial() {
     const UpdateTestimonialName = document.getElementById('UpdateTestimonialName');
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
     const formData = new FormData();
-    
+
     formData.append('updateTestimonialData', updateTestimonialData);
     formData.append('UpdateTestimonialName', UpdateTestimonialName.value);
     formData.append('UpdateTestimonialDescription', UpdateTestimonialDescription.value);
 
-    fetch('/uploadUpdateTestimonial', {
-        method: 'POST',
-        body: formData
+    fetch(`${testimonialPath}/uploadUpdateTestimonial`, {
+        method: 'PUT',
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -85,9 +89,10 @@ function handleDeleteTestimonial() {
     const formData = new FormData();
     formData.append('deleteTestimonial', deleteTestimonial);
 
-    fetch('/uploadDeleteTestimonial', {
-        method: 'POST',
-        body: formData
+    fetch(`${testimonialPath}/uploadDeleteTestimonial`, {
+        method: 'DELETE',
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {

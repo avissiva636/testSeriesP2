@@ -3,7 +3,9 @@ let NotificationList = [];
 // let updateCourseList = [];
 
 function fetchNotificationData() {
-    return fetch('/getNotificationList')
+    return fetch(`${notificationPath}/getNotificationList`, {
+        withCredentials: true,
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -29,12 +31,13 @@ function handleAddNotificationSubmit(event) {
     const notificationName = document.getElementById('notificationName').value;
     const notificationDescription = quillNotificationAdd.summernote('code');
 
-    fetch('/uploadAddNotification', {
+    fetch(`${notificationPath}/uploadAddNotification`, {
         method: 'POST',
         body: JSON.stringify({ notificationName: notificationName, notificationDescription: notificationDescription }),
         headers: {
             'Content-Type': 'application/json'
         },
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -57,7 +60,7 @@ function handleUpdateNotification() {
     const filteredNotification = NotificationList.filter((notification) => notification.name === updateNotification.value);
 
     UpdateNotificationName.value = filteredNotification[0].name;
-    quillNotificationUpdate.summernote('code',filteredNotification[0].description);
+    quillNotificationUpdate.summernote('code', filteredNotification[0].description);
 }
 
 // updateNotification
@@ -70,8 +73,8 @@ function updateNotificationList() {
     const UpdateNotificationName = document.getElementById('UpdateNotificationName');
     const UpdateNotificationDescription = quillNotificationUpdate.summernote('code');
 
-    fetch('/uploadUpdateNotification', {
-        method: 'POST',
+    fetch(`${notificationPath}/uploadUpdateNotification`, {
+        method: 'PUT',
         body: JSON.stringify({
             updateNotificationData,
             UpdateNotificationName: UpdateNotificationName.value,
@@ -80,6 +83,7 @@ function updateNotificationList() {
         headers: {
             'Content-Type': 'application/json'
         },
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -94,14 +98,15 @@ function updateNotificationList() {
 function handleDeleteNotification() {
     const deleteNotification = document.getElementById('deleteNotification').value;
 
-    fetch('/uploadDeleteNotification', {
-        method: 'POST',
+    fetch(`${notificationPath}/uploadDeleteNotification`, {
+        method: 'DELETE',
         body: JSON.stringify({
             deleteNotification
         }),
         headers: {
             'Content-Type': 'application/json'
         },
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {

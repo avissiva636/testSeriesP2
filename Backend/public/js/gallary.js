@@ -9,9 +9,10 @@ function uploadFile() {
         return
     }
 
-    fetch('/upload', {
+    fetch(`${gallaryPath}/upload`, {
         method: 'POST',
-        body: formData
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -63,9 +64,10 @@ function uploadFile() {
 function deleteImage(deleteFile) {
     const formData = new FormData();
     formData.append("imagenameToDelete", deleteFile);
-    fetch('/deletePhoto', {
-        method: 'POST',
-        body: formData
+    fetch(`${gallaryPath}/deletePhoto`, {
+        method: 'DELETE',
+        body: formData,
+        withCredentials: true,
     })
         .then(() => loadSection('addPhoto'))
         .catch(error => {
@@ -85,9 +87,10 @@ function uploadvideo() {
         const formData = new FormData();
         formData.append('videoId', videoIdInput.value);
 
-        fetch('/uploadVideo', {
+        fetch(`${gallaryPath}/uploadVideo`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            withCredentials: true,
         })
             .then(response => response.json())
             .then(data => {
@@ -140,9 +143,10 @@ function deleteVideo(elementToRemove) {
     const formData = new FormData();
     formData.append('videoIdToDelete', elementToRemove);
 
-    fetch('/deleteVideo', {
-        method: 'POST',
-        body: formData
+    fetch(`${gallaryPath}/deleteVideo`, {
+        method: 'DELETE',
+        body: formData,
+        withCredentials: true,
     })
         .then(() => loadSection('addVideo'))
         .catch(error => {

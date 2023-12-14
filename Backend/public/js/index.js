@@ -1,14 +1,58 @@
 var todos = [];
+const coursePath = "/course";
+const productPath = "/product";
+const testimonialPath = "/testimonial";
+const gallaryPath = "/gallary";
+const notificationPath = "/notification";
+
 
 const loadSection = (filename, clickedElement) => {
     const content = document.getElementById("content");
     // const clickedElementId = clickedElement.closest('div').id;
+    let renderPath = "";
+    switch (filename) {
+        case "addCourse":
+        case "updateCourse":
+        case "deleteCourse":
+            renderPath = `${coursePath}`
+            break;
+
+        case "addProduct":
+        case "updateProduct":
+        case "deleteProduct":
+            renderPath = `${productPath}`
+            break;
+
+        case "addPhoto":
+        case "addVideo":
+            renderPath = `${gallaryPath}`
+            break;
+
+        case "addtestimonial":
+        case "updateTestimonial":
+        case "deleteTestimonial":
+            renderPath = `${testimonialPath}`
+            break;
+
+        case "addNotification":
+        case "updateNotification":
+        case "deleteNotification":
+            renderPath = `${notificationPath}`
+            break;
+
+        default:
+            break;
+    }
 
     // fetch(`/${"views"}/${clickedElementId}/${filename}`)
-    fetch(`/${filename}`)
+    fetch(`${renderPath}/${filename}`, {
+        withCredentials: true,
+    })
         .then(res => {
             if (res.ok) {
                 return res.text();
+            } else {
+                throw new Error(`${res.status}`);
             }
         })
         .then(htmlSnippet => {
@@ -22,8 +66,34 @@ const loadSection = (filename, clickedElement) => {
                     loadupdateNotificationQuill();
                     break;
             }
+        }).catch(err => {
+            console.log(err.message);
+            if (err.message==='401') {
+                console.log("error");
+            } else {
+                console.log("other error")
+            }
+            switch (err.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;            
+                default:
+                    console.log(err.message);
+                    break;
+            }
         })
 };
+
+function loadLogout(filename) {
+    fetch(`${filename}`, {
+        withCredentials: true,
+    }).then((res) => {
+        if (res.ok) {
+            location.reload();
+        }
+    })
+}
 
 const toggleVisibility = (display, elementA, elementB) => {
     const containerA = document.getElementById(elementA);
@@ -59,7 +129,7 @@ const editSubTitle = (elementToRemove) => {
     // const updateDescription = document.getElementById("quill-editorSub");
 
     updateSubTitle.value = title;
-    quillSub.summernote('code',JSON.parse(description));
+    quillSub.summernote('code', JSON.parse(description));
 
     toggleVisibility('yesSubtitle', 'subtDescVisiblity')
 
@@ -105,9 +175,10 @@ function handleAddCourseSubmit() {
         formData.append("Description", descriptionJSON);
 
         button.disabled = true;
-        fetch('/addCourseNormalList', {
+        fetch(`${coursePath}/addCourseNormalList`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            withCredentials: true,
         })
             .then(response => response.json())
             .then(data => {
@@ -132,9 +203,10 @@ function handleAddCourseSubmit() {
         formData.append("SubTitle", JSON.stringify(todos));
 
         button.disabled = true;
-        fetch('/addCourseSubList', {
+        fetch(`${coursePath}/addCourseSubList`, {
             method: 'POST',
-            body: formData
+            body: formData,
+            withCredentials: true,
         })
             .then(response => response.json())
             .then(data => {

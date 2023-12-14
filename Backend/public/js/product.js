@@ -3,7 +3,9 @@ let productTodo = [];
 let updateProductList = [];
 
 function fetchProductData() {
-    return fetch('/getProductList')
+    return fetch(`${productPath}/getProductList`, {
+        withCredentials: true,
+    })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -63,9 +65,10 @@ function handleSubmitProduct() {
     formData.append("mainProduct", mainProductName.value);
     formData.append("subProducts", JSON.stringify(productTodo));
 
-    fetch('/addProductList', {
+    fetch(`${productPath}/addProductList`, {
         method: 'POST',
-        body: formData
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -86,7 +89,7 @@ const editProduct = (elementToRemove) => {
     const title = elementToRemove.getAttribute('data-title');
     const description = elementToRemove.getAttribute('data-description');
     const photo = elementToRemove.getAttribute('data-photo');
-    
+
     const ProductUlList = document.getElementById("ProductUlList");
 
     ProductUlList.removeChild(elementToRemove.parentNode);
@@ -102,7 +105,7 @@ const editProduct = (elementToRemove) => {
 
     updatesubProductLink.value = description;
 
-    productPhoto.value=photo;
+    productPhoto.value = photo;
 
     toggleVisibility('yesSubtitle', 'addProductVisiblity')
 
@@ -197,7 +200,7 @@ function updateSubProductList() {
     const newEntry = {
         mainProduct: selectedProduct.value,
         // subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:seletctedProductImage },
-        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value,photo:updatesubProductPhoto.value },
+        subProducts: { name: updateSubProduct.value, link: updatesubProductLink.value, photo: updatesubProductPhoto.value },
         originalSubProductName,
         Change: "UPDATE"
     };
@@ -272,9 +275,10 @@ function fetchUpdateProductData() {
     formData.append("updateProductList", JSON.stringify(updateProductList));
 
 
-    fetch('/updateProductList', {
-        method: 'POST',
-        body: formData
+    fetch(`${productPath}/updateProductList`, {
+        method: 'PUT',
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
@@ -353,9 +357,10 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
     }
 
 
-    fetch('/deleteProductList', {
-        method: 'POST',
-        body: formData
+    fetch(`${productPath}/deleteProductList`, {
+        method: 'DELETE',
+        body: formData,
+        withCredentials: true,
     })
         .then(response => response.json())
         .then(data => {
