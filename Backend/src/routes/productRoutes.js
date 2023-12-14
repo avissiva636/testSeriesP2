@@ -9,6 +9,7 @@ const { renderProductList,
     updateProductList, renderUpdateProduct,
     deleteProductList, renderDeleteProduct
 } = require("../controllers/adminControllers/productController");
+const validateToken = require("../util/middleware/validateTokenHandler");
 
 const productStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -28,18 +29,20 @@ const productUpload = multer({ storage: productStorage });
 
 router.route("/getProductList").get(getProductList);
 
+router.use(validateToken);
+
 // router.route("/addProductList").post(productUpload.array('photo'), addProductList);
 router.route("/addProductList").post(dataflow.any(),addProductList);
 
 router.route("/addProduct").get(renderProductList);
 
 // router.route("/updateProductList").post(productUpload.array('prodUpPhoto'), updateProductList);
-router.route("/updateProductList").post(dataflow.any(),updateProductList);
+router.route("/updateProductList").put(dataflow.any(),updateProductList);
 
 router.route("/updateProduct").get(renderUpdateProduct);
 
 
-router.route("/deleteProductList").post(dataflow.any(), deleteProductList)
+router.route("/deleteProductList").delete(dataflow.any(), deleteProductList)
 
 router.route("/deleteProduct").get(renderDeleteProduct);
 

@@ -28,11 +28,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 
 app.use("/",require("./routes/adminRoutes"));
-app.use("/",require("./routes/courseRoutes"));
-app.use("/",require("./routes/productRoutes"));
-app.use("/",require("./routes/gallaryRoutes"));
-app.use("/",require("./routes/testimonialRoutes"));
-app.use("/",require("./routes/notificationRoutes"));
+app.use("/course",require("./routes/courseRoutes"));
+app.use("/product",require("./routes/productRoutes"));
+app.use("/gallary",require("./routes/gallaryRoutes"));
+app.use("/testimonial",require("./routes/testimonialRoutes"));
+app.use("/notification",require("./routes/notificationRoutes"));
 
 app.use("/api/home",require("./routes/contactRoutes"));
 app.use("/api/users",require("./routes/userRoutes"));

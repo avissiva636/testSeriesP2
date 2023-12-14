@@ -3,7 +3,7 @@ let CourseList = [];
 let updateCourseList = [];
 
 function fetchCourseData() {
-    return fetch('/getCourseList')
+    return fetch(`${coursePath}/getCourseList`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -207,8 +207,8 @@ function fetchUpdateCourseSubList() {
     const formData = new FormData();
     formData.append("updateCourseList", JSON.stringify(updateCourseList));
 
-    fetch('/updateCourseSubList', {
-        method: 'POST',
+    fetch(`${coursePath}/updateCourseSubList`, {
+        method: 'PUT',
         body: formData
     })
         .then(response => response.json())
@@ -242,8 +242,8 @@ function fetchUpdateCourseList(selectedCourse, updateDescription) {
     formData.append("selectedCourse", JSON.stringify(selectedCourse));
     formData.append("updateDescription", updateDescription);
 
-    fetch('/uploadUpdateCourseList', {
-        method: 'POST',
+    fetch(`${coursePath}/uploadUpdateCourseList`, {
+        method: 'PUT',
         body: formData
     })
         .then(response => response.json())
@@ -298,8 +298,8 @@ function deleteCourse() {
 function fetchDeleteNormalCourseList(deleteData) {
     const formData = new FormData();
     formData.append("DeleteData", JSON.stringify(deleteData));
-    fetch('/deleteNormalCourseList', {
-        method: 'POST',
+    fetch(`${coursePath}/deleteNormalCourseList`, {
+        method: 'DELETE',
         body: formData
     })
         .then(response => response.json())
@@ -337,8 +337,8 @@ function fetchdeleteSubCourseList(coursetoDelete,selectedValues) {
     formData.append("coursetoDelete", JSON.stringify(coursetoDelete));
     formData.append("selectedValues", JSON.stringify(selectedValues));
 
-    fetch('/deleteSubCourseList', {
-        method: 'POST',
+    fetch(`${coursePath}/deleteSubCourseList`, {
+        method: 'DELETE',
         body: formData
     })
         .then(response => response.json())

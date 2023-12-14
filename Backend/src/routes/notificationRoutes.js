@@ -1,21 +1,24 @@
 const express = require("express");
 const router = express.Router();
 
-const {renderaddNotification, renderupdateNotification, renderdeleteNotification,
-    getNotificationList, 
-    uploadAddNotification, uploadUpdateNotification, uploadDeleteNotification} = require("../controllers/adminControllers/notificationController");
-
-router.route("/addNotification").get(renderaddNotification);
+const { renderaddNotification, renderupdateNotification, renderdeleteNotification,
+    getNotificationList,
+    uploadAddNotification, uploadUpdateNotification, uploadDeleteNotification } = require("../controllers/adminControllers/notificationController");
+const validateToken = require("../util/middleware/validateTokenHandler");
 
 router.route("/getNotificationList").get(getNotificationList);
 
+router.use(validateToken);
+
+router.route("/addNotification").get(renderaddNotification);
+
 router.post("/uploadAddNotification", uploadAddNotification);
 
-router.post("/uploadUpdateNotification", uploadUpdateNotification);
+router.put("/uploadUpdateNotification", uploadUpdateNotification);
 
 router.route("/updateNotification").get(renderupdateNotification);
 
-router.post("/uploadDeleteNotification", uploadDeleteNotification);
+router.delete("/uploadDeleteNotification", uploadDeleteNotification);
 
 router.route("/deleteNotification").get(renderdeleteNotification);
 

@@ -37,7 +37,8 @@ const renderDeleteTestimonial = asyncHandler(async (req, res) => {
     });
 });
 
-const getTestimonialList = asyncHandler((req, res) => {
+const getTestimonialList = asyncHandler(async (req, res) => {
+    await setTestimonials();
     res.json({ Testimonials });
 });
 

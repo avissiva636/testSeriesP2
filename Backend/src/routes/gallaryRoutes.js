@@ -7,7 +7,7 @@ const dataflow = multer();
 const { renderAddPhoto, renderAddVideo,
     uploadImage, getphotolist, deleteImage,
     getvideolist, uploadVideo, deleteVideo } = require("../controllers/adminControllers/gallaryController")
-
+const validateToken = require("../util/middleware/validateTokenHandler");
 
 // Set up storage using multer
 const storage = multer.diskStorage({
@@ -19,21 +19,25 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
-// Handle the file upload
-router.post('/upload', upload.single('image'), uploadImage);
 
 router.route("/getphotolist").get(getphotolist);
 
+router.get('/getvideolist', getvideolist);
+
+router.use(validateToken);
+
+// Handle the file upload
+router.post('/upload', upload.single('image'), uploadImage);
+
 router.route("/addPhoto").get(renderAddPhoto);
 
-router.route("/deletePhoto").post(dataflow.any(), deleteImage);
+router.route("/deletePhoto").delete(dataflow.any(), deleteImage);
 
-router.get('/getvideolist', getvideolist);
 
 router.post('/uploadVideo', dataflow.any(), uploadVideo);
 
 router.route("/addVideo").get(renderAddVideo);
 
-router.route("/deleteVideo").post(dataflow.any(), deleteVideo);
+router.route("/deleteVideo").delete(dataflow.any(), deleteVideo);
 
 module.exports = router;
