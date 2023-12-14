@@ -7,6 +7,7 @@ const dataflow = multer();
 const { renderAddTestimonial, renderUpdateTestimonial, renderDeleteTestimonial,
     getTestimonialList, uploadAddTestimonial, uploadUpdateTestimonial, uploadDeleteTestimonial
 } = require("../controllers/adminControllers/testimonialController");
+const validateToken = require("../util/middleware/validateTokenHandler");
 
 const testimonialStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -22,15 +23,17 @@ const testimonialUpload = multer({ storage: testimonialStorage });
 
 router.route("/gettestimoniallist").get(getTestimonialList);
 
+router.use(validateToken);
+
 router.post("/uploadAddTestimonial", testimonialUpload.single('TestimonialPhoto'), uploadAddTestimonial);
 
 router.route("/addTestimonial").get(renderAddTestimonial);
 
-router.post("/uploadUpdateTestimonial", dataflow.any(), uploadUpdateTestimonial);
+router.put("/uploadUpdateTestimonial", dataflow.any(), uploadUpdateTestimonial);
 
 router.route("/updateTestimonial").get(renderUpdateTestimonial);
 
-router.post("/uploadDeleteTestimonial", dataflow.any(), uploadDeleteTestimonial);
+router.delete("/uploadDeleteTestimonial", dataflow.any(), uploadDeleteTestimonial);
 
 router.route("/deleteTestimonial").get(renderDeleteTestimonial);
 
