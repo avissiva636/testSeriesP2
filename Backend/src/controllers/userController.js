@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { userModel: User } = require("../database/index");
+const { APP_SECRET } = require("../config/index");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -14,21 +15,16 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error("All fields are mandatory");
     }
 
-    console.log(email);
     const userAvailable = await User.findOne({ email });
-    console.log("user available", userAvailable);
 
     if (userAvailable) {
-        console.log("Setting response");
         res.status(400);
         throw new Error("User Already Exists");
     }
-    console.log("lets");
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({ username, email, password: hashedPassword });
-    console.log(`created user ${user}`);
     if (user) {
         res.status(201).json({ _id: user.id, email: user.email });
     } else {
@@ -38,42 +34,13 @@ const registerUser = asyncHandler(async (req, res) => {
     // res.json({ message: "Register the User" });
 });
 
-//@desc Login user
-//@route GET /api/users/login
-//access public
-// const loginUser = asyncHandler(async (req, res) => {  
-//     const { email, password } = req.body;
-//     if (!email && !password) {
-//         res.status(400);
-//         throw new Error("All fields are mandatory");
-//     }
-
-//     const user = await User.findOne({ email });
-//     // compare password with hashedPassword
-//     if (user && await bcrypt.compare(password, user.password)) {
-//         const accessToken = jwt.sign({
-//             user: {
-//                 username: user.username,
-//                 email: user.email,
-//                 id: user.id,
-//             },
-//         },
-//             process.env.ACCESS_TOKEN_SECRET,
-//             { expiresIn: "15m" }
-//         );
-//         res.status(200).json({ accessToken });
-//     } else {
-//         res.status(401);
-//         throw new Error("email or password is not valid");
-//     }
-// });
-
 //@desc currentUser information
 //@route GET /api/users/Current
 //access private
 
-const loginUser = asyncHandler(async (req, res) => {  
-    const { name:username, password } = req.body;
+const loginUser = asyncHandler(async (req, res) => {
+    const { name: username, password } = req.body;
+
     if (!username && !password) {
         res.status(400);
         throw new Error("All fields are mandatory");
@@ -81,10 +48,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const user = await User.findOne({ username });
     // compare password with hashedPassword
-    console.log("hello")
-    // console.log(bcrypt.getRounds(10))
     if (user && await bcrypt.compare(password, user.password)) {
-        console.log("hai")
         const accessToken = jwt.sign({
             user: {
                 username: user.username,
@@ -92,17 +56,16 @@ const loginUser = asyncHandler(async (req, res) => {
                 id: user.id,
             },
         },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "15m" }
+            APP_SECRET,
+            { expiresIn: "10m" }
         );
-        res.status(200).json({ accessToken });
+        res.cookie('jwt', accessToken, { httpOnly: true, secure: true, sameSite: 'Strict', maxAge: 1 * 10 * 60 * 1000 });
+        res.status(200).json({ message: "Received token", accessToken });
+        // res.status(200).json({ accessToken });
     } else {
         res.status(401);
         throw new Error("email or password is not valid");
     }
 });
-const currentUser = asyncHandler(async (req, res) => {
-    res.json(req.user);
-});
 
-module.exports = { registerUser, loginUser, currentUser };
+module.exports = { registerUser, loginUser };
