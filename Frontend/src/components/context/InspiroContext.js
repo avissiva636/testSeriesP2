@@ -52,6 +52,16 @@ export const InspiroContext = ({ children }) => {
       setNotification(result.data.NotificationList);
     }
   };
+
+  const sendEmailContent = async (formData) => {
+    await api.post("/emailHandler", {
+      method: "POST",
+      body: JSON.stringify({ emailData: formData }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
   // getNotificationList();
   // const Notification = [
   //   {
@@ -97,6 +107,7 @@ export const InspiroContext = ({ children }) => {
         getVideoList,
         getTestimonialList,
         getNotificationList,
+        sendEmailContent,
       }}
     >
       {children}

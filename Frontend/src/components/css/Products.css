@@ -76,14 +76,13 @@ body {
     display: block;
   }
 
-
-
+/*Home page Product card style*/
   .product-item{
   color: black;
   background-color: #FFC0C7;
   padding: 24px;
-  width: 500px;
-  height: 150px;
+  width: 400px;
+  height: 80px;
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
 }

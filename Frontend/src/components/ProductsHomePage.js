@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import "./css/ProductsHomePage.css";
 import { useInspiroCrud } from "./context/InspiroContext";
 import { Link } from "react-router-dom";
@@ -23,7 +24,7 @@ const ProductsHomePage = () => {
           ))}
         </div>
         <div className="d-flex justify-content-end view__products"><Link to={"/Products"}>
-          <button className="view-more-button">View More</button>
+          <button className="view-more-button">View More <ArrowRightAltIcon /></button>
         </Link></div>
         
       </div>
