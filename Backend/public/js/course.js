@@ -136,6 +136,7 @@ function updateAddSubTitle() {
 
     updateCourseList.push({
         Title: selectedCourse.value,
+        originalSubTitleName:title.value,
         SubTitle: { Title: title.value, Description: description },
         Change: "ADD"
     })
@@ -146,6 +147,7 @@ function updateAddSubTitle() {
     // description.value = ""
 
     toggleVisibility('noSubtitle', 'upAddSubtDescVisiblity')
+    fetchUpdateCourseSubList();
 }
 
 function updateCourseListSubtitle() {
@@ -168,6 +170,7 @@ function updateCourseListSubtitle() {
 
     const newEntry = {
         Title: selectedCourse.value,
+        originalSubTitleName,
         SubTitle: { Title: updateSubTitle.value, Description: updateQuillEditorSub },
         Change: "UPDATE"
     };
@@ -201,6 +204,7 @@ function updateCourseListSubtitle() {
     quillUp.summernote('empty');
     toggleVisibility("noSubtitle", "subtitleContent");
 
+    fetchUpdateCourseSubList();
 }
 
 function fetchUpdateCourseSubList() {
@@ -214,6 +218,7 @@ function fetchUpdateCourseSubList() {
         .then(response => response.json())
         .then(data => {
             CourseList = data.CourseList;
+            updateCourseList=[];
         })
         .catch(error => {
             console.error('Error uploading file:', error);
