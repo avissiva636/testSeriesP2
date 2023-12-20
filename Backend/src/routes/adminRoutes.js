@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validateToken = require("../util/middleware/validateTokenHandler");
+const { emailHandler } = require("../controllers/emailHandler");
 
 
 router.route("/loginAdmin").get((req, res) => {
@@ -11,7 +12,7 @@ router.route("/loginAdmin").get((req, res) => {
 router.route("/validator").get(validateToken);
 
 router.route("/").get((req, res) => {
-    if(!req.cookies?.jwt){
+    if (!req.cookies?.jwt) {
         res.redirect("/loginAdmin");
     }
     // validateToken();
@@ -29,13 +30,10 @@ router.route("/test").get((req, res) => {
     });
 })
 
-router.route("/emailHandler").post((req,res)=>{
-    console.log(req);
-    res.status(200).send("hello");
-});
+router.route("/emailHandler").post(emailHandler);
 
-router.route("/logout").get((req,res)=>{
-    res.cookie('jwt','',{maxAge:1});
+router.route("/logout").get((req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
     res.status(200).render("login");
 });
 
