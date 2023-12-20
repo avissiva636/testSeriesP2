@@ -50,7 +50,7 @@ function handleUpdateTestimonial() {
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
 
     const filteredTestimonials = Testimonials.filter((testimonial) => testimonial.name === updateTestimonial.value);
-    console.log(filteredTestimonials,)
+
     UpdateTestimonialName.value = filteredTestimonials[0].name;
     UpdateTestimonialDescription.value = filteredTestimonials[0].desc;
 }
