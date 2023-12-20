@@ -46,7 +46,7 @@ const emailHandler = asyncHandler(async (req, res) => {
                         <thead style="background-color: #f2f2f2;">
                             <tr>
                                 <th style="border: 1px solid #dddddd; text-align: left; padding: 10px;">Title</th>
-                                <th style="border: 1px solid #dddddd; text-align: left; padding: 10px;">Date</th>
+                                <th style="border: 1px solid #dddddd; text-align: left; padding: 10px;">Data</th>
                             </tr>
                         </thead>
                         <tbody>
