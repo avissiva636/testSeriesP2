@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const dataflow = multer();
 
 const { renderAddCourse, renderUpdateCourse,
     getCourseList, addCourseNormalList, addCourseSubList,
@@ -10,26 +8,27 @@ const { renderAddCourse, renderUpdateCourse,
 } = require("../controllers/adminControllers/courseController");
 const validateToken = require("../util/middleware/validateTokenHandler");
 
+const {dataPass} = require("../util/middleware/imageUpload");
 
 router.route("/getCourseList").get(getCourseList);
 
 router.use(validateToken);
 
-router.route("/addCourseNormalList").post(dataflow.any(), addCourseNormalList);
+router.route("/addCourseNormalList").post(dataPass, addCourseNormalList);
 
-router.route("/addCourseSubList").post(dataflow.any(), addCourseSubList)
+router.route("/addCourseSubList").post(dataPass, addCourseSubList)
 
 router.route("/addCourse").get(renderAddCourse);
 
-router.route("/uploadUpdateCourseList").put(dataflow.any(), updateCourseNormalList);
+router.route("/uploadUpdateCourseList").put(dataPass, updateCourseNormalList);
 
-router.route("/updateCourseSubList").put(dataflow.any(), updateCourseSubList);
+router.route("/updateCourseSubList").put(dataPass, updateCourseSubList);
 
 router.route("/updateCourse").get(renderUpdateCourse);
 
-router.route("/deleteNormalCourseList").delete(dataflow.any(), deleteCourseNormalList)
+router.route("/deleteNormalCourseList").delete(dataPass, deleteCourseNormalList)
 
-router.route("/deleteSubCourseList").delete(dataflow.any(), deleteCourseSubList)
+router.route("/deleteSubCourseList").delete(dataPass, deleteCourseSubList)
 
 router.route("/deleteCourse").get(renderDeleteCourse);
 
