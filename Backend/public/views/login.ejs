@@ -62,7 +62,7 @@
         <form method="post">
             <div class="input-group">
                 <label for="adminUserName">Username:</label>
-                <input type="text" id="adminUserName" name="username" required>
+                <input type="text" id="adminUserName" name="username" autocomplete="username" required>
             </div>
             <div class="input-group">
                 <label for="adminUserPassword">Password:</label>
@@ -90,7 +90,7 @@
                     if (response.ok) {
                         window.location.href = '/';
                     }
-                })              
+                })
                 .catch(error => {
                     console.error('Error uploading file:', error);
                 });
