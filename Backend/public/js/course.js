@@ -265,6 +265,9 @@ function fetchUpdateCourseList(selectedCourse, updateDescription) {
 function deleteCourse() {
     var deleteCourseSelect = document.getElementById('deleteCourse');
     var coursetoDelete = deleteCourseSelect.value;
+    if (coursetoDelete.length === 0) {
+        return;
+    }
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
     var deleteSubtitleSelectLength = deleteSubtitleSelect.options.length;
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
@@ -348,7 +351,7 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
     button.disabled = true;
 
     //if all values of a course need to delete
-    if (selectedValues.length === deleteSubtitleSelectLength) {        
+    if (selectedValues.length === deleteSubtitleSelectLength) {
         // Get the index of the currently selected option
         var deleteCourseSelect = document.getElementById('deleteCourse');
         var selectedIndex = deleteCourseSelect.selectedIndex;

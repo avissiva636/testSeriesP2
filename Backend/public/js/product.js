@@ -318,6 +318,9 @@ function fetchUpdateProductData() {
 function deleteProduct() {
     var deleteProductSelect = document.getElementById('deleteProduct');
     var producttoDelete = deleteProductSelect.value;
+    if (producttoDelete.length === 0) {
+        return;
+    }
     var deleteSubproductSelect = document.getElementById('deletesubproduct');
     var selectedValues = Array.from(deleteSubproductSelect.selectedOptions).map(option => option.value);
     var deleteSubproductSelectLength = deleteSubproductSelect.options.length;
