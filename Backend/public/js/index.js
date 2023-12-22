@@ -87,6 +87,16 @@ function loadLogout(filename) {
         if (res.ok) {
             location.reload();
         }
+    }).catch(err => {
+        switch (err.message) {
+            case '401':
+                location.reload();
+                console.log("error");
+                break;
+            default:
+                console.log(err.message);
+                break;
+        }
     })
 }
 
