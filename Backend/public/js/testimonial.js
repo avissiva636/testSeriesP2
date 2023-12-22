@@ -25,6 +25,17 @@ fetchtestimonialData()
 
 function handleTestimonial() {
 
+    const testimonialNameLength = document.getElementById('testimonialName').value.length;
+    const testimonialDescriptionLength = document.getElementById('testimonialDescription').value.length;
+    const testimonialPhotoLength = document.getElementById('testimonialPhoto').files.length;
+
+    if (testimonialNameLength === 0 || testimonialDescriptionLength === 0 || testimonialPhotoLength === 0) {
+        return;
+    }
+
+    var aTButton = document.getElementById("addTestimonialBtn");
+    aTButton.disabled = true;
+
     const form = document.getElementById('testimonialForm');
     const formData = new FormData(form);
 
@@ -37,9 +48,11 @@ function handleTestimonial() {
         .then(data => {
             // You can update the UI or show a success message here
             Testimonials = data.Testimonials;
-            form.reset();
+            aTButton.disabled = false;
+            loadSection('addtestimonial');
         })
         .catch(error => {
+            aTButton.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
@@ -50,18 +63,21 @@ function handleUpdateTestimonial() {
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
 
     const filteredTestimonials = Testimonials.filter((testimonial) => testimonial.name === updateTestimonial.value);
-
     UpdateTestimonialName.value = filteredTestimonials[0].name;
     UpdateTestimonialDescription.value = filteredTestimonials[0].desc;
 }
 
 function handleUpdateSubmitTestimonial() {
     const updateTestimonialData = document.getElementById('updateTestimonial').value;
-    if (!updateTestimonialData) {
-        return;
-    }
     const UpdateTestimonialName = document.getElementById('UpdateTestimonialName');
     const UpdateTestimonialDescription = document.getElementById('UpdateTestimonialDescription');
+    if (updateTestimonialData.length === 0 ||
+        UpdateTestimonialName.value.length === 0 ||
+        UpdateTestimonialDescription.value.length === 0) {
+        return;
+    }
+    var uTButton = document.getElementById("updateTestimonialBtn");
+    uTButton.disabled = true;
     const formData = new FormData();
 
     formData.append('updateTestimonialData', updateTestimonialData);
@@ -76,15 +92,24 @@ function handleUpdateSubmitTestimonial() {
         .then(response => response.json())
         .then(data => {
             Testimonials = data.Testimonials;
+            uTButton.disabled = false;
             loadSection('updateTestimonial');
         })
         .catch(error => {
+            uTButton.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
 
 function handleDeleteTestimonial() {
     const deleteTestimonial = document.getElementById('deleteTestimonial').value;
+
+    if (deleteTestimonial.length === 0) {
+        return;
+    }
+
+    var button = document.getElementById("deleteTestimonialBtn");
+    button.disabled = true;
 
     const formData = new FormData();
     formData.append('deleteTestimonial', deleteTestimonial);
@@ -97,9 +122,11 @@ function handleDeleteTestimonial() {
         .then(response => response.json())
         .then(data => {
             Testimonials = data.Testimonials;
+            button.disabled = false;
             loadSection('deleteTestimonial');
         })
         .catch(error => {
+            button.disabled = false;
             console.error('Error uploading file:', error);
         });
 
