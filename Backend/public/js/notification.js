@@ -17,8 +17,16 @@ function fetchNotificationData() {
             // Now you can use the NotificationList array with the fetched data
         })
         .catch(error => {
-            // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            // Handle errors that occurred during the fetch            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -47,7 +55,13 @@ function handleAddNotificationSubmit(event) {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             // You can update the UI or show a success message here
             NotificationList = data.NotificationList;
@@ -56,7 +70,15 @@ function handleAddNotificationSubmit(event) {
         })
         .catch(error => {
             aNButton = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
     // event.preventDefault();
 }
@@ -102,7 +124,13 @@ function updateNotificationList() {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             NotificationList = data.NotificationList;
             uNButton.disabled = false;
@@ -110,7 +138,15 @@ function updateNotificationList() {
         })
         .catch(error => {
             uNButton.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -134,7 +170,13 @@ function handleDeleteNotification() {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             NotificationList = data.NotificationList;
             dNButton.disabled = false;
@@ -143,6 +185,14 @@ function handleDeleteNotification() {
         })
         .catch(error => {
             dNButton.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }

@@ -16,7 +16,15 @@ function fetchtestimonialData() {
         })
         .catch(error => {
             // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -44,7 +52,13 @@ function handleTestimonial() {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             // You can update the UI or show a success message here
             Testimonials = data.Testimonials;
@@ -53,7 +67,15 @@ function handleTestimonial() {
         })
         .catch(error => {
             aTButton.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -89,7 +111,13 @@ function handleUpdateSubmitTestimonial() {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             Testimonials = data.Testimonials;
             uTButton.disabled = false;
@@ -97,7 +125,15 @@ function handleUpdateSubmitTestimonial() {
         })
         .catch(error => {
             uTButton.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -119,7 +155,13 @@ function handleDeleteTestimonial() {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             Testimonials = data.Testimonials;
             button.disabled = false;
@@ -127,7 +169,15 @@ function handleDeleteTestimonial() {
         })
         .catch(error => {
             button.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
 }

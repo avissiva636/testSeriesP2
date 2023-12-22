@@ -23,8 +23,16 @@ function uploadFile() {
 
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
-            // Handle errors or show an error message
+            // Handle errors or show an error message            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -71,7 +79,15 @@ function deleteImage(deleteFile) {
     })
         .then(() => loadSection('addPhoto'))
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
 }
@@ -100,8 +116,16 @@ function uploadvideo() {
                 // updateVideoGallery(data.videos);
             })
             .catch(error => {
-                console.error('Error uploading file:', error);
                 // Handle errors or show an error message
+                switch (error.message) {
+                    case '401':
+                        location.reload();
+                        console.log("error");
+                        break;
+                    default:
+                        console.log(error.message);
+                        break;
+                }
             });
     }
 }
@@ -150,7 +174,15 @@ function deleteVideo(elementToRemove) {
     })
         .then(() => loadSection('addVideo'))
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
 }

@@ -219,7 +219,15 @@ function handleAddCourseSubmit(event) {
             .catch(error => {
                 alert("Not updated");
                 button.disabled = false;
-                console.error('Error uploading file:', error);
+                switch (error.message) {
+                    case '401':
+                        location.reload();
+                        console.log("error");
+                        break;
+                    default:
+                        console.log(error.message);
+                        break;
+                }
             });
     }
     else if (radios[0].checked) {
@@ -255,7 +263,15 @@ function handleAddCourseSubmit(event) {
             .catch(error => {
                 alert("Not updated");
                 button.disabled = false;
-                console.error('Error uploading file:', error);
+                switch (error.message) {
+                    case '401':
+                        location.reload();
+                        console.log("error");
+                        break;
+                    default:
+                        console.log(error.message);
+                        break;
+                }
             });
 
     }

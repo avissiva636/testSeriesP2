@@ -18,8 +18,16 @@ function fetchProductData() {
             // Now you can use the CourseList array with the fetched data
         })
         .catch(error => {
-            // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            // Handle errors that occurred during the fetch            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -85,7 +93,13 @@ function handleSubmitProduct() {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             productList = data.productList;
             mainProductName.value = '';
@@ -94,7 +108,15 @@ function handleSubmitProduct() {
         })
         .catch(error => {
             button.disabled = true;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
     // location.reload();
@@ -304,14 +326,28 @@ function fetchUpdateProductData() {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             productList = data.productList;
             updateProductList = [];
             loadSection('updateProduct');
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -406,7 +442,13 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
         body: formData,
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             productList = data.productList;
             alert(`${producttoDelete} Deleted`);
@@ -414,7 +456,15 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
         })
         .catch(error => {
             deleteProdbutton.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
     // location.reload();

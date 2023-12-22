@@ -15,8 +15,16 @@ function fetchCourseData() {
             // Now you can use the CourseList array with the fetched data
         })
         .catch(error => {
-            // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            // Handle errors that occurred during the fetch            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -215,16 +223,29 @@ function fetchUpdateCourseSubList() {
         method: 'PUT',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
             updateCourseList = [];
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
-    loadSection('updateCourse');
 }
 
 
@@ -251,15 +272,28 @@ function fetchUpdateCourseList(selectedCourse, updateDescription) {
         method: 'PUT',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
-    loadSection('updateCourse');
 }
 
 function deleteCourse() {
@@ -314,7 +348,13 @@ function fetchDeleteNormalCourseList(deleteData) {
         method: 'DELETE',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
             alert(`${deleteData} deleted`)
@@ -322,7 +362,15 @@ function fetchDeleteNormalCourseList(deleteData) {
         })
         .catch(error => {
             button.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -373,7 +421,15 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
         method: 'DELETE',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                throw new Error(response.status);
+            }
+
+        })
         .then(data => {
             CourseList = data.CourseList;
             alert(`${coursetoDelete} deleted`);
@@ -381,6 +437,14 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
         })
         .catch(error => {
             button.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
