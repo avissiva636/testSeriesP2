@@ -87,6 +87,16 @@ function loadLogout(filename) {
         if (res.ok) {
             location.reload();
         }
+    }).catch(err => {
+        switch (err.message) {
+            case '401':
+                location.reload();
+                console.log("error");
+                break;
+            default:
+                console.log(err.message);
+                break;
+        }
     })
 }
 
@@ -209,7 +219,15 @@ function handleAddCourseSubmit(event) {
             .catch(error => {
                 alert("Not updated");
                 button.disabled = false;
-                console.error('Error uploading file:', error);
+                switch (error.message) {
+                    case '401':
+                        location.reload();
+                        console.log("error");
+                        break;
+                    default:
+                        console.log(error.message);
+                        break;
+                }
             });
     }
     else if (radios[0].checked) {
@@ -245,7 +263,15 @@ function handleAddCourseSubmit(event) {
             .catch(error => {
                 alert("Not updated");
                 button.disabled = false;
-                console.error('Error uploading file:', error);
+                switch (error.message) {
+                    case '401':
+                        location.reload();
+                        console.log("error");
+                        break;
+                    default:
+                        console.log(error.message);
+                        break;
+                }
             });
 
     }

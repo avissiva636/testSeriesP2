@@ -15,8 +15,16 @@ function fetchCourseData() {
             // Now you can use the CourseList array with the fetched data
         })
         .catch(error => {
-            // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            // Handle errors that occurred during the fetch            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -215,16 +223,29 @@ function fetchUpdateCourseSubList() {
         method: 'PUT',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
             updateCourseList = [];
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
-    loadSection('updateCourse');
 }
 
 
@@ -251,20 +272,36 @@ function fetchUpdateCourseList(selectedCourse, updateDescription) {
         method: 'PUT',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 
-    loadSection('updateCourse');
 }
 
 function deleteCourse() {
     var deleteCourseSelect = document.getElementById('deleteCourse');
     var coursetoDelete = deleteCourseSelect.value;
+    if (coursetoDelete.length === 0) {
+        return;
+    }
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
     var deleteSubtitleSelectLength = deleteSubtitleSelect.options.length;
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
@@ -311,7 +348,13 @@ function fetchDeleteNormalCourseList(deleteData) {
         method: 'DELETE',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             CourseList = data.CourseList;
             alert(`${deleteData} deleted`)
@@ -319,7 +362,15 @@ function fetchDeleteNormalCourseList(deleteData) {
         })
         .catch(error => {
             button.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -348,7 +399,7 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
     button.disabled = true;
 
     //if all values of a course need to delete
-    if (selectedValues.length === deleteSubtitleSelectLength) {        
+    if (selectedValues.length === deleteSubtitleSelectLength) {
         // Get the index of the currently selected option
         var deleteCourseSelect = document.getElementById('deleteCourse');
         var selectedIndex = deleteCourseSelect.selectedIndex;
@@ -370,7 +421,15 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
         method: 'DELETE',
         body: formData
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            else {
+                throw new Error(response.status);
+            }
+
+        })
         .then(data => {
             CourseList = data.CourseList;
             alert(`${coursetoDelete} deleted`);
@@ -378,6 +437,14 @@ function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitle
         })
         .catch(error => {
             button.disabled = false;
-            console.error('Error uploading file:', error);
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }

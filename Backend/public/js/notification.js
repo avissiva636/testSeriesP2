@@ -17,8 +17,16 @@ function fetchNotificationData() {
             // Now you can use the NotificationList array with the fetched data
         })
         .catch(error => {
-            // Handle errors that occurred during the fetch
-            console.error('Error during fetch:', error);
+            // Handle errors that occurred during the fetch            
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
@@ -31,6 +39,14 @@ function handleAddNotificationSubmit(event) {
     const notificationName = document.getElementById('notificationName').value;
     const notificationDescription = quillNotificationAdd.summernote('code');
 
+    //Check All input entered
+    if (notificationName.length === 0 || notificationDescription === "<p><br></p>" || notificationDescription.length === 0) {
+        return;
+    }
+
+    var aNButton = document.getElementById("NotificationsubmitButton");
+    aNButton.disabled = true;
+
     fetch(`${notificationPath}/uploadAddNotification`, {
         method: 'POST',
         body: JSON.stringify({ notificationName: notificationName, notificationDescription: notificationDescription }),
@@ -39,14 +55,30 @@ function handleAddNotificationSubmit(event) {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             // You can update the UI or show a success message here
             NotificationList = data.NotificationList;
-            loadSection('addNotification')
+            aNButton = false;
+            loadSection('addNotification');
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            aNButton = false;
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
     // event.preventDefault();
 }
@@ -67,11 +99,18 @@ function handleUpdateNotification() {
 // Submitting updated Notification
 function updateNotificationList() {
     const updateNotificationData = document.getElementById('updateNotification').value;
-    if (!updateNotificationData) {
-        return;
-    }
     const UpdateNotificationName = document.getElementById('UpdateNotificationName');
     const UpdateNotificationDescription = quillNotificationUpdate.summernote('code');
+
+    if (!updateNotificationData ||
+        UpdateNotificationName.value.length === 0 ||
+        UpdateNotificationDescription === "<p><br></p>" ||
+        UpdateNotificationDescription.length === 0) {
+        return;
+    }
+
+    var uNButton = document.getElementById("updateNotificationBtn");
+    uNButton.disabled = true;
 
     fetch(`${notificationPath}/uploadUpdateNotification`, {
         method: 'PUT',
@@ -85,18 +124,41 @@ function updateNotificationList() {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             NotificationList = data.NotificationList;
+            uNButton.disabled = false;
             loadSection('updateNotification');
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            uNButton.disabled = false;
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }
 
 function handleDeleteNotification() {
     const deleteNotification = document.getElementById('deleteNotification').value;
+
+    if (deleteNotification.length === 0) {
+        return;
+    }
+
+    var dNButton = document.getElementById("deleteNotificationBtn");
+    dNButton.disabled = true;
 
     fetch(`${notificationPath}/uploadDeleteNotification`, {
         method: 'DELETE',
@@ -108,12 +170,29 @@ function handleDeleteNotification() {
         },
         withCredentials: true,
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        })
         .then(data => {
             NotificationList = data.NotificationList;
+            dNButton.disabled = false;
+            alert(`${deleteNotification} Deleted`);
             loadSection('deleteNotification');
         })
         .catch(error => {
-            console.error('Error uploading file:', error);
+            dNButton.disabled = false;
+            switch (error.message) {
+                case '401':
+                    location.reload();
+                    console.log("error");
+                    break;
+                default:
+                    console.log(error.message);
+                    break;
+            }
         });
 }

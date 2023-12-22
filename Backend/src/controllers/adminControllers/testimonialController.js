@@ -7,8 +7,7 @@ let Testimonials = [];
 
 async function setTestimonials() {
     try {
-        const retrievedTestimonial = await Testimonial.find();
-        Testimonials = retrievedTestimonial;
+        Testimonials = await Testimonial.find();        
     } catch (error) {
         console.error('Error setting Testimonials:', error);
     }
