@@ -47,7 +47,7 @@ document.addEventListener('change', function (event) {
             // The course has subtitles            
             toggleVisibility("yesSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         } else {
-            quillDes.summernote('code',selectedCourseData.Description);
+            quillDes.summernote('code', selectedCourseData.Description);
             toggleVisibility("noSubtitle", "subtitleVisiblity", "descriptionVisiblity");
         }
 
@@ -118,7 +118,7 @@ function handleSubtitleSelection() {
 
     //setting value for course, description box
     updateSubTitle.value = selectedOption.value;
-    quillUp.summernote('code',description);
+    quillUp.summernote('code', description);
 }
 
 function updateAddSubTitle() {
@@ -136,7 +136,7 @@ function updateAddSubTitle() {
 
     updateCourseList.push({
         Title: selectedCourse.value,
-        originalSubTitleName:title.value,
+        originalSubTitleName: title.value,
         SubTitle: { Title: title.value, Description: description },
         Change: "ADD"
     })
@@ -218,7 +218,7 @@ function fetchUpdateCourseSubList() {
         .then(response => response.json())
         .then(data => {
             CourseList = data.CourseList;
-            updateCourseList=[];
+            updateCourseList = [];
         })
         .catch(error => {
             console.error('Error uploading file:', error);
@@ -266,6 +266,7 @@ function deleteCourse() {
     var deleteCourseSelect = document.getElementById('deleteCourse');
     var coursetoDelete = deleteCourseSelect.value;
     var deleteSubtitleSelect = document.getElementById('deletesubtitle');
+    var deleteSubtitleSelectLength = deleteSubtitleSelect.options.length;
     var selectedValues = Array.from(deleteSubtitleSelect.selectedOptions).map(option => option.value);
     if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
         // It will not delete course if it has subTitle
@@ -295,12 +296,15 @@ function deleteCourse() {
         }
         toggleVisibility("noSubtitle", "deletesubtitleVisiblity");
     });
-    fetchdeleteSubCourseList(coursetoDelete,selectedValues)
+    fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitleSelectLength);
     // deleteCourseList(deleteCourseSelect.selectedIndex - 1, selectedValues);
 
 }
 
 function fetchDeleteNormalCourseList(deleteData) {
+    var button = document.getElementById("deleteSubmitBtn");
+    button.disabled = true;
+
     const formData = new FormData();
     formData.append("DeleteData", JSON.stringify(deleteData));
     fetch(`${coursePath}/deleteNormalCourseList`, {
@@ -311,8 +315,10 @@ function fetchDeleteNormalCourseList(deleteData) {
         .then(data => {
             CourseList = data.CourseList;
             alert(`${deleteData} deleted`)
+            button.disabled = false;
         })
         .catch(error => {
+            button.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
@@ -337,7 +343,25 @@ function deleteCourseList(courseIndex, selectedValues) {
     deleteApi();
 }
 
-function fetchdeleteSubCourseList(coursetoDelete,selectedValues) {
+function fetchdeleteSubCourseList(coursetoDelete, selectedValues, deleteSubtitleSelectLength) {
+    var button = document.getElementById("deleteSubmitBtn");
+    button.disabled = true;
+
+    //if all values of a course need to delete
+    if (selectedValues.length === deleteSubtitleSelectLength) {        
+        // Get the index of the currently selected option
+        var deleteCourseSelect = document.getElementById('deleteCourse');
+        var selectedIndex = deleteCourseSelect.selectedIndex;
+
+        if (selectedIndex !== -1) {
+            // Remove the currently selected option
+            deleteCourseSelect.remove(selectedIndex);
+            deleteCourseList(selectedIndex - 1)
+            fetchDeleteNormalCourseList(coursetoDelete)
+        }
+        return
+    }
+
     const formData = new FormData();
     formData.append("coursetoDelete", JSON.stringify(coursetoDelete));
     formData.append("selectedValues", JSON.stringify(selectedValues));
@@ -349,8 +373,11 @@ function fetchdeleteSubCourseList(coursetoDelete,selectedValues) {
         .then(response => response.json())
         .then(data => {
             CourseList = data.CourseList;
+            alert(`${coursetoDelete} deleted`);
+            button.disabled = false;
         })
         .catch(error => {
+            button.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
