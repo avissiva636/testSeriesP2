@@ -1,4 +1,5 @@
 var todos = [];
+var todoFlag = false;
 const coursePath = "/course";
 const productPath = "/product";
 const testimonialPath = "/testimonial";
@@ -67,17 +68,11 @@ const loadSection = (filename, clickedElement) => {
                     break;
             }
         }).catch(err => {
-            console.log(err.message);
-            if (err.message==='401') {
-                console.log("error");
-            } else {
-                console.log("other error")
-            }
             switch (err.message) {
                 case '401':
                     location.reload();
                     console.log("error");
-                    break;            
+                    break;
                 default:
                     console.log(err.message);
                     break;
@@ -115,6 +110,10 @@ const toggleVisibility = (display, elementA, elementB) => {
 
 
 const editSubTitle = (elementToRemove) => {
+    //If it is currently clicked
+    if (todoFlag) {
+        return;
+    }
 
     const title = elementToRemove.getAttribute('data-title');
     const description = elementToRemove.getAttribute('data-description');
@@ -131,7 +130,13 @@ const editSubTitle = (elementToRemove) => {
     updateSubTitle.value = title;
     quillSub.summernote('code', JSON.parse(description));
 
-    toggleVisibility('yesSubtitle', 'subtDescVisiblity')
+    todoFlag = true;
+    var newButton = document.getElementById("subButtonBtn");
+    newButton.disabled = true;
+    var button = document.getElementById("submitButton");
+    button.disabled = true;
+
+    toggleVisibility('yesSubtitle', 'subtDescVisiblity');
 
 }
 
@@ -141,6 +146,11 @@ function addTodo() {
     var title = document.getElementById("subTitleInput").value;
     var description = quillSub.summernote('code');
     var todoList = document.getElementById("todoList");
+
+    //Check All input entered
+    if (title.length === 0 || description === "<p><br></p>" || description.length === 0) {
+        return;
+    }
 
     // Convert Delta to JSON
     var descriptionJSON = JSON.stringify(description);
@@ -157,17 +167,28 @@ function addTodo() {
     document.getElementById("subTitleInput").value = "";
     quillSub.summernote('empty');
 
+    todoFlag = false;
+    var newButton = document.getElementById("subButtonBtn");
+    newButton.disabled = false;
+    var button = document.getElementById("submitButton");
+    button.disabled = false;
 
     toggleVisibility('noSubtitle', 'subtDescVisiblity')
 }
 
-function handleAddCourseSubmit() {
+function handleAddCourseSubmit(event) {
     var radios = document.getElementsByName('subtitle');
 
     if (radios[1].checked) {
-        var button = document.getElementById("submitButton")
+        var button = document.getElementById("submitButton");
         var ftitle = document.getElementById("title").value;
         var description = quillNormal.summernote('code');
+
+        //Check All input entered
+        if (ftitle.length === 0 || description === "<p><br></p>" || description.length === 0) {
+            return;
+        }
+
         // Convert Delta to JSON        
         var descriptionJSON = JSON.stringify(description);
         const formData = new FormData();
@@ -192,11 +213,18 @@ function handleAddCourseSubmit() {
             });
     }
     else if (radios[0].checked) {
-        var button = document.getElementById("submitButton")
+        var button = document.getElementById("submitButton");
         var title = document.getElementById("title").value;
         // var subTitleInput = document.getElementById("subTitleInput").value;
-        var description = quillSub.summernote('code');
-        var descriptionJSON = JSON.stringify(description);
+        // var description = quillSub.summernote('code');
+        // var descriptionJSON = JSON.stringify(description);
+
+        //Check All input entered
+        if (title.length === 0 || todos.length === 0) {
+            console.log(title.length, todos.length)
+            event.preventDefault();
+            return;
+        }
 
         const formData = new FormData();
         formData.append("Title", title);

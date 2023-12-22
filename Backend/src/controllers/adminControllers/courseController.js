@@ -119,12 +119,12 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
     for (const ucourse of updateCourseList) {
         try {
             // Check if SubTitle exists
-            const existingCourse = await Course.findOne({ Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title });
+            const existingCourse = await Course.findOne({ Title: ucourse.Title, "SubTitle.Title": ucourse.originalSubTitleName });
 
             if (existingCourse) {
                 // SubTitle exists, update it
                 await Course.updateOne(
-                    { Title: ucourse.Title, "SubTitle.Title": ucourse.SubTitle.Title },
+                    { Title: ucourse.Title, "SubTitle.Title": ucourse.originalSubTitleName },
                     {
                         $set: {
                             "SubTitle.$": ucourse.SubTitle,
@@ -148,7 +148,7 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
         }
     }
 
-    setCourseList()
+    await setCourseList()
     res.status(200).json({
         message: "Course Data Updated",
         CourseList: CourseList

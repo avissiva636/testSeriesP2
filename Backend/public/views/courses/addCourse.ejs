@@ -6,7 +6,7 @@
     <input type="text" id="fcourse" name="course" required>
     
     <br> -->
-    
+
     <!-- Title Input Box -->
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" required>
@@ -27,14 +27,14 @@
     <br>
 
     <div id="descriptionDetails" style="display: none; flex-direction: column;">
-        <label for="quill-editornormal">Description:</label>
+        Description:
         <div id="quill-editornormal" aria-label="Editor for describing something"></div>
     </div>
 
 
     <div id="subtitleDetails" style="display: none; flex-direction: column;">
         <br>
-        
+
         <!-- Sub Button Input Box -->
         <button type="button" id="subButtonBtn" onclick="toggleVisibility('yesSubtitle','subtDescVisiblity')">New
             Sub</button>
@@ -49,7 +49,7 @@
             <br>
 
             <!-- Description Input Box -->
-            <label for="quill-editorSub">Description:</label>
+            Description:
             <div id="quill-editorSub" name="description"></div>
             <br>
 
@@ -60,5 +60,5 @@
 
     <br><br>
     <!-- Submit Button -->
-    <input id="submitButton" type="submit" value="Submit" onclick="handleAddCourseSubmit()">
+    <input id="submitButton" type="submit" value="Submit" onclick="handleAddCourseSubmit(event)">
 </form>
