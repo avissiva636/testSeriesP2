@@ -31,6 +31,14 @@ function handleAddNotificationSubmit(event) {
     const notificationName = document.getElementById('notificationName').value;
     const notificationDescription = quillNotificationAdd.summernote('code');
 
+    //Check All input entered
+    if (notificationName.length === 0 || notificationDescription === "<p><br></p>" || notificationDescription.length === 0) {
+        return;
+    }
+
+    var aNButton = document.getElementById("NotificationsubmitButton");
+    aNButton.disabled = true;
+
     fetch(`${notificationPath}/uploadAddNotification`, {
         method: 'POST',
         body: JSON.stringify({ notificationName: notificationName, notificationDescription: notificationDescription }),
@@ -43,9 +51,11 @@ function handleAddNotificationSubmit(event) {
         .then(data => {
             // You can update the UI or show a success message here
             NotificationList = data.NotificationList;
-            loadSection('addNotification')
+            aNButton = false;
+            loadSection('addNotification');
         })
         .catch(error => {
+            aNButton = false;
             console.error('Error uploading file:', error);
         });
     // event.preventDefault();
@@ -67,11 +77,18 @@ function handleUpdateNotification() {
 // Submitting updated Notification
 function updateNotificationList() {
     const updateNotificationData = document.getElementById('updateNotification').value;
-    if (!updateNotificationData) {
-        return;
-    }
     const UpdateNotificationName = document.getElementById('UpdateNotificationName');
     const UpdateNotificationDescription = quillNotificationUpdate.summernote('code');
+
+    if (!updateNotificationData ||
+        UpdateNotificationName.value.length === 0 ||
+        UpdateNotificationDescription === "<p><br></p>" ||
+        UpdateNotificationDescription.length === 0) {
+        return;
+    }
+
+    var uNButton = document.getElementById("updateNotificationBtn");
+    uNButton.disabled = true;
 
     fetch(`${notificationPath}/uploadUpdateNotification`, {
         method: 'PUT',
@@ -88,15 +105,24 @@ function updateNotificationList() {
         .then(response => response.json())
         .then(data => {
             NotificationList = data.NotificationList;
+            uNButton.disabled = false;
             loadSection('updateNotification');
         })
         .catch(error => {
+            uNButton.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
 
 function handleDeleteNotification() {
     const deleteNotification = document.getElementById('deleteNotification').value;
+
+    if (deleteNotification.length === 0) {
+        return;
+    }
+
+    var dNButton = document.getElementById("deleteNotificationBtn");
+    dNButton.disabled = true;
 
     fetch(`${notificationPath}/uploadDeleteNotification`, {
         method: 'DELETE',
@@ -111,9 +137,12 @@ function handleDeleteNotification() {
         .then(response => response.json())
         .then(data => {
             NotificationList = data.NotificationList;
+            dNButton.disabled = false;
+            alert(`${deleteNotification} Deleted`);
             loadSection('deleteNotification');
         })
         .catch(error => {
+            dNButton.disabled = false;
             console.error('Error uploading file:', error);
         });
 }
