@@ -1,5 +1,6 @@
 let productList = [];
 let productTodo = [];
+let productTodoFlag = false;
 let updateProductList = [];
 
 function fetchProductData() {
@@ -37,6 +38,10 @@ function addProductTodo() {
     //     return
     // }
 
+    if (subProductName.length === 0 || subProductLink.length === 0 || productPhoto.value.length === 0) {
+        return;
+    }
+
     var subTitleElement = document.createElement("li");
     subTitleElement.innerHTML = `<p id="${subProductName}" data-title="${subProductName}" data-description='${subProductLink}' data-photo='${productPhoto.value}'  onclick="editProduct(this)"><strong> ${subProductName} </strong></p> `;
     ProductUlList.appendChild(subTitleElement);
@@ -48,6 +53,11 @@ function addProductTodo() {
     document.getElementById("subProductLink").value = "";
     document.getElementById("productPhoto").value = "";
 
+    productTodoFlag = false;
+    var addProdbutton = document.getElementById("subButtonBtn");
+    addProdbutton.disabled = false;
+    var button = document.getElementById("addProdBtn");
+    button.disabled = false;
 
     toggleVisibility('noSubtitle', 'addProductVisiblity');
 
@@ -57,6 +67,11 @@ function handleSubmitProduct() {
     var mainProductName = document.getElementById("mainProductName");
     var ProductUlList = document.getElementById("ProductUlList");
 
+    if (mainProductName.value.length === 0 || productTodo.length === 0) {
+        return;
+    }
+    var button = document.getElementById("addProdBtn");
+    button.disabled = true;
 
     const formData = new FormData();
     // productTodo.forEach(subProduct => {
@@ -75,8 +90,10 @@ function handleSubmitProduct() {
             productList = data.productList;
             mainProductName.value = '';
             ProductUlList.innerHTML = '';
+            button.disabled = true;
         })
         .catch(error => {
+            button.disabled = true;
             console.error('Error uploading file:', error);
         });
 
@@ -85,6 +102,9 @@ function handleSubmitProduct() {
 }
 
 const editProduct = (elementToRemove) => {
+    if (productTodoFlag) {
+        return;
+    }
 
     const title = elementToRemove.getAttribute('data-title');
     const description = elementToRemove.getAttribute('data-description');
@@ -102,10 +122,14 @@ const editProduct = (elementToRemove) => {
     const productPhoto = document.getElementById("productPhoto");
 
     updatesubProductName.value = title;
-
     updatesubProductLink.value = description;
-
     productPhoto.value = photo;
+
+    productTodoFlag = true;
+    var addProdbutton = document.getElementById("subButtonBtn");
+    addProdbutton.disabled = true;
+    var button = document.getElementById("addProdBtn");
+    button.disabled = true;
 
     toggleVisibility('yesSubtitle', 'addProductVisiblity')
 
@@ -296,6 +320,7 @@ function deleteProduct() {
     var producttoDelete = deleteProductSelect.value;
     var deleteSubproductSelect = document.getElementById('deletesubproduct');
     var selectedValues = Array.from(deleteSubproductSelect.selectedOptions).map(option => option.value);
+    var deleteSubproductSelectLength = deleteSubproductSelect.options.length;
 
     if ((selectedValues.length === 1 && selectedValues[0] === '') || selectedValues.length === 0) {
         // It will not delete product if it has subProducts
@@ -325,6 +350,21 @@ function deleteProduct() {
         toggleVisibility("noSubtitle", "deletesubproductVisiblity");
     });
     deleteProductList(deleteProductSelect.selectedIndex - 1, selectedValues);
+
+    //Auto remove if all options selected
+    if (deleteSubproductSelectLength === selectedValues.length) {
+        // Get the index of the currently selected option
+        var selectedIndex = deleteProductSelect.selectedIndex;
+
+        if (selectedIndex !== -1) {
+            // Remove the currently selected option
+            deleteProductSelect.remove(selectedIndex);
+            deleteProductList(selectedIndex - 1);
+            fetchDeleteProductList("MAIN", producttoDelete);
+            return;
+        }
+    }
+
     fetchDeleteProductList("SUB", producttoDelete, selectedValues);
 }
 
@@ -355,7 +395,8 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
     if (category === "SUB") {
         formData.append("subProduct", JSON.stringify(subProduct));
     }
-
+    var deleteProdbutton = document.getElementById("deleteSubButtonBtn");
+    deleteProdbutton.disabled = true;
 
     fetch(`${productPath}/deleteProductList`, {
         method: 'DELETE',
@@ -365,8 +406,11 @@ function fetchDeleteProductList(category, producttoDelete, subProduct) {
         .then(response => response.json())
         .then(data => {
             productList = data.productList;
+            alert(`${producttoDelete} Deleted`);
+            deleteProdbutton.disabled = false;
         })
         .catch(error => {
+            deleteProdbutton.disabled = false;
             console.error('Error uploading file:', error);
         });
 
