@@ -5,6 +5,7 @@ const { connectDb } = require("./database");
 const path = require("path");
 const ejs = require('ejs');
 const cors = require('cors')
+const corsOptions = require('./config/corsOptions');
 const cookieParser = require('cookie-parser');
 
 const initializeServer = async () => {
@@ -16,7 +17,7 @@ const initializeServer = async () => {
     app.set("view engine", "ejs");
     app.set("views", path.join(__dirname, "../public/views"));
 
-    app.use(cors());
+    app.use(cors(corsOptions));
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
