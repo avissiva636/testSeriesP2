@@ -32,7 +32,6 @@ const initializeServer = async () => {
     app.use("/testimonial", require("./routes/testimonialRoutes"));
     app.use("/notification", require("./routes/notificationRoutes"));
 
-    app.use("/api/home", require("./routes/contactRoutes"));
     app.use("/api/users", require("./routes/userRoutes"));
     app.use(errorHandler);
 
