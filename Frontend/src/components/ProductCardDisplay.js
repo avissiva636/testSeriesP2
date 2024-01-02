@@ -7,7 +7,7 @@ const ProductCardDisplay = ({ product, hoveredProduct }) => {
   };
   return (
     <div className="product-item">
-      <div className="product__contents">
+      <div>
         <h2>
           <div onClick={handleClick}>{product.mainProduct}</div>
         </h2>
