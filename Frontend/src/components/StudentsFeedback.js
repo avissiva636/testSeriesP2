@@ -25,7 +25,7 @@ const StudentFeedback = () => {
   return (
     <div className="testimonial__content">
       <aside className="testimonial__header">
-        <h1>Testimonial</h1>
+        <h1><b>Testimonial</b></h1>
         <h3>What Our Students Say</h3>
       </aside>
       <div className="test1">

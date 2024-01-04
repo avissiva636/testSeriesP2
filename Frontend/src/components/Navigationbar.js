@@ -4,6 +4,7 @@ import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDown
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useInspiroCrud } from "./context/InspiroContext";
+import logo from "./css/images/logo7.jpg";
 
 const Navigationbar = () => {
   const Gallery = { key1: "Photo", key2: "Video" };
@@ -142,13 +143,15 @@ const Navigationbar = () => {
       )}
       <div className="navigation__container d-flex justify-content-between">
         <div>
-          <b>Inspiro</b>
+        <img src={logo} alt="Card Image" style={{ marginLeft: "0px", marginRight: '5px', borderRadius: "10px", height: "60px", width: "200px" }}/>
+          
         </div>
 
         <div className={`nav__item-link ${showheaderDropdown ? "show" : ""}`}>
           {showheaderDropdown && (
             <div className="toggle__content">
               <div>
+              <img src="./css/images/logo.jpg" alt="Logo" style={{ marginRight: '5px' }} />
                 <b>Inspiro</b>
               </div>{" "}
               <button className="close-button" onClick={closeButtonClick}>
@@ -283,12 +286,12 @@ const Navigationbar = () => {
           </button>
           <div className="navigation__avatar" onClick={toggleAvatar}>
             <PersonSharpIcon style={{ cursor: "pointer" }} />
-            {avatarDropdown && (
+            {/* {avatarDropdown && (
               <div className="dropdown-content">
                 <div>Register</div>
                 <div>Admin</div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

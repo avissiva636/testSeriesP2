@@ -22,7 +22,7 @@ const Products = () => {
     <div>
       <div>
         <b>
-          <h1 className="heading">Our Products</h1>
+          <h1 className="heading"><b>Our Products</b></h1>
         </b>
         <div className="product-list">
           {products.map((product, index) => (
