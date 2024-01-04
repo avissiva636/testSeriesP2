@@ -1,6 +1,6 @@
 const allowedOrigins = [
-    'http://localhost:5001',
-    'http://localhost:3000'
+    'https://inspiroiasf.onrender.com',
+    'https://inspiroias.onrender.com'
 ];
 
 module.exports = allowedOrigins;
