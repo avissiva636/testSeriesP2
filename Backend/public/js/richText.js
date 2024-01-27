@@ -29,15 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
           placeholder: 'Please enter your data',
           tabsize: 2,
           height: 120,
-          toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture']],
-            ['view', ['codeview']]
-          ]
+          toolbar: TOOLBAROPTIONS
         });
       }
     }
@@ -52,15 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
           placeholder: 'Please enter your data',
           tabsize: 2,
           height: 120,
-          toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture']],
-            ['view', ['codeview']]
-          ]
+          toolbar: TOOLBAROPTIONS
         });
       }
     }
@@ -69,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'course') {
-      var quillEditorUpAdd = document.getElementById('quill-editorSubupAdd');     
+      var quillEditorUpAdd = document.getElementById('quill-editorSubupAdd');
 
       if (quillEditorUpAdd) {
         quillUpAdd = $('#quill-editorSubupAdd').summernote({
@@ -85,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function (event) {
     // Check if the clicked element has a specific class or ID
     if (event.target.id === 'course') {
-      var quillEditorUp = document.getElementById('quill-editorSubup');      
+      var quillEditorUp = document.getElementById('quill-editorSubup');
 
       if (quillEditorUp) {
         quillUp = $('#quill-editorSubup').summernote({
@@ -106,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
       function loadQuillDes() {
         try {
 
-          var quillEditorDes = document.getElementById('quillUpdateDescription');        
+          var quillEditorDes = document.getElementById('quillUpdateDescription');
 
           if (quillEditorDes) {
             quillDes = $('#quillUpdateDescription').summernote({
