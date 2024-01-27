@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const {USER,APP_PASSWORD}=require("../config/index");
+const { USER, APP_PASSWORD } = require("../config/index");
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -28,9 +28,9 @@ const sendMail = async (transporter, mailOptions) => {
 //@route POST /emailHandler
 //access public
 const emailHandler = asyncHandler(async (req, res) => {
-    
+
     const { name, email, phone,
-        qualification, place, message } = req.body.emailData;        
+        qualification, place, message } = req.body.emailData.formData;
 
     const mailOptions = {
         from: {
@@ -74,8 +74,8 @@ const emailHandler = asyncHandler(async (req, res) => {
                     </table>
                 `,
     };
-   
-    sendMail(transporter,mailOptions);
+
+    sendMail(transporter, mailOptions);
 
     res.status(200).json({
         message: "Email Send",

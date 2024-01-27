@@ -1,10 +1,15 @@
 const path = require("path");
+const fs = require('fs');
 const multer = require('multer');
 const dataflow = multer();
 
 // Testimonial
 const testimonialStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: async function (req, file, cb) {
+        if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','testimonials'))) {   
+            console.log("hello testimonial")        ;
+            await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','testimonials'));
+        }
         cb(null, path.join(__dirname, '../../../public/images/testimonials'));
     },
     filename: function (req, file, cb) {
