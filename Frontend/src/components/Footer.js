@@ -142,7 +142,8 @@ const Footer = () => {
       <div className="footer__bottom">
         <aside className="text-light">
           Copyright 2023. Inspiro IAS Academy All Rights Reserved | Website
-          Design and Development :{""}
+          Design and Development : <a href="http://www.agilewebwizards.com" style={{ color: 'white', textDecoration: 'none' }} onMouseOver={(e) => e.target.style.color='red'} onMouseOut={(e) => e.target.style.color='white'}>Agilewebwizards</a>
+
         </aside>
       </div>
     </>
