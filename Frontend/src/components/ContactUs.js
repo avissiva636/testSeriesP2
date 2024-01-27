@@ -1,5 +1,3 @@
-import Navigationbar from "./Navigationbar";
-import Footer from "./Footer";
 import CallIcon from "@mui/icons-material/Call";
 import { Email } from "@mui/icons-material";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
