@@ -16,7 +16,11 @@ async function setvideoEidList() {
 //@desc Display the addPhoto page
 //@route GET /addPhoto
 //access public
-const renderAddPhoto = asyncHandler((req, res) => {
+const renderAddPhoto = asyncHandler(async (req, res) => {
+    if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','photo'))) {           
+        await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','photo'));
+    }
+
     const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
     res.render("gallery/addPhoto", {
         message: "Add photo",
