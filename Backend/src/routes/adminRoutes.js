@@ -13,7 +13,7 @@ router.route("/validator").get(validateToken);
 
 router.route("/").get((req, res) => {
     if (!req.cookies?.jwt) {
-        res.redirect("/loginAdmin");
+        return res.redirect("/loginAdmin");
     }
     // validateToken();
     res.status(200).render("adminHome", {
