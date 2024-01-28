@@ -42,13 +42,12 @@ const logEvents = (message, event) => {
 
     // Use Winston to log to file
     switch (event) {
-        case "event":
-            eventLogger.info(logItem);
-            break;
         case "err":
             errorLogger.info(logItem);
             break;
-
+        case "event":
+            eventLogger.info(logItem);
+            break;
     }
 };
 
