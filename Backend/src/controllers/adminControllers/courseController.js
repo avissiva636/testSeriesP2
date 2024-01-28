@@ -45,8 +45,10 @@ const renderDeleteCourse = asyncHandler((req, res) => {
 //@route GET /getCourseList
 //access public
 const getCourseList = asyncHandler(async (req, res) => {
-    await setCourseList()
-    res.status(200).json({ CourseList });
+    if (req.headers.origin) {        
+        await setCourseList();
+        return res.status(200).json({ CourseList });
+    }    
 });
 
 //@desc Add Course(without subtitle) in CourseList

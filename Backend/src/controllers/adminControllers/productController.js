@@ -48,8 +48,10 @@ const renderProductList = asyncHandler((req, res) => {
 //@route GET /getProductList
 //access public
 const getProductList = asyncHandler(async (req, res) => {
-    await setProductList()
-    res.status(200).json({ productList });
+    if (req.headers.origin) {
+        await setProductList()
+        return res.status(200).json({ productList });
+    }
 });
 
 //@desc Add Product
@@ -168,7 +170,7 @@ const deleteProductList = asyncHandler(async (req, res) => {
     });
 });
 
-const renderDeleteProduct=asyncHandler((req, res) => {
+const renderDeleteProduct = asyncHandler((req, res) => {
     res.render("products/deleteProduct", {
         message: "delete Course",
         productList: productList,
@@ -178,5 +180,5 @@ const renderDeleteProduct=asyncHandler((req, res) => {
 module.exports = {
     renderProductList,
     getProductList, addProductList, updateProductList, renderUpdateProduct,
-    deleteProductList,renderDeleteProduct
+    deleteProductList, renderDeleteProduct
 }
