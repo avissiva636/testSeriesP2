@@ -17,8 +17,8 @@ async function setvideoEidList() {
 //@route GET /addPhoto
 //access public
 const renderAddPhoto = asyncHandler(async (req, res) => {
-    if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','photo'))) {           
-        await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','photo'));
+    if (!fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'images', 'photo'))) {
+        await fs.promises.mkdir(path.join(__dirname, '..', '..', '..', 'public', 'images', 'photo'));
     }
 
     const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
@@ -43,8 +43,10 @@ const renderAddVideo = asyncHandler(async (req, res) => {
 //@route GET /getphotolist
 //access public
 const getphotolist = asyncHandler((req, res) => {
-    const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
-    res.json({ files });
+    if (req.headers.origin) {
+        const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
+        return res.json({ files });
+    }
 })
 
 //@desc Add image in the respective place
@@ -84,10 +86,12 @@ const deleteImage = asyncHandler((req, res) => {
 //@route GET /getvideolist
 //access public
 const getvideolist = asyncHandler(async (req, res) => {
-    await setvideoEidList()
-    res.json({
-        videos: videoEidList,
-    });
+    if (req.headers.origin) {   
+        await setvideoEidList()
+        return res.json({
+            videos: videoEidList,
+        });
+    }
 });
 
 //@desc Add video

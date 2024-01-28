@@ -44,8 +44,10 @@ const renderdeleteNotification = asyncHandler((req, res) => {
 //@route GET /getNotificationList
 //access public
 const getNotificationList = asyncHandler(async (req, res) => {
-    await setNotificationList();
-    res.json({ NotificationList });
+    if (req.headers.origin) {
+        await setNotificationList();
+        res.json({ NotificationList });
+    }
 });
 
 //@desc Add Notification

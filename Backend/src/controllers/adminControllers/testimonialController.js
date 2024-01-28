@@ -7,7 +7,7 @@ let Testimonials = [];
 
 async function setTestimonials() {
     try {
-        Testimonials = await Testimonial.find();        
+        Testimonials = await Testimonial.find();
     } catch (error) {
         console.error('Error setting Testimonials:', error);
     }
@@ -37,8 +37,10 @@ const renderDeleteTestimonial = asyncHandler(async (req, res) => {
 });
 
 const getTestimonialList = asyncHandler(async (req, res) => {
-    await setTestimonials();
-    res.json({ Testimonials });
+    if (req.headers.origin) {
+        await setTestimonials();
+        res.json({ Testimonials });
+    }
 });
 
 const uploadAddTestimonial = asyncHandler(async (req, res) => {
