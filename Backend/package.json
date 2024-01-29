@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "INSPIRO IAS backend",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+  "scripts": {    
     "start": "set NODE_ENV=prod&& node src/server.js",
     "dev": "set NODE_ENV=dev&& nodemon src/server.js",
-    "macdev": "NODE_ENV=dev node src/server.js"
+    "macdev": "NODE_ENV=dev nodemon src/server.js"
   },
   "author": "SivaLingam",
   "license": "MIT",
