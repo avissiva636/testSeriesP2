@@ -45,7 +45,7 @@ const SubProducts = () => {
       <div className="card-container">
         {filteredSubProducts.map((sp) => (
           <div key={sp.index} className="card">
-            {/* <img src={sp.image} alt={sp.name} className="card-img" /> */}
+            <img src={sp.photo} alt={sp.photo} className="card-img" />
             <div className="sub-product-name">{sp.name}</div>
             <Link to={sp.link} target="_blank">
               <button className="buy-button">Buy</button>
