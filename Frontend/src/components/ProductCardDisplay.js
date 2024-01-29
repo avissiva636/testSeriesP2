@@ -6,10 +6,10 @@ const ProductCardDisplay = ({ product, hoveredProduct }) => {
     navigate("Products");
   };
   return (
-    <div className="product-item">
+    <div className="product-item" onClick={handleClick}>
       <div>
         <h2>
-          <div onClick={handleClick}>{product.mainProduct}</div>
+          <div >{product.mainProduct}</div>
         </h2>
       </div>
       <div>

@@ -10,6 +10,12 @@ h1{
   color: rgb(244, 244, 244);
   margin: 20px;
 }
+@media (max-width: 767px) {
+  h1 {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+}
 }
 
 .course__content{
@@ -249,6 +255,35 @@ transition: 0.7s;
     margin-left: 30px;
     margin-right: 30px;
   }
+  .card1{
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+      0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 15px;
+    position: relative;
+    z-index: 1;
+    padding: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    // overflow: hidden;
+    min-height: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    transition: 0.7s;
+    th {
+      position: sticky;
+      top: 0;
+      background-color: #f2f2f2;
+    }
+    td, th {
+      font-size: 12px; /* Adjust for smaller screens */
+      padding: 6px; /* Adjust for smaller screens */
+    }
+  }
+  .card1 h2 {
+    font-size: 1.5em; /* Adjust as needed for smaller screens */
+  }
+    
+  
 }
 
 

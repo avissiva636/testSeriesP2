@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useInspiroCrud } from "./context/InspiroContext";
 import "./css/Products.css";
-import Footer from "./Footer";
 import ContactUsHomePage from "./ContactUsHomePage";
 import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const navigate = useNavigate();
+  const { products, getProductList } = useInspiroCrud();
   useEffect(() => {
     window.scroll(0, 0);
+    getProductList();
   }, []);
-  const { products } = useInspiroCrud();
 
   const handleProductClick = (product) => {
     navigate("/SubProducts", {
@@ -22,7 +22,9 @@ const Products = () => {
     <div>
       <div>
         <b>
-          <h1 className="heading"><b>Our Products</b></h1>
+          <h1 className="heading">
+            <b>Our Products</b>
+          </h1>
         </b>
         <div className="product-list">
           {products.map((product, index) => (
