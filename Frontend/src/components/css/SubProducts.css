@@ -10,19 +10,23 @@
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-left: 20px;
   margin-right: 20px;
 }
 
 .card {
   width: 30%;
+  margin-left: 20px;
   margin-bottom: 50px;
   position: relative;
   overflow: hidden;
   align-items: center;
   border-radius: 10px;
-  height: 300px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  background-color: #eeeeee;
 }
 
 .card:hover {
@@ -30,19 +34,23 @@
 }
 
 .card-img {
-  width: 100%;
-  height: 50%;
+  margin-top: 20px;
+  width: 90%;
+  height: 100%;
   object-fit: cover;
 }
 
 .buy-button {
-  position: absolute;
-  bottom: 30px;
+  /* position: absolute; */
+  bottom: 0px;
   left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 16px;
+  border-radius: 3px;
+  /* transform: translateX(-50%); */
+  padding: 8px 86px;
   background-color: #da0f0f;
   cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .buy-button:hover {
@@ -52,7 +60,9 @@
   text-align: left;
 }
 .sub-product-name {
-  margin-top: 180px;
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 .container {
   display: flex;
@@ -86,14 +96,21 @@ input[type="text"] {
 
   .card {
     width: 70%; /* Cards take full width on small screens */
+    margin-left: 0px;
   }
   .back-button {
     position: left;
     margin-left: 0px;
   }
+  .sub-product-name {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 10px;
+  }
   .card-img {
-    width: 100%;
-    height: 50%; /* Set the height to 50% of the card */
-    object-fit: cover;
+    width: 90%;
+    height: auto; /* Set the height to 50% of the card */
+    object-fit: cover ;
+    margin: 10px;
   }
 }

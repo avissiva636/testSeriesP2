@@ -143,7 +143,7 @@ const ContactUs = () => {
                     onChange={handleChange}
                   />
                 </Col>
-                <div className="input-group">
+                <div className="input-group-message">
                   <label>Your Message:</label>
                   <textarea
                     name="message"

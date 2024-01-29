@@ -119,6 +119,19 @@ button:hover {
   height: 40px !important;
 }
 
+.input-group-message {
+  display: block !important;
+  label {
+    display: block;
+  }
+}
+.input-group-message input,
+.input-group-message textarea{
+  height: 140px !important;
+  width: 100%;
+
+}
+
 .submit__btn {
   border-radius: 5px;
 }
