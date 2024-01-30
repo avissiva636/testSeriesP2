@@ -38,6 +38,9 @@ const renderDeleteTestimonial = asyncHandler(async (req, res) => {
 
 const getTestimonialList = asyncHandler(async (req, res) => {
     if (req.headers.origin) {
+        if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','testimonials'))) {               
+            await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','testimonials'));
+        }
         await setTestimonials();
         res.json({ Testimonials });
     }
