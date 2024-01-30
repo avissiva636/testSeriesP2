@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require("path");
 
 const { productModel: Product } = require("../../database/index");
+const allowedOrigins = require("../../config/allowedOrigins");
 
 let productList = []
 async function setProductList() {
@@ -48,10 +49,16 @@ const renderProductList = asyncHandler((req, res) => {
 //@route GET /getProductList
 //access public
 const getProductList = asyncHandler(async (req, res) => {
-    if (req.headers.origin) {
+    const referer = req.headers.referer;
+    // Check if the Referer header matches any of the allowed domains
+    const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
+
+    if (isAllowed) {
         await setProductList()
         return res.status(200).json({ productList });
     }
+    res.status(404);
+    throw new Error("Page not found");
 });
 
 //@desc Add Product

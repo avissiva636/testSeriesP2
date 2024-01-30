@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { notificationModel: Notification } = require("../../database/index");
+const allowedOrigins = require("../../config/allowedOrigins");
 
 let NotificationList = [];
 async function setNotificationList() {
@@ -44,10 +45,17 @@ const renderdeleteNotification = asyncHandler((req, res) => {
 //@route GET /getNotificationList
 //access public
 const getNotificationList = asyncHandler(async (req, res) => {
-    if (req.headers.origin) {
+    const referer = req.headers.referer;
+    // // Check if the Referer header matches any of the allowed domains
+    const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
+
+    if (isAllowed) {
         await setNotificationList();
-        res.json({ NotificationList });
+        return res.json({ NotificationList });
     }
+
+    res.status(404);
+    throw new Error("Page not found");
 });
 
 //@desc Add Notification
