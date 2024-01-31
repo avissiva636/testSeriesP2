@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { courseModel: Course } = require("../../database/index");
 const allowedOrigins = require("../../config/allowedOrigins");
+const { simplifyTable } = require("../../util/htmlTableParser");
 
 let CourseList = []
 async function setCourseList() {
@@ -49,13 +50,13 @@ const getCourseList = asyncHandler(async (req, res) => {
     const referer = req.headers.referer;
     // Check if the Referer header matches any of the allowed domains
     const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
-    
+
     if (isAllowed) {
         await setCourseList();
         return res.status(200).json({ CourseList });
     }
     res.status(404);
-    throw new Error("Page not found");    
+    throw new Error("Page not found");
 });
 
 //@desc Add Course(without subtitle) in CourseList
@@ -64,7 +65,7 @@ const getCourseList = asyncHandler(async (req, res) => {
 const addCourseNormalList = asyncHandler(async (req, res) => {
     const data = {
         Title: req.body.Title,
-        Description: JSON.parse(req.body.Description)
+        Description: simplifyTable(JSON.parse(req.body.Description))
     };
 
     CourseList.push(data);
@@ -84,23 +85,27 @@ const addCourseNormalList = asyncHandler(async (req, res) => {
 //@desc Add Course(with subtitle) in CourseList
 //@route POST /addCourseSubList
 //access public
-const addCourseSubList = asyncHandler(
-    async (req, res) => {
-        const data = {
-            Title: req.body.Title,
-            SubTitle: JSON.parse(req.body.SubTitle)
-        }
-        await Course.create({
-            Title: data.Title,
-            SubTitle: data.SubTitle,
-        });
-
-        CourseList.push(data);
-        res.status(200).json({
-            message: "Course Data Updated",
-            CourseList,
-        });
+const addCourseSubList = asyncHandler(async (req, res) => {
+    const data = {
+        Title: req.body.Title,
+        SubTitle: JSON.parse(req.body.SubTitle)
     }
+
+    data.SubTitle = data.SubTitle.map((subtitle) => {
+        return { ...subtitle, "Description": simplifyTable(subtitle.Description) };
+    })
+
+    await Course.create({
+        Title: data.Title,
+        SubTitle: data.SubTitle,
+    });
+
+    CourseList.push(data);
+    res.status(200).json({
+        message: "Course Data Updated",
+        CourseList,
+    });
+}
 );
 
 //@desc Update Course(without subtitle) in CourseList
@@ -108,7 +113,7 @@ const addCourseSubList = asyncHandler(
 //access public
 const updateCourseNormalList = asyncHandler(async (req, res) => {
     const selectedCourse = JSON.parse(req.body.selectedCourse);
-    const updateDescription = JSON.parse(req.body.updateDescription);
+    const updateDescription = simplifyTable(JSON.parse(req.body.updateDescription));
 
     await Course.findOneAndUpdate({ Title: selectedCourse }, { Description: updateDescription });
     await setCourseList()
@@ -131,7 +136,8 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
             const existingCourse = await Course.findOne({ Title: ucourse.Title, "SubTitle.Title": ucourse.originalSubTitleName });
 
             if (existingCourse) {
-                // SubTitle exists, update it
+                // SubTitle exists, update it                
+                ucourse.SubTitle = { ...ucourse.SubTitle, Description: simplifyTable(ucourse.SubTitle.Description) };
                 await Course.updateOne(
                     { Title: ucourse.Title, "SubTitle.Title": ucourse.originalSubTitleName },
                     {
@@ -142,6 +148,9 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
                 );
             } else {
                 // SubTitle doesn't exist, add it
+                //HTML table simplification                
+                ucourse.SubTitle = { ...ucourse.SubTitle, Description: simplifyTable(ucourse.SubTitle.Description) };
+
                 await Course.updateOne(
                     { Title: ucourse.Title },
                     {
