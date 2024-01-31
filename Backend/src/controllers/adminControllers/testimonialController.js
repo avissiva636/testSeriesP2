@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { testimonialsModel: Testimonial } = require("../../database/index");
 const fs = require('fs');
 const path = require("path");
+const allowedOrigins = require("../../config/allowedOrigins");
 
 let Testimonials = [];
 
@@ -37,10 +38,19 @@ const renderDeleteTestimonial = asyncHandler(async (req, res) => {
 });
 
 const getTestimonialList = asyncHandler(async (req, res) => {
-    if (req.headers.origin) {
+    const referer = req.headers.referer;
+    // Check if the Referer header matches any of the allowed domains
+    const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
+
+    if (isAllowed) {
+        if (!fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'images', 'testimonials'))) {
+            await fs.promises.mkdir(path.join(__dirname, '..', '..', '..', 'public', 'images', 'testimonials'));
+        }
         await setTestimonials();
-        res.json({ Testimonials });
+        return res.json({ Testimonials });
     }
+    res.status(404);
+    throw new Error("Page not found");
 });
 
 const uploadAddTestimonial = asyncHandler(async (req, res) => {

@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { videoModel: Video } = require("../../database/index");
 const fs = require('fs');
 const path = require("path");
+const allowedOrigins = require("../../config/allowedOrigins");
 
 let videoEidList = [];
 async function setvideoEidList() {
@@ -42,11 +43,20 @@ const renderAddVideo = asyncHandler(async (req, res) => {
 //@desc Get all images
 //@route GET /getphotolist
 //access public
-const getphotolist = asyncHandler((req, res) => {
-    if (req.headers.origin) {
+const getphotolist = asyncHandler(async (req, res) => {
+    const referer = req.headers.referer;
+    // Check if the Referer header matches any of the allowed domains
+    const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
+
+    if (isAllowed) {
+        if (!fs.existsSync(path.join(__dirname, '..', '..', '..', 'public', 'images', 'photo'))) {
+            await fs.promises.mkdir(path.join(__dirname, '..', '..', '..', 'public', 'images', 'photo'));
+        }
         const files = fs.readdirSync(path.join(__dirname, '../../../public/images/photo'));
         return res.json({ files });
     }
+    res.status(404);
+    throw new Error("Page not found");
 })
 
 //@desc Add image in the respective place
@@ -86,12 +96,18 @@ const deleteImage = asyncHandler((req, res) => {
 //@route GET /getvideolist
 //access public
 const getvideolist = asyncHandler(async (req, res) => {
-    if (req.headers.origin) {   
+    const referer = req.headers.referer;
+    // Check if the Referer header matches any of the allowed domains
+    const isAllowed = allowedOrigins.some(domain => referer && referer.includes(domain));
+
+    if (isAllowed) {
         await setvideoEidList()
         return res.json({
             videos: videoEidList,
         });
     }
+    res.status(404);
+    throw new Error("Page not found");
 });
 
 //@desc Add video
