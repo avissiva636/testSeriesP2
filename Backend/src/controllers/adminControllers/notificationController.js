@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { notificationModel: Notification } = require("../../database/index");
 const allowedOrigins = require("../../config/allowedOrigins");
+const { simplifyTable } = require("../../util/htmlTableParser");
 
 let NotificationList = [];
 async function setNotificationList() {
@@ -63,7 +64,7 @@ const getNotificationList = asyncHandler(async (req, res) => {
 //access public
 const uploadAddNotification = asyncHandler(async (req, res) => {
     const notificationName = req.body.notificationName;
-    const notificationDescription = req.body.notificationDescription;
+    const notificationDescription = simplifyTable(req.body.notificationDescription);    
 
     await Notification.create({
         name: notificationName,
@@ -83,7 +84,7 @@ const uploadAddNotification = asyncHandler(async (req, res) => {
 const uploadUpdateNotification = asyncHandler(async (req, res) => {
     const notificationOldName = req.body.updateNotificationData;
     const UpdateNotificationName = req.body.UpdateNotificationName;
-    const UpdateNotificationDescription = req.body.UpdateNotificationDescription;
+    const UpdateNotificationDescription = simplifyTable(req.body.UpdateNotificationDescription);
 
     await Notification.findOneAndUpdate(
         { name: notificationOldName },
