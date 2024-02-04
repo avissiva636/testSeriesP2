@@ -78,8 +78,7 @@ const uploadImage = asyncHandler((req, res) => {
 const deleteImage = asyncHandler((req, res) => {
     // Assuming you have the filename you want to delete
     const imagenameToDelete = req.body.imagenameToDelete;
-
-    res.json({ message: req.body })
+    
     const filePath = path.join(__dirname, '../../../public/images/photo', imagenameToDelete);
 
     // Check if the file exists before attempting to delete
