@@ -1,14 +1,24 @@
 import Gallery from "./Gallery";
-import StudentFeedback from "./StudentsFeedback";
 import FrequentlyAskedQuestions from "./FrequentlyAskedQuestions";
 import ContactUsHomePage from "./ContactUsHomePage";
 import PopularCourse from "./PopularCourses";
 import ProductsHomePage from "./ProductsHomePage";
-
+import Sidebar from "./Sidebar";
+// import Popup from "./Popup";
+import Testimonial from "./Testimonial";
+// import { useEffect, useState } from "react";
 
 const HomePage = () => {
+  // const [isPopupOpen, setIsPopupOpen] = useState(true);
+  // useEffect(() => {
+  //   console.log("Popup rendering");
+  // }, []);
+  // const handleClosePopup = () => {
+  //   setIsPopupOpen(false);
+  // };
   return (
     <div className="landing__page">
+      {/* {isPopupOpen && <Popup />} */}
       <PopularCourse />
       <ProductsHomePage />
       <br />
@@ -22,7 +32,7 @@ const HomePage = () => {
       <br />
       <br />
       <br />
-      <StudentFeedback />
+      <Testimonial />
       <br />
       <br />
       <br />
@@ -35,6 +45,7 @@ const HomePage = () => {
       <br />
       <br />
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };
