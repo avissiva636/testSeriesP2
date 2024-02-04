@@ -15,7 +15,8 @@ const PopularCourse = () => {
   const clickHandler = () => {
     const Title = coursesToShow[0].Title;
     const Description = coursesToShow[0].Description;
-    navigate("ListAllCourses", {
+    // const url = `ListAllCourses?Title=${encodeURIComponent(Title)}`;
+    navigate(`ListAllCourses/${Title}`, {
       state: { data: { Title, Description } },
     });
   };
@@ -23,14 +24,16 @@ const PopularCourse = () => {
     if (Title1 == "KPSC" || Title1 == "KEA") {
       const Title = course.SubTitle[0].Title;
       const Description = course.SubTitle[0].Description;
-      navigate("ListAllCourses", {
+      // const url = `ListAllCourses?Title=${encodeURIComponent(Title)}`;
+      navigate(`ListAllCourses/${Title}`, {
         state: { data: { Title, Description } },
       });
       return;
     }
     const Title = Title1;
     const Description = Description1;
-    navigate("ListAllCourses", {
+    // const url = `ListAllCourses?Title=${encodeURIComponent(Title)}`;
+    navigate(`ListAllCourses/${Title}`, {
       state: { data: { Title, Description } },
     });
   };

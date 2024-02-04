@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
-import Footer from "./Footer";
 import "./css/PrivacyPolicy.css";
+import Sidebar from "./Sidebar";
 
 const PrivacyPolicy = () => {
   useEffect(() => {
@@ -9,11 +9,12 @@ const PrivacyPolicy = () => {
   }, []);
   return (
     <div>
+      <Sidebar />
       <div className="heading-container">
         <h1>Privacy Policy</h1>
         <p>Home &gt;&gt; Privacy Policy</p>
       </div>
-      <div className="container">
+      <div className="container1">
         <h2>
           <b>1. Our Commitment To Privacy</b>
         </h2>

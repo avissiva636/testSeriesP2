@@ -8,6 +8,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { useInspiroCrud } from "./context/InspiroContext";
+import Sidebar from "./Sidebar";
 
 const ContactUs = () => {
   const { sendEmailContent } = useInspiroCrud();
@@ -45,6 +46,7 @@ const ContactUs = () => {
 
   return (
     <div>
+      <Sidebar />
       {/* <Navigationbar /> */}
       <div className="heading-container">
         <h1>Contact Us</h1>

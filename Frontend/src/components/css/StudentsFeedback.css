@@ -1,3 +1,57 @@
-.heading{
-    text-align: center;
+
+.testimonial-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* transform: translateX(0); */
+  }
+
+.testimonial-scroll {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
+.button1 {
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .button1:hover {
+    background-color: darkred;
+  }
+
+.testimonial-item {
+    flex: 0 0 auto;
+    margin-right: 10px;
+}
+@keyframes scrollImage {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .testimonialAll-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .testimonialAll-item {
+    flex: 0 0 calc(33.33% - 20px); /* 33.33% for three items in a row, minus 20px for margin */
+    margin: 10px;
+  }
+  
+  .testimonialAll-item img {
+    width: 100%;
+    height: auto;
+  }
+  

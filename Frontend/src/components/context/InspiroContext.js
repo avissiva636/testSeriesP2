@@ -25,6 +25,8 @@ export const InspiroContext = ({ children }) => {
     if (result.data) {
       setCourses(result.data.CourseList);
     }
+
+    return result.data.CourseList;
   };
 
   const getImageList = async () => {

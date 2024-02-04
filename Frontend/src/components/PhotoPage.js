@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import { useInspiroCrud } from "./context/InspiroContext";
+import Sidebar from "./Sidebar";
 
 const PhotoPage = () => {
   const { Images, getImageList, apiurl } = useInspiroCrud();
   useEffect(() => {
+    window.scroll(0,0);
     getImageList();
   }, []);
   return (
@@ -14,6 +16,7 @@ const PhotoPage = () => {
         {Images.map((photo) => (
           <div key={photo.id}>
             <img src={`${apiurl}/images/photo/${photo}`} width="300" height="200" />
+            {console.log(`${apiurl}/images/photo/${photo}`)}
           </div>
         ))}
       </div>
@@ -23,6 +26,7 @@ const PhotoPage = () => {
       <br></br>
       <br></br>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useInspiroCrud } from "./context/InspiroContext";
 import "./css/Products.css";
 import ContactUsHomePage from "./ContactUsHomePage";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const Products = () => {
         <br></br>
         <br></br>
         <ContactUsHomePage />
+        <Sidebar />
       </div>
     </div>
   );

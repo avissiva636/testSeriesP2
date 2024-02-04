@@ -2,45 +2,70 @@ import ContactUsHomePage from "./ContactUsHomePage";
 import { useInspiroCrud } from "./context/InspiroContext";
 import { useEffect, useState } from "react";
 import CourseDescription from "./CourseDescription";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 const ListAllCourses = () => {
+  const { Title } = useParams();
   const { Courses, getCourseList } = useInspiroCrud();
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedSubCourse, setSelectedSubCourse] = useState(null);
   const location = useLocation();
-  let initialTitle = location.state.data.Title;
-  let initialDescription = location.state.data.Description;
+  const history = useNavigate();
+  let initialTitle = location.state?.data?.Title??Title;
+  let initialDescription = location.state?.data?.Description;
   const [a, setA] = useState(initialTitle);
   const [b, setB] = useState(initialDescription);
 
+
   useEffect(() => {
     getCourseList();
-    if (location.state.data) {
+    if (location.state?.data) {
       setA(location.state.data.Title);
       setB(location.state.data.Description);
     }
-  }, [location.state.data]);
+  }, [location.state?.data]);
+
+  useEffect(() => {
+    const letstye = async ()=>{
+
+      if (initialDescription === undefined && initialTitle) {
+        const coursesData = await getCourseList();
+        
+        var filteredContent=coursesData.filter((course)=>(course.Title===initialTitle));
+        if(filteredContent[0]){
+          setB(filteredContent[0].Description);
+        }
+        else{
+          filteredContent=coursesData.filter((course)=>(course.SubTitle.length>0));
+
+          const result = filteredContent.reduce((acc, item) => {          
+            const match = item.SubTitle.find(subitem => subitem.Title === initialTitle);
+            if (match) {
+              acc = match.Description;
+            }
+            return acc;
+          }, null);
+
+          setB(result)
+        }
+      }
+    }
+
+    letstye();
+  }, []);
 
   const handleCourseClick = (index, Title, Description) => {
-    if (window.innerWidth >= 1024) {
-      const descriptionSection = document.getElementById("descriptionSection");
-      if (descriptionSection) {
-        descriptionSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
-    } else if (window.innerWidth <= 992) {
-      const descriptionSection = document.getElementById("descriptionSection1");
-      if (descriptionSection) {
-        descriptionSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
-    }
+    // if (window.innerWidth >= 1024) {
+    //   const descriptionSection = document.getElementById("descriptionSection");
+    //   if (descriptionSection) {
+    //     window.scrollTo({ top: 0, behavior: "smooth" });
+    //   }
+    // } else if (window.innerWidth <= 992) {
+    //   const descriptionSection = document.getElementById("descriptionSection1");
+    //   if (descriptionSection) {
+    //     window.scrollTo({ top: 0, behavior: "smooth" });
+    //   }
+    // }
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     if (selectedCourse === index) {
       setSelectedCourse(null);
@@ -49,35 +74,30 @@ const ListAllCourses = () => {
       setSelectedSubCourse(null);
       setA(Title);
       setB(Description);
+      window.history.pushState(null,null,`/ListAllCourses/${encodeURIComponent(Title)}`)
     }
   };
 
   const handleSubtitleClick = (index, Title, Description) => {
-    if (window.innerWidth >= 1024) {
-      const descriptionSection = document.getElementById("descriptionSection");
-      if (descriptionSection) {
-        descriptionSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
-    } else if (window.innerWidth <= 992) {
-      const descriptionSection = document.getElementById("descriptionSection1");
-      if (descriptionSection) {
-        descriptionSection.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-      // <SmoothScrolling targetElement={descriptionSection} duration={1000} />;
-    }
+    // if (window.innerWidth >= 1024) {
+    //   const descriptionSection = document.getElementById("descriptionSection");
+    //   if (descriptionSection) {
+    //     window.scrollTo({ top: 0, behavior: "smooth" });
+    //   }
+    // } else if (window.innerWidth <= 992) {
+    //   const descriptionSection = document.getElementById("descriptionSection1");
+    //   if (descriptionSection) {
+    //     window.scrollTo({ top: 0, behavior: "smooth" });
+    //   }
+    // }
+    window.scrollTo({ top: 0, behavior: "smooth" });
     if (selectedSubCourse === index) {
       setSelectedSubCourse(null);
     } else {
       setSelectedSubCourse(index);
       setA(Title);
       setB(Description);
+      window.history.pushState(null,null,`/ListAllCourses/${encodeURIComponent(Title)}`)
     }
   };
 
@@ -92,8 +112,9 @@ const ListAllCourses = () => {
             let Title;
 
             if (course.SubTitle != "") {
-              Title = course.SubTitle.map((subCourse, subIndex) => (
-                <div className="d-flex">
+              Title = course.SubTitle.map((subCourse, subIndex) => {
+               
+                return <div className="d-flex">
                   <div
                     className="text__title"
                     key={subIndex}
@@ -108,7 +129,7 @@ const ListAllCourses = () => {
                     <div className="text__left">{subCourse.Title}</div>
                   </div>
                 </div>
-              ));
+              });
             } else {
               Title = (
                 <div className="d-flex">
