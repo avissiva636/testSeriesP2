@@ -1,0 +1,17 @@
+<h1>ADD TESTIMONIAL</h1>
+
+<form id="uploadTestimonialForm" enctype="multipart/form-data">
+    <input type="file" id="fileTestimonialInput" name="TestimonialPhoto" accept="image/*" required>
+    <button type="button" onclick="uploadTestimonialFile()">Upload</button>
+</form>
+<h1>Testimonial Gallery</h1>
+
+
+<div id="imageContainer">
+    <% files.forEach(file => { %>
+        <div class="imageWrapper">
+            <img src="/images/testimonials/<%= file %>" alt="<%= file %>" style="max-width: 300px; max-height: 200px;">
+            <span class="deleteIcon" onclick="deleteTestimonial('<%= file %>')">❌</span>
+        </div>
+    <% }); %>
+</div>
