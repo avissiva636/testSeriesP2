@@ -15,10 +15,13 @@ const Navigationbar = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const { Courses, getNotificationList, notification } = useInspiroCrud();
   const [showGallery, setShowGallery] = useState(false);
+  // console.log(Courses);
 
+  const Titles = ["KPSC", "KEA"];
   useEffect(() => {
     getNotificationList();
   }, []);
+
   const toggleMenu = () => {
     setheaderShowDropdown(!showheaderDropdown);
   };
@@ -71,20 +74,27 @@ const Navigationbar = () => {
     //   toggleCoursesDropDoem();
     // }
     toggleCoursesDropDoem();
-    setheaderShowDropdown(false);
+    if (!Titles.includes(Title)) {
+      setheaderShowDropdown(false);
+    }
     setShowDropdown(false);
     setShowCourses(false);
     setSelectedCourse(selectedCourse === index ? null : index);
 
-    if (
-      Title !== "KPSC" &&
-      Title !== "KEA"
-      // window.innerWidth > 768
-    ) {
-      navigate("ListAllCourses", {
-        state: { data: { Title, Description } },
-      });
-    }
+    // if (
+    //   !Titles.includes(Title)
+    //   // window.innerWidth > 768
+    // ) {
+    //   // navigate("ListAllCourses", {
+    //   //   state: { data: { Title, Description } },
+    //   // });
+    //   <Link
+    //     to={{
+    //       pathname: "ListAllCourses",
+    //       state: { data: { Title, Description } },
+    //     }}
+    //   />;
+    // }
   };
 
   const handleSubtitleClick = (Description, Title) => {
@@ -93,9 +103,10 @@ const Navigationbar = () => {
     setShowDropdown(false);
     setShowCourses(false);
     // setSelectedSubtitle(subarr);
-    navigate("ListAllCourses", {
+    navigate(`ListAllCourses/${encodeURIComponent(Title)}`, {
       state: { data: { Title, Description } },
     });
+    // <Link to={{ pathname: '/ListAllCourses', state: { data: { Title, Description }} }} />
   };
   const handleWhyInspiroPage = () => {
     navigate("WhyInspiro");
@@ -124,10 +135,24 @@ const Navigationbar = () => {
     setShowCourses(false);
   };
   const handleNotification = () => {
-    navigate("NotificationMain", {
+    const Title = notification[0].name;
+    navigate(`NotificationMain/${encodeURIComponent(Title)}`, {
       state: { data: { notification } },
     });
   };
+  const naviagate = useNavigate();
+  const handleContextMenu = (event, Title, Description) => {
+    
+    naviagate.push({
+      pathname: `ListAllCourses/${encodeURIComponent(Title)}`,
+      state: { data: {
+        Title: Title,
+        Description: Description,
+      } },
+    });
+    console.log("Open new tab testing")
+    console.log(Title, Description);
+  }
 
   return (
     <>
@@ -143,15 +168,28 @@ const Navigationbar = () => {
       )}
       <div className="navigation__container d-flex justify-content-between">
         <div>
-        <img src={logo} alt="Card Image" style={{ marginLeft: "0px", marginRight: '5px', borderRadius: "10px", height: "60px", width: "200px" }}/>
-          
+          <img
+            src={logo}
+            alt="Card Image"
+            style={{
+              marginLeft: "0px",
+              marginRight: "5px",
+              borderRadius: "10px",
+              height: "60px",
+              width: "200px",
+            }}
+          />
         </div>
 
         <div className={`nav__item-link ${showheaderDropdown ? "show" : ""}`}>
           {showheaderDropdown && (
             <div className="toggle__content">
               <div>
-              <img src="./css/images/logo.jpg" alt="Logo" style={{ marginRight: '5px' }} />
+                <img
+                  src="./css/images/logo.jpg"
+                  alt="Logo"
+                  style={{ marginRight: "5px" }}
+                />
                 <b>Inspiro</b>
               </div>{" "}
               <button className="close-button" onClick={closeButtonClick}>
@@ -201,8 +239,8 @@ const Navigationbar = () => {
               <div className="courses-dropdown-content">
                 {Courses.map((course, index) => (
                   <div key={index}>
-                    {course.Title === "KPSC Prelims" ||
-                    course.Title === "KEA" ? (
+                    {/* {course.Title === "KPSC" || course.Title === "KEA" ? ( */}
+                    {Titles.includes(course.Title) ? (
                       <div
                         onClick={() =>
                           handleCourseClick(
@@ -214,10 +252,27 @@ const Navigationbar = () => {
                         className="course-title"
                       >
                         {course.Title}
+                        {/* {course.SubTitle.length > 0 ? (
+                          course.Title
+                        ) : (
+                          <Link
+                            to={"/ListAllCourses"}
+                            state={{
+                              data: {
+                                Title: course.Title,
+                                Description: course.Description,
+                              },
+                            }}
+                          >
+                            {course.Title}
+                          </Link>
+                        )} */}
+
                         <KeyboardArrowDownOutlinedIcon />
                       </div>
                     ) : (
                       <div
+                      // onContextMenu={(event) => handleContextMenu(event, course.Title, course.Description)}
                         onClick={() =>
                           handleCourseClick(
                             index,
@@ -227,7 +282,22 @@ const Navigationbar = () => {
                         }
                         className="course-title"
                       >
-                        {course.Title}
+                        {course.SubTitle.length > 0 ? (
+                          course.Title
+                        ) : (
+                          <Link
+                            to={`ListAllCourses/${encodeURIComponent(course.Title)}`}
+                            style={{color: "black"}}
+                            state={{
+                              data: {
+                                Title: course.Title,
+                                Description: course.Description,
+                              },
+                            }}
+                          >
+                            {course.Title}
+                          </Link>
+                        )}
                       </div>
                     )}
 
@@ -246,7 +316,31 @@ const Navigationbar = () => {
                             }
                             className="sub-Title"
                           >
-                            <div className="mt-2">{subTitle.Title}</div>
+                            <div className="mt-2">
+                              {/* <Link
+                                to={{
+                                  pathname: "/ListAllCourses",
+                                  state: {
+                                    data: {
+                                      Title: course.Title,
+                                      Description: course.Description,
+                                    },
+                                  },
+                                }}
+                              > */}
+                              <Link
+                              style={{color: "black"}}
+                                to={`ListAllCourses/${encodeURIComponent(subTitle.Title)}`}
+                                state={{
+                                  data: {
+                                    Title: subTitle.Title,
+                                    Description: subTitle.Description,
+                                  },
+                                }}
+                              >
+                                {subTitle.Title}
+                              </Link>
+                            </div>
                           </div>
                         ))}
                     </div>
