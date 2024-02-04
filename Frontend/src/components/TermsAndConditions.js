@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
 
 const TermsAndConditions = () => {
   useEffect(() => {
@@ -40,6 +41,7 @@ const TermsAndConditions = () => {
         </p>
       </div>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

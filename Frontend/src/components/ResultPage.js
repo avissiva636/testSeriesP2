@@ -4,6 +4,7 @@ import icon from "./css/images/geography.png";
 import medal from "./css/images/medal.png";
 import white from "./css/images/whiteboard.png";
 import mortar from "./css/images/mortarboard.png";
+import Sidebar from "./Sidebar";
 
 const ResultPage = () => {
   return (
@@ -55,6 +56,7 @@ const ResultPage = () => {
         </div>
       </div>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

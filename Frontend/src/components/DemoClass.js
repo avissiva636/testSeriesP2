@@ -1,5 +1,6 @@
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useInspiroCrud } from "./context/InspiroContext";
 
@@ -21,6 +22,7 @@ const DemoClass = () => {
       <br></br>
       <br></br>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

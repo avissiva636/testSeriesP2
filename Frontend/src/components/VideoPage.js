@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import YoutubeEmbed from "./YoutubeEmbed";
 import { useInspiroCrud } from "./context/InspiroContext";
+import Sidebar from "./Sidebar";
 
 const VideoPage = () => {
   const { Video, getVideoList } = useInspiroCrud();
@@ -24,6 +25,7 @@ const VideoPage = () => {
       <br></br>
       <br></br>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

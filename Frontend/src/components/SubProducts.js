@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ContactUsHomePage from "./ContactUsHomePage";
 import "./css/SubProducts.css"; // Assuming SubProducts.css is the CSS file with the provided styles
 import { ArrowBack } from "@mui/icons-material";
+import Sidebar from "./Sidebar";
 
 const SubProducts = () => {
   const location = useLocation();
@@ -54,6 +55,7 @@ const SubProducts = () => {
         ))}
       </div>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };

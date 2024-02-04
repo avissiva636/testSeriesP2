@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
 
 const RefundPolicy = () => {
   useEffect(() => {
@@ -12,7 +13,7 @@ const RefundPolicy = () => {
         <h1>Refund and Cancellation Policy</h1>
         <p>Home &gt;&gt; Refund and Cancellation Policy</p>
       </div>
-      <div className="container">
+      <div className="container1">
         <p>Our Policy for the refund will be as follows:</p>
         <br></br>
         <p>
@@ -29,6 +30,7 @@ const RefundPolicy = () => {
         <p>inspiroschools@gmail.com</p>
       </div>
       <ContactUsHomePage />
+      <Sidebar />
     </div>
   );
 };
