@@ -4,16 +4,27 @@ const multer = require('multer');
 const dataflow = multer();
 
 // Testimonial
+// const testimonialStorage = multer.diskStorage({
+//     destination: async function (req, file, cb) {
+//         if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','testimonials'))) {               
+//             await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','testimonials'));
+//         }
+//         cb(null, path.join(__dirname, '../../../public/images/testimonials'));
+//     },
+//     filename: function (req, file, cb) {
+//         const fileName = Date.now() + path.extname(file.originalname);
+//         req.testimonialImageName = fileName;
+//         cb(null, Date.now() + path.extname(file.originalname));
+//     }
+// });
+// const testimonialUpload = multer({ storage: testimonialStorage });
+
+// Testimonial
 const testimonialStorage = multer.diskStorage({
-    destination: async function (req, file, cb) {
-        if (!fs.existsSync(path.join(__dirname, '..','..','..','public','images','testimonials'))) {               
-            await fs.promises.mkdir(path.join(__dirname, '..','..','..','public','images','testimonials'));
-        }
+    destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '../../../public/images/testimonials'));
     },
     filename: function (req, file, cb) {
-        const fileName = Date.now() + path.extname(file.originalname);
-        req.testimonialImageName = fileName;
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });

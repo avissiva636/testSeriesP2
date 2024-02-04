@@ -29,9 +29,7 @@ const loadSection = (filename, clickedElement) => {
             renderPath = `${gallaryPath}`
             break;
 
-        case "addtestimonial":
-        case "updateTestimonial":
-        case "deleteTestimonial":
+        case "addTestimonial":       
             renderPath = `${testimonialPath}`
             break;
 
@@ -41,7 +39,7 @@ const loadSection = (filename, clickedElement) => {
             renderPath = `${notificationPath}`
             break;
 
-        default:
+        default:            
             break;
     }
 
@@ -239,7 +237,7 @@ function handleAddCourseSubmit(event) {
 
         //Check All input entered
         if (title.length === 0 || todos.length === 0) {
-            console.log(title.length, todos.length)
+            // console.log(title.length, todos.length)
             event.preventDefault();
             return;
         }
