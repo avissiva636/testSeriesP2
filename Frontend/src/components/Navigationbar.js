@@ -135,7 +135,7 @@ const Navigationbar = () => {
     setShowCourses(false);
   };
   const handleNotification = () => {
-    
+    setheaderShowDropdown(false);    
     const Title = notification[0]?.name;
     navigate(`NotificationMain/${encodeURIComponent(Title)}`, {
       state: { data: { notification } },
