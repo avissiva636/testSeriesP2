@@ -1,11 +1,11 @@
+import "../css/styles.css"
 const CourseDescription = (props) => {
   const { Title, Description } = props;
   const isLoading = !Description;
 
   return (
     <div className="card1">
-      <h2>{Title}</h2>
-      <div dangerouslySetInnerHTML={{ __html: Description }}></div>
+      <center><h2>{Title}</h2></center>
       {isLoading ? (
         <div className="loader-container">
           <div className="loader"></div>
@@ -23,7 +23,7 @@ const CourseDescription = (props) => {
 
 .loader {
   border: 8px solid #f3f3f3;
-  border-top: 8px solid #3498db;
+  border-top: 8px solid #FF0000;
   border-radius: 50%;
   width: 50px;
   height: 50px;
