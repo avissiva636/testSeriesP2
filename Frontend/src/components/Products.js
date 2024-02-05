@@ -12,9 +12,11 @@ const Products = () => {
     window.scroll(0, 0);
     getProductList();
   }, []);
+  console.log(products)
 
   const handleProductClick = (product) => {
-    navigate("/SubProducts", {
+    console.log(product);
+    navigate(`/SubProducts/${encodeURIComponent(product.mainProduct)}`, {
       state: { data: { product } },
     });
   };
