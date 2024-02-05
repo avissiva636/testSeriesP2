@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'BookmanOldStyle';
+    /* src: url('./fonts/BookmanOldStyle.ttf') format('truetype'); */
+    src: url('../../public/Font/BOOKOS.TTF') format('truetype');
+    /* Add other font formats (e.g., woff, woff2) for better browser compatibility */
+  }
+  
+  body {
+    font-family: 'BookmanOldStyle', sans-serif;
+  }

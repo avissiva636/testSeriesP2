@@ -18,6 +18,7 @@ export const InspiroContext = ({ children }) => {
     if (result.data) {
       setProducts(result.data.productList);
     }
+    return result.data.productList;
   };
 
   const getCourseList = async () => {
@@ -53,6 +54,7 @@ export const InspiroContext = ({ children }) => {
     if (result.data) {
       setNotification(result.data.NotificationList);
     }
+    return result.data.NotificationList;
   };
 
   const sendEmailContent = async (formData) => {

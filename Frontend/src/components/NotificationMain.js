@@ -1,23 +1,46 @@
 import { useEffect, useState } from "react";
 import ContactUsHomePage from "./ContactUsHomePage";
 import CourseDescription from "./CourseDescription";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { useInspiroCrud } from "./context/InspiroContext";
 
 const NotificationMain = () => {
+  const { notification, getNotificationList } = useInspiroCrud();
+  const { Title } = useParams();
   const location = useLocation();
-  const { notification } = location.state.data;
-  let initialTitle = notification[0].name;
-  let initialDescription = notification[0].description;
+  // const notification = location.state?.data.notification;
+  // console.log(notification)
+  // let initialTitle = notification ? notification[0]?.name : Title;
+  let initialTitle = notification[0]?.name ?? Title;
+
+  // console.log(initialTitle)
+  let initialDescription = notification && notification[0]?.description;
+  // console.log(initialDescription);
   const [a, setA] = useState(initialTitle);
   const [b, setB] = useState(initialDescription);
 
-  const handleNotificationClick = (name, description) => {
-    const descriptionSection = document.getElementById("descriptionSection");
-    if (descriptionSection) {
-      descriptionSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  useEffect(() => {
+
+    const notify = async ()=>{
+      if (initialDescription === undefined && initialTitle) {
+        const notificationData = await getNotificationList();
+        var filteredContent=notificationData.filter((data)=>(data.name===initialTitle));
+        setB(filteredContent[0]?.description);      
+      }
     }
+
+    notify();
+  }, []);
+
+  const handleNotificationClick = (name, description) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setA(name);
     setB(description);
+    window.history.pushState(
+      null,
+      null,
+      `/NotificationMain/${encodeURIComponent(name)}`
+    );
   };
   return (
     <>
@@ -29,7 +52,6 @@ const NotificationMain = () => {
       <div className="courses__full-content mb-5">
         <div className="courses__page col-xl-3 col-lg-3 col-md-12">
           <div className="courses__header">Recent Notifications</div>
-
           {notification.map((items) => {
             let Title;
 

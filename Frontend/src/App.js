@@ -17,19 +17,22 @@ import DemoClass from "./components/DemoClass";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsAndConditions from "./components/TermsAndConditions";
 import RefundPolicy from "./components/RefundPolicy";
-import Sidebar from "./components/sidemenu";
 import SubProducts from "./components/SubProducts";
 import Footer from "./components/Footer";
 import NotificationMain from "./components/NotificationMain";
 import Popup from "./components/Popup";
 import ScrollToTop from "./components/ScrollToTop";
+import CommonLayout from "./components/CommonLayout";
+import TestimonialAll from "./components/TestimonialAll";
 function App() {
   return (
     <div>
+      
       <Router>
         <InspiroContext>
+        {/* <CommonLayout> */}
           <Navigationbar />
-          <Sidebar />
+          {/* <Sidebar /> */}
           <Routes>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/Products" element={<Products />}></Route>
@@ -41,7 +44,7 @@ function App() {
               path="/CourseDescription"
               element={<CourseDescription />}
             ></Route>
-            <Route path="/ListAllCourses" element={<ListAllCourses />}></Route>
+            <Route path="/ListAllCourses/:Title" element={<ListAllCourses />} />
             <Route path="/PhotoPage" element={<PhotoPage />} />
             <Route path="/VideoPage" element={<VideoPage />} />
             <Route
@@ -54,14 +57,18 @@ function App() {
               element={<TermsAndConditions />}
             />
             <Route path="/RefundPolicy" element={<RefundPolicy />} />
-            <Route path="SubProducts" element={<SubProducts />} />
-            <Route path="/NotificationMain" element={<NotificationMain />} />
+            <Route path="/SubProducts/:Title" element={<SubProducts />} />
+            <Route path="/NotificationMain/:Title" element={<NotificationMain />} />
+            <Route path="/TestimonialAll" element={<TestimonialAll />}></Route>
+            <Route path="/*" element={<SubProducts />}/>
           </Routes>
           <ScrollToTop />
           <Footer />
+          {/* </CommonLayout> */}
         </InspiroContext>
       </Router>
       <Popup />
+      
     </div>
   );
 }

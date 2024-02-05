@@ -1,30 +1,48 @@
-import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import ContactUsHomePage from "./ContactUsHomePage";
 import "./css/SubProducts.css"; // Assuming SubProducts.css is the CSS file with the provided styles
 import { ArrowBack } from "@mui/icons-material";
 import Sidebar from "./Sidebar";
+import { useInspiroCrud } from "./context/InspiroContext";
 
 const SubProducts = () => {
+  const { Title } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { mainProduct, subProducts } = location.state.data.product;
-  console.log(subProducts);
-  const sortedSubProducts = [...subProducts].sort();
+  const { products, getProductList } = useInspiroCrud();
+
+  const { mainProduct, subProducts } = location.state?.data?.product || {};
+  const [reloadSubProducts, setReloadSubProducts] = useState([null]);
+  const sortedSubProducts = subProducts ? [...subProducts].sort() : reloadSubProducts;
   const [searchQuery, setSearchQuery] = useState("");
 
   const backClickHandler = () => {
     navigate("/Products");
   };
-  const filteredSubProducts = sortedSubProducts.filter((sp) =>
-    sp.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredSubProducts =  sortedSubProducts.filter((sp) =>
+    sp?.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  useEffect(() => {
+    const prodCall = async () => {
+      if (mainProduct === undefined && Title) {
+        const subProductData = await getProductList();
+        var filteredContent = subProductData.filter(
+          (data) => data.mainProduct === Title
+        );
+        setReloadSubProducts(filteredContent[0].subProducts)
+        
+      }
+    };
+
+    prodCall();
+  }, []);
 
   return (
     <div>
       <div className="heading">
         <h1>
-          <b>{mainProduct}</b>
+          <b>{mainProduct ? mainProduct : Title}</b>
         </h1>
       </div>
       <div className="container">
@@ -44,7 +62,7 @@ const SubProducts = () => {
       </div>
 
       <div className="card-container">
-        {filteredSubProducts.map((sp) => (
+        { filteredSubProducts.map((sp) => (
           <div key={sp.index} className="card">
             <img src={sp.photo} alt={sp.photo} className="card-img" />
             <div className="sub-product-name">{sp.name}</div>
