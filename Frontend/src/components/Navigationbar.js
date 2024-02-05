@@ -28,7 +28,7 @@ const Navigationbar = () => {
 
   const toggleDropdownGallery = () => {
     setShowGallery(!showGallery);
-    setheaderShowDropdown(false);
+    // setheaderShowDropdown(false);
     setShowDropdown(false);
     setShowCourses(false);
   };
@@ -135,7 +135,8 @@ const Navigationbar = () => {
     setShowCourses(false);
   };
   const handleNotification = () => {
-    const Title = notification[0].name;
+    
+    const Title = notification[0]?.name;
     navigate(`NotificationMain/${encodeURIComponent(Title)}`, {
       state: { data: { notification } },
     });
