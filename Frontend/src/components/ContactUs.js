@@ -26,23 +26,10 @@ const ContactUs = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if(name === 'phone'){
-      if (/^\d{10}$/.test(value)) {
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-    }
-    else if (name === 'email') {
-      if (/^\S+@\S+\.\S+$/.test(value)) {
-        setFormData({ ...formData, [name]: value });
-      }
-    }
-    else{
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));}
+    }));
   };
   const emailHandler = (event) => {
     event.preventDefault();
