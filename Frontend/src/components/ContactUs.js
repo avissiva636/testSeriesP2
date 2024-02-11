@@ -26,10 +26,23 @@ const ContactUs = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if(name === 'phone'){
+      if (/^\d{10}$/.test(value)) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+    }
+    else if (name === 'email') {
+      if (/^\S+@\S+\.\S+$/.test(value)) {
+        setFormData({ ...formData, [name]: value });
+      }
+    }
+    else{
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
+    }));}
   };
   const emailHandler = (event) => {
     event.preventDefault();
@@ -91,7 +104,7 @@ const ContactUs = () => {
         <Col lg={9} md={7} sm={12} className="right-section mb-5">
           <div className="quick-contact">
             <h2>Quick Contact</h2>
-            <Form>
+            <Form onSubmit={emailHandler}>
               <Row>
                 <Col md={6} className="input-group">
                   <label>Name:</label>
@@ -131,6 +144,7 @@ const ContactUs = () => {
                     type="text"
                     name="qualification"
                     value={formData.qualification}
+                    required
                     onChange={handleChange}
                   />
                 </Col>
@@ -142,6 +156,7 @@ const ContactUs = () => {
                     type="text"
                     name="place"
                     value={formData.place}
+                    required
                     onChange={handleChange}
                   />
                 </Col>
@@ -155,11 +170,7 @@ const ContactUs = () => {
                   ></textarea>
                 </div>
               </Row>
-              <div
-                onClick={(event) => {
-                  emailHandler(event);
-                }}
-              >
+              <div>
                 <button className="submit__btn" type="submit">
                   Submit
                 </button>
