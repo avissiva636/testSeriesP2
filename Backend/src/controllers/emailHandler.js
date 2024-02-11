@@ -40,8 +40,7 @@ const emailHandler = asyncHandler(async (req, res) => {
         to: ['lingamsiva646@gmail.com'],
         cc: ['lingamsiva636@gmail.com'],
         subject: "Send email using nodemailer and gmail",
-        html: `
-                    <p>${message}</p>
+        html: `                    
                     <table style="border-collapse: collapse; width: 100%; margin-top: 15px;">
                         <thead style="background-color: #f2f2f2;">
                             <tr>
@@ -72,6 +71,7 @@ const emailHandler = asyncHandler(async (req, res) => {
                             </tr>
                         </tbody>
                     </table>
+                    <p>${message}</p>
                 `,
     };
 
