@@ -22,7 +22,6 @@ import Footer from "./components/Footer";
 import NotificationMain from "./components/NotificationMain";
 import Popup from "./components/Popup";
 import ScrollToTop from "./components/ScrollToTop";
-import CommonLayout from "./components/CommonLayout";
 import TestimonialAll from "./components/TestimonialAll";
 function App() {
   return (

@@ -60,7 +60,7 @@ export const InspiroContext = ({ children }) => {
   const sendEmailContent = async (formData) => {
     await api.post("/emailHandler", {
       method: "POST",
-      body: JSON.stringify({ emailData: formData }),
+      emailData: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
       },
