@@ -30,7 +30,7 @@ const sendMail = async (transporter, mailOptions) => {
 const emailHandler = asyncHandler(async (req, res) => {
 
     const { name, email, phone,
-        qualification, place, message } = req.body.emailData.formData;
+        qualification, place, message } = JSON.parse(req.body.emailData);
 
     const mailOptions = {
         from: {
