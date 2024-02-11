@@ -32,9 +32,18 @@ const Footer = () => {
   const handleCourses = () => {
     const Title = coursesToShow[0].Title;
     const Description = coursesToShow[0].Description;
-    navigate("ListAllCourses", {
+    if (coursesToShow[0].SubTitle.length > 0) {
+      console.log("Hi")
+      navigate(`ListAllCourses/${encodeURIComponent(coursesToShow[0].SubTitle[0].Title)}`, {
+        state: { data: { Title:coursesToShow[0]?.SubTitle[0]?.Title, Description: coursesToShow[0]?.SubTitle[0]?.Description} },
+      });
+
+    } else if (coursesToShow[0].SubTitle.length === 0) {
+      console.log("Hi1")
+      navigate(`ListAllCourses/${encodeURIComponent(Title)}`, {
       state: { data: { Title, Description } },
     });
+    } ;
   };
   return (
     <>
