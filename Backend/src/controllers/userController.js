@@ -57,9 +57,9 @@ const loginUser = asyncHandler(async (req, res) => {
             },
         },
             APP_SECRET,
-            { expiresIn: "60m" }
+            { expiresIn: "1d" }
         );
-        res.cookie('jwt', accessToken, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 1 * 60 * 60 * 1000 });
+        res.cookie('jwt', accessToken, { httpOnly: true, secure: false, sameSite: 'strict', maxAge: 24 * 60 * 60 * 1000 });
         res.status(200).json({ message: "Received token", accessToken });
         // res.status(200).json({ accessToken });
     } else {
