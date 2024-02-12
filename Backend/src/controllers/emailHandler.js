@@ -34,12 +34,12 @@ const emailHandler = asyncHandler(async (req, res) => {
 
     const mailOptions = {
         from: {
-            name: 'WEB WIZARD',
+            name: 'STUDENTS WEB QUERY',
             address: USER
         },
-        to: ['lingamsiva646@gmail.com'],
-        cc: ['lingamsiva636@gmail.com'],
-        subject: "Send email using nodemailer and gmail",
+        to: ['inspiroschools@gmail.com'],
+        cc: ['agilewebwizards@gmail.com'],
+        subject: "STUDENTS WEB QUERY DETAILS",
         html: `                    
                     <table style="border-collapse: collapse; width: 100%; margin-top: 15px;">
                         <thead style="background-color: #f2f2f2;">
