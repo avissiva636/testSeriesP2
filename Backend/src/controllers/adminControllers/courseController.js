@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { courseModel: Course } = require("../../database/index");
 const allowedOrigins = require("../../config/allowedOrigins");
-const { simplifyTable } = require("../../util/htmlTableParser");
+// const { simplifyTable } = require("../../util/htmlTableParser");
 
 let CourseList = []
 async function setCourseList() {
@@ -65,7 +65,7 @@ const getCourseList = asyncHandler(async (req, res) => {
 const addCourseNormalList = asyncHandler(async (req, res) => {
     const data = {
         Title: req.body.Title,
-        Description: simplifyTable(JSON.parse(req.body.Description))
+        Description: JSON.parse(req.body.Description)
     };
 
     CourseList.push(data);
@@ -92,7 +92,7 @@ const addCourseSubList = asyncHandler(async (req, res) => {
     }
 
     data.SubTitle = data.SubTitle.map((subtitle) => {
-        return { ...subtitle, "Description": simplifyTable(subtitle.Description) };
+        return { ...subtitle, "Description": subtitle.Description };
     })
 
     await Course.create({
@@ -113,7 +113,7 @@ const addCourseSubList = asyncHandler(async (req, res) => {
 //access public
 const updateCourseNormalList = asyncHandler(async (req, res) => {
     const selectedCourse = JSON.parse(req.body.selectedCourse);
-    const updateDescription = simplifyTable(JSON.parse(req.body.updateDescription));
+    const updateDescription = JSON.parse(req.body.updateDescription);
 
     await Course.findOneAndUpdate({ Title: selectedCourse }, { Description: updateDescription });
     await setCourseList()
@@ -137,7 +137,7 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
 
             if (existingCourse) {
                 // SubTitle exists, update it                
-                ucourse.SubTitle = { ...ucourse.SubTitle, Description: simplifyTable(ucourse.SubTitle.Description) };
+                ucourse.SubTitle = { ...ucourse.SubTitle, Description: ucourse.SubTitle.Description };
                 await Course.updateOne(
                     { Title: ucourse.Title, "SubTitle.Title": ucourse.originalSubTitleName },
                     {
@@ -149,7 +149,7 @@ const updateCourseSubList = asyncHandler(async (req, res) => {
             } else {
                 // SubTitle doesn't exist, add it
                 //HTML table simplification                
-                ucourse.SubTitle = { ...ucourse.SubTitle, Description: simplifyTable(ucourse.SubTitle.Description) };
+                ucourse.SubTitle = { ...ucourse.SubTitle, Description: ucourse.SubTitle.Description };
 
                 await Course.updateOne(
                     { Title: ucourse.Title },
