@@ -8,7 +8,7 @@ let videoEidList = [];
 async function setvideoEidList() {
     try {
         const retrievedVideo = await Video.find();
-        videoEidList = retrievedVideo;
+        videoEidList = retrievedVideo.reverse();
     } catch (error) {
         console.error('Error setting videoEidList:', error);
     }
