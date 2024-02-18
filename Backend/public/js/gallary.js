@@ -70,6 +70,10 @@ function uploadFile() {
 // }
 
 function deleteImage(deleteFile) {
+    if (!confirm("Are you sure you want to delete this image?")) {
+        return; 
+    }
+
     const formData = new FormData();
     formData.append("imagenameToDelete", deleteFile);
     fetch(`${gallaryPath}/deletePhoto`, {
@@ -163,6 +167,10 @@ function uploadvideo() {
 // }
 
 function deleteVideo(elementToRemove) {
+    if (!confirm("Are you sure you want to delete this video?")) {
+        return; 
+    }
+
 
     const formData = new FormData();
     formData.append('videoIdToDelete', elementToRemove);
