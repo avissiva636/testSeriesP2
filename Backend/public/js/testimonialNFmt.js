@@ -36,6 +36,10 @@ function uploadTestimonialFile() { //uploadFile
 
 
 function deleteTestimonial(deleteFile) {  //deleteImage
+    if (!confirm("Are you sure you want to delete this video?")) {
+        return; 
+    }
+    
     const formData = new FormData();
     formData.append("imagenameToDelete", deleteFile);
     fetch(`${testimonialPath}/deleteTestimonial`, {
