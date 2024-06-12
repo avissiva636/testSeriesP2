@@ -1,8 +1,6 @@
 const allowedOrigins = [
-    'https://inspiroiasf.onrender.com',
+    'https://inspiroiasf.netlify.app',
     'https://inspiroias.onrender.com',
-    'http://localhost:5001',
-    'http://localhost:3000'
 ];
 
 module.exports = allowedOrigins;
