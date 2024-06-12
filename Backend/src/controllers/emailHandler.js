@@ -37,8 +37,8 @@ const emailHandler = asyncHandler(async (req, res) => {
             name: 'STUDENTS WEB QUERY',
             address: USER
         },
-        to: ['inspiroschools@gmail.com'],
-        cc: ['agilewebwizards@gmail.com'],
+        to: ['lingamsiva636@gmail.com'],
+        // cc: ['agilewebwizards@gmail.com'],
         subject: "STUDENTS WEB QUERY DETAILS",
         html: `                    
                     <table style="border-collapse: collapse; width: 100%; margin-top: 15px;">
